@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:rich="http://richfaces.org/rich">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <body>
+       
+     <ui:composition template="/templates/template.xhtml">
+       <ui:define name="body">
+        <f:metadata>
+            <f:viewParam  name="idUser" value="#{userBean.idUser}"/> 
+        </f:metadata>
+           <h:body>                         
+            <h:form prependId="false">
+                <h:outputLabel value="Name:" for="nameInput" />
+                <h:inputText id="nameInput" value="#{userBean.nameUser}">
+                </h:inputText>                                         
+                <h:body><br/></h:body>                 
+                <h:outputLabel value="Data of birthday:" for="dataInput" />
+                <rich:calendar id="date" value="#{userBean.dateOfBirthday}"/>
+                <br/>
+                <h:commandButton value="Save"
+                                 action="#{userBean.addUser}" />
+                <h:commandButton value="Go to User Table"
+                                 action="goToUT" />
+            </h:form>
+           </h:body>
+       </ui:define>     
+         </ui:composition>
+    </body>     
+</html>
+

@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <title>Facelet Title</title>
+</h:head>
+<body>
+    
+    <ui:composition template="/templates/template.xhtml">   
+        <ui:define name="body">
+            <h:form prependId="false">    
+                <h:outputLabel value="Chose privilege:" />
+                <rich:select value="#{permissionBean.privilegeId}">
+                    <f:selectItems value="#{privilegeBean.listPrivilege}" var = "priv" 
+                                   itemValue="#{priv.idPriv}" itemLabel="#{priv.namePriv}"/>
+                </rich:select>
+                <br/>
+                <h:outputLabel value="for application:" />
+                <rich:select value="#{permissionBean.appId}">
+                    <f:selectItems value="#{applicationBean.listApplication}" var = "app" 
+                                   itemValue="#{app.idApp}" itemLabel="#{app.nameApp}"/>
+                </rich:select>
+                <br/>
+                <h:commandButton value="Add" 
+                                 action="#{permissionBean.addPermission()}" />
+                <h:commandButton value="Go to Permission table"
+                                 action="showpermission" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</body>
+</html>
+
