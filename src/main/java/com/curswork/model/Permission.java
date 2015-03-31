@@ -7,12 +7,17 @@
 package com.curswork.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -37,7 +42,18 @@ public class Permission implements Serializable {
     @ManyToOne
     @JoinColumn(name = "id_priv")
     private Privilege privelege;
+    
+    @ManyToMany(fetch =FetchType.LAZY, mappedBy = "permissions",cascade = CascadeType.ALL)
+    private Set<Role> roles = new HashSet<Role>(); 
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+    
     public Permission(Application application, Privilege privelege) {
         this.application = application;
         this.privelege = privelege;

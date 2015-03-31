@@ -7,14 +7,18 @@
 package com.curswork.model;
 
 import com.curswork.bean.*;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.faces.bean.ManagedBean;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -23,10 +27,9 @@ import javax.persistence.Table;
  *
  * @author admin
  */
-@ManagedBean
 @Entity
 @Table(name = "\"Privilege\"")
-public class Privilege 
+public class Privilege implements Serializable 
 {
     @Id
     @Column(name = "id_priv")
@@ -37,6 +40,25 @@ public class Privilege
     private String namePriv;
     @OneToMany(mappedBy = "privelege")
     private Set<Permission> permissions = new HashSet<Permission>();
+    @ManyToMany(fetch =FetchType.LAZY, mappedBy = "privs",cascade = CascadeType.ALL)
+    private Set<Application> apps;
+    /**
+     * Get the value of apps
+     *
+     * @return the value of apps
+     */
+    public Set<Application> getApps() {
+        return apps;
+    }
+
+    /**
+     * Set the value of apps
+     *
+     * @param apps new value of apps
+     */
+    public void setApps(Set<Application> apps) {
+        this.apps = apps;
+    }
 
     public Privilege(String namePriv) {
         this.namePriv = namePriv;
@@ -77,6 +99,29 @@ public class Privilege
 
     public void setNamePriv(String namePriv) {
         this.namePriv = namePriv;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 37 * hash + this.idPriv;
+        return hash;
+    }
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Privilege other = (Privilege) obj;
+        return this.idPriv == other.idPriv;
+    }
+    
+    @Override
+    public String toString() {
+        return String.valueOf(idPriv) ;
     }
     
 }

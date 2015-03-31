@@ -34,7 +34,8 @@ public class UserDAO
             entityManager.merge(u);  //!!!!!!!! !!!!!!!!!!! M E R G E 
             entityManager.getTransaction().commit();      
         } catch (Exception e) {
-            entityManager.getTransaction().rollback();
+            if(entityManager.getTransaction()!=null)
+                entityManager.getTransaction().rollback();            
             throw e;
         }
         finally
@@ -84,5 +85,24 @@ public class UserDAO
         entityManager.merge(upUser);
         entityManager.getTransaction().commit();
         entityManager.close();
+    }
+    public static void deleteUser(int id_user) throws Exception
+    {
+        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+        try {        
+            entityManager.getTransaction().begin();      
+            User u = entityManager.find(User.class, id_user);
+            u.getRoles().removeAll(u.getRoles());
+            entityManager.remove(u);
+            entityManager.getTransaction().commit();      
+        } catch (Exception e) {
+            if(entityManager.getTransaction()!=null)
+                entityManager.getTransaction().rollback();
+            throw e;
+        }
+        finally
+        {
+              entityManager.close();
+        }
     }
 }

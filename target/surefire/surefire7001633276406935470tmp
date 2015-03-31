@@ -1,0 +1,9 @@
+#surefire
+#Tue Mar 31 17:32:42 MSK 2015
+maven.ext.class.path=C\:\\Program Files\\NetBeans 8.0.2\\java\\maven-nblib\\netbeans-eventspy.jar
+user.dir=D\:\\CursWorkJSF\\WebAppJSF
+file.encoding=UTF-8
+localRepository=C\:\\Users\\admin\\.m2\\repository
+netbeans.deploy=true
+netbeans.deploy.debugmode=true
+basedir=D\:\\CursWorkJSF\\WebAppJSF

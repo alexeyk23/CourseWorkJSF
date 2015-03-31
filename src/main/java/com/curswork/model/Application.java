@@ -11,11 +11,16 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.faces.bean.ManagedBean;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -37,9 +42,32 @@ public class Application implements Serializable {
     private String nameApp;
     @OneToMany(mappedBy = "application")
     private Set<Permission> permissions = new HashSet<Permission>();
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "\"App_priv\"",
+            joinColumns = {@JoinColumn(name = "id_app", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "id_priv", nullable = false, updatable = false)})
+    private Set<Privilege> privs = new HashSet<Privilege>();
+    /**
+     * Get the value of privs
+     *
+     * @return the value of privs
+     */
+    public Set<Privilege> getPrivs() {
+        return privs;
+    }
 
-    public Application(String nameApp) {
+    /**
+     * Set the value of privs
+     *
+     * @param privs new value of privs
+     */
+    public void setPrivs(Set<Privilege> privs) {
+        this.privs = privs;
+    }
+
+    public Application(String nameApp,Set<Privilege> privileges) {
         this.nameApp = nameApp;
+        this.privs = privileges;
     }
     
     public Application() {

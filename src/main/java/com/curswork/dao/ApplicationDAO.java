@@ -23,7 +23,7 @@ public class ApplicationDAO
         
       EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
       entityManager.getTransaction().begin();
-      entityManager.persist(r);            
+      entityManager.merge(r);            
       entityManager.getTransaction().commit();
       entityManager.close();
     }

@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -42,7 +44,11 @@ public class UserBean implements Serializable {
     }  
     public void updateUser()
     {               
-        UserDAO.updateUser(idUser,nameUser, dateOfBirthday,selectedRoles);
+        UserDAO.updateUser(idUser, nameUser, dateOfBirthday,selectedRoles);
+    }
+    public void deleteUser() throws Exception
+    {      
+        UserDAO.deleteUser(idUser);        
     }
     public List<User> getListUser()
     {

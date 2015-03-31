@@ -17,6 +17,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -37,7 +39,30 @@ public class Role implements Serializable {
     private String nameRole;
     @ManyToMany(fetch =FetchType.LAZY, mappedBy = "roles",cascade = CascadeType.ALL)
     private Set<User> users = new HashSet<User>(); 
-     
+     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "\"Role_permission\"",
+            joinColumns = {@JoinColumn(name = "id_role", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "id_perm", nullable = false, updatable = false)})
+    private Set<Permission> permissions;
+
+    /**
+     * Get the value of permissions
+     *
+     * @return the value of permissions
+     */
+    public Set<Permission> getPermissions() {
+        return permissions;
+    }
+
+    /**
+     * Set the value of permissions
+     *
+     * @param permissions new value of permissions
+     */
+    public void setPermissions(Set<Permission> permissions) {
+        this.permissions = permissions;
+    }
+
     public Set<User>  getUsers() {
         return users;
     }

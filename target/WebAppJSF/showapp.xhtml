@@ -21,6 +21,9 @@
                            <rich:column>
                                <h:outputText value="NAME" />
                            </rich:column>
+                           <rich:column>
+                               <h:outputText value="PRIVILEGES" />
+                           </rich:column>
                        </rich:columnGroup>
                    </f:facet>
                    <rich:column>
@@ -28,6 +31,9 @@
                    </rich:column>                   
                    <rich:column>
                        <h:outputText value="#{appl.nameApp}"></h:outputText>                            
+                   </rich:column>
+                   <rich:column>
+                       #{appl.privs}              
                    </rich:column>
                </rich:dataTable>  
                  <h:commandButton action="addAppPage" value="Add new Application Page"></h:commandButton>
