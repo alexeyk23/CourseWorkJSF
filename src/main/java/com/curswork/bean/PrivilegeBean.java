@@ -41,7 +41,6 @@ public class PrivilegeBean implements Serializable
     public void setIdPriv(int idPriv) {
         this.idPriv = idPriv;
     }
-
    
 
     /**

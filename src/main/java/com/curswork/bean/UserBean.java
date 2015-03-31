@@ -32,6 +32,23 @@ public class UserBean implements Serializable {
     private Set<Role>  roles = new HashSet<Role>();
     private List<String> selectedRoles = new ArrayList<String>();
 
+    public void  addUser() throws Exception
+    {
+        for (String id:selectedRoles) {
+            roles.add(RoleDAO.getRoleById(Integer.valueOf(id)));
+        }
+        User  u = new User(nameUser, dateOfBirthday, roles);
+        UserDAO.addUser(u);        
+    }  
+    public void updateUser()
+    {               
+        UserDAO.updateUser(idUser,nameUser, dateOfBirthday,selectedRoles);
+    }
+    public List<User> getListUser()
+    {
+        return UserDAO.getAllUsers();
+    }
+    
     public List<String> getSelectedRoles() {
         return selectedRoles;
     }
@@ -45,20 +62,6 @@ public class UserBean implements Serializable {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
-    }
-
-    public void  addUser()
-    {
-        for (String id:selectedRoles) {
-            roles.add(RoleDAO.getRoleById(Integer.valueOf(id)));
-        }
-        User  u = new User(nameUser, dateOfBirthday, roles);
-        UserDAO.addUser(u);        
-    }  
-    
-    public List<User> getListUser()
-    {
-        return UserDAO.getAllUsers();
     }
     /**
      * Get User ID
@@ -79,7 +82,9 @@ public class UserBean implements Serializable {
            User u = UserDAO.getUserById(idUser);
            nameUser=u.getNameUser();
            dateOfBirthday = u.getDateOfBirhday();
-           roles = u.getRoles();
+           selectedRoles.clear();
+           for(Role r : u.getRoles())           
+               selectedRoles.add(String.valueOf(r.getIdRole()));       
        }
     }
 

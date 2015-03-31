@@ -20,12 +20,17 @@
                 <h:outputLabel value="Name:" for="nameInput" />
                 <h:inputText id="nameInput" value="#{userBean.nameUser}">
                 </h:inputText>                                         
-                <h:body><br/></h:body>                 
+                <br/>            
                 <h:outputLabel value="Data of birthday:" for="dataInput" />
                 <rich:calendar id="date" value="#{userBean.dateOfBirthday}"/>
                 <br/>
-                <h:commandButton value="Save"
-                                 action="#{userBean.addUser}" />
+                <h:selectManyCheckbox  value="#{userBean.selectedRoles}" >
+                     <f:selectItems var="role" value="#{roleBean.allRole}" itemLabel="#{role.nameRole}"
+                                   itemValue="#{role.idRole}" >                       
+                    </f:selectItems>
+                </h:selectManyCheckbox>
+                <h:commandButton value="Update"
+                                 action="#{userBean.updateUser()}"/>
                 <h:commandButton value="Go to User Table"
                                  action="goToUT" />
             </h:form>

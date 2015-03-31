@@ -21,9 +21,9 @@
                 <br/>
                 <h:selectManyCheckbox value="#{userBean.selectedRoles}" > 
                     <f:selectItems var="role" value="#{roleBean.allRole}" itemLabel="#{role.nameRole}"
-                                   itemValue="#{role.idRole}">                       
+                                   itemValue="#{role.idRole}" >                       
                     </f:selectItems>
-                </h:selectManyCheckbox> 
+                </h:selectManyCheckbox>                 
                 <h:commandButton value="Save"
                                  action="#{userBean.addUser}" />
                 <h:commandButton value="Go to User Table"

@@ -10,6 +10,7 @@ package com.curswork.model;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,7 +35,7 @@ public class Role implements Serializable {
     private int idRole;
     @Column(name = "name_role")
     private String nameRole;
-    @ManyToMany(fetch =FetchType.LAZY, mappedBy = "roles")
+    @ManyToMany(fetch =FetchType.LAZY, mappedBy = "roles",cascade = CascadeType.ALL)
     private Set<User> users = new HashSet<User>(); 
      
     public Set<User>  getUsers() {
