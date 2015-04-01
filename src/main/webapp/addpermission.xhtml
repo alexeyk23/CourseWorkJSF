@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j">
 <h:head>
     <title>Facelet Title</title>
 </h:head>
@@ -12,18 +13,19 @@
     
     <ui:composition template="/templates/template.xhtml">   
         <ui:define name="body">
-            <h:form prependId="false">    
-                <h:outputLabel value="Chose privilege:" />
-                <rich:select value="#{permissionBean.privilegeId}">
-                    <f:selectItems value="#{privilegeBean.listPrivilege}" var = "priv" 
-                                   itemValue="#{priv.idPriv}" itemLabel="#{priv.namePriv}"/>
-                </rich:select>
-                <br/>
-                <h:outputLabel value="for application:" />
-                <rich:select value="#{permissionBean.appId}">
+            <h:form prependId="false">                    
+                <h:outputLabel value="Chose application:" />
+                <h:selectOneMenu value="#{permissionBean.appId}" valueChangeListener="#{permissionBean.changeApp}">
                     <f:selectItems value="#{applicationBean.listApplication}" var = "app" 
                                    itemValue="#{app.idApp}" itemLabel="#{app.nameApp}"/>
-                </rich:select>
+                    <a4j:ajax event="valueChange" render="privsForApp" execute="@this" />
+                </h:selectOneMenu>
+                <br/>
+                <h:outputLabel value="Chose privilege:"/>
+                <h:selectOneMenu value="#{permissionBean.privilegeId}" id="privsForApp">
+                    <f:selectItems value="#{permissionBean.app.privs}" var="priv" itemLabel="#{priv.namePriv}"
+                                   itemValue="#{priv.idPriv}"/>
+                </h:selectOneMenu>
                 <br/>
                 <h:commandButton value="Add" 
                                  action="#{permissionBean.addPermission()}" />

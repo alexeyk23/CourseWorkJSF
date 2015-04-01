@@ -13,8 +13,10 @@ import com.curswork.model.Application;
 import com.curswork.model.Permission;
 import com.curswork.model.Privilege;
 import java.util.List;
+import static javassist.CtMethod.ConstParameter.string;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.event.ValueChangeEvent;
 
 /**
  *
@@ -27,11 +29,28 @@ public class PermissionBean {
     private int idPerm;   
     private String appId;    
     private String privilegeId;
+    Application app;
+    Privilege priv;
+
+    public Application getApp() {
+        return app;
+    }
+
+    public void setApp(Application app) {
+        this.app = app;
+    }
+
+    public Privilege getPriv() {
+        return priv;
+    }
+
+    public void setPriv(Privilege priv) {
+        this.priv = priv;
+    }
     public void addPermission()
-    {
-        Application a = ApplicationDAO.getAppById(Integer.valueOf(appId));
-        Privilege priv = PrivilegeDAO.getPrivilegeById(Integer.valueOf(privilegeId));
-        Permission p = new Permission(a,priv);
+    {       
+        priv = PrivilegeDAO.getPrivilegeById(Integer.valueOf(privilegeId));
+        Permission p = new Permission(app,priv);
         PermissionDAO.addPermission(p);
     }
     public List<Permission> getListPermission() {
@@ -90,7 +109,11 @@ public class PermissionBean {
     public void setIdPerm(int idPerm) {
         this.idPerm = idPerm;
     }
-
+    public void changeApp(ValueChangeEvent event)
+    {
+        if(event.getNewValue()!=null)
+          app = ApplicationDAO.getAppById(Integer.valueOf((String)event.getNewValue()));        
+    }
     public PermissionBean() {
     }
 

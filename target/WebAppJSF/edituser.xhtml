@@ -15,7 +15,7 @@
         <f:metadata>
             <f:viewParam  name="idUser" value="#{userBean.idUser}"/> 
         </f:metadata>
-           <h:body>                         
+        <h:body>                         
             <h:form prependId="false">
                 <h:outputLabel value="Name:" for="nameInput" />
                 <h:inputText id="nameInput" value="#{userBean.nameUser}">
@@ -25,7 +25,7 @@
                 <rich:calendar id="date" value="#{userBean.dateOfBirthday}"/>
                 <br/>
                 <h:selectManyCheckbox  value="#{userBean.selectedRoles}" >
-                     <f:selectItems var="role" value="#{roleBean.allRole}" itemLabel="#{role.nameRole}"
+                    <f:selectItems var="role" value="#{roleBean.allRole}" itemLabel="#{role.nameRole}"
                                    itemValue="#{role.idRole}" >                       
                     </f:selectItems>
                 </h:selectManyCheckbox>
@@ -34,9 +34,9 @@
                 <h:commandButton value="Go to User Table"
                                  action="goToUT" />
             </h:form>
-           </h:body>
+        </h:body>
        </ui:define>     
-         </ui:composition>
+     </ui:composition>
     </body>     
 </html>
 
