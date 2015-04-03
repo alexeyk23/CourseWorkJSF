@@ -40,7 +40,7 @@ public class Privilege implements Serializable
     private String namePriv;
     @OneToMany(mappedBy = "privelege")
     private Set<Permission> permissions = new HashSet<Permission>();
-    @ManyToMany(fetch =FetchType.LAZY, mappedBy = "privs",cascade = CascadeType.ALL)
+    @ManyToMany(fetch =FetchType.LAZY, mappedBy = "privs")
     private Set<Application> apps;
     /**
      * Get the value of apps

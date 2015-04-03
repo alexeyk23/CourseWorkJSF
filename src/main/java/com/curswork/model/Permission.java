@@ -43,7 +43,7 @@ public class Permission implements Serializable {
     @JoinColumn(name = "id_priv")
     private Privilege privelege;
     
-    @ManyToMany(fetch =FetchType.LAZY, mappedBy = "permissions",cascade = CascadeType.ALL)
+    @ManyToMany(fetch =FetchType.LAZY, mappedBy = "permissions")
     private Set<Role> roles = new HashSet<Role>(); 
 
     public Set<Role> getRoles() {

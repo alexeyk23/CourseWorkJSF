@@ -24,7 +24,7 @@
                 <h:outputLabel value="Data of birthday:" for="dataInput" />
                 <rich:calendar id="date" value="#{userBean.dateOfBirthday}"/>
                 <br/>
-                <h:selectManyCheckbox  value="#{userBean.selectedRoles}" >
+                <h:selectManyCheckbox layout="pageDirection" value="#{userBean.selectedRoles}" >
                     <f:selectItems var="role" value="#{roleBean.allRole}" itemLabel="#{role.nameRole}"
                                    itemValue="#{role.idRole}" >                       
                     </f:selectItems>

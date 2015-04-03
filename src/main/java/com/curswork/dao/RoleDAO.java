@@ -7,6 +7,7 @@
 package com.curswork.dao;
 
 import com.curswork.model.Role;
+import com.curswork.model.User;
 import com.curswork.util.UtilHibernate;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -23,7 +24,7 @@ public static void  addRole(Role r)
         
       EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
       entityManager.getTransaction().begin();
-      entityManager.persist(r);            
+      entityManager.merge(r);            
       entityManager.getTransaction().commit();
       entityManager.close();
     }
@@ -45,5 +46,27 @@ public static void  addRole(Role r)
        entityManager.getTransaction().commit();
        entityManager.close();
        return res;
+    }
+    public static void deleteRole(int id_role) throws Exception
+    {
+        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+        try {        
+            entityManager.getTransaction().begin();      
+            Role r = entityManager.find(Role.class, id_role);
+            for (User u : r.getUsers()) {
+                u.getRoles().remove(r);
+            }
+            r.getPermissions().clear();
+            entityManager.remove(r);
+            entityManager.getTransaction().commit();      
+        } catch (Exception e) {
+            if(entityManager.getTransaction()!=null)
+                entityManager.getTransaction().rollback();
+            throw e;
+        }
+        finally
+        {
+              entityManager.close();
+        }
     }
 }

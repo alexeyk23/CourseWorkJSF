@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.curswork.bean;
 
 import com.curswork.dao.PrivilegeDAO;
@@ -11,6 +10,7 @@ import com.curswork.model.Privilege;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -19,11 +19,24 @@ import javax.faces.bean.SessionScoped;
  */
 @ManagedBean
 @SessionScoped
-public class PrivilegeBean implements Serializable 
-{   
-    
+public class PrivilegeBean implements Serializable {
+
     private int idPriv;
     private String name_priv;
+
+    public void deletePrivilege() throws Exception {
+        PrivilegeDAO.deletePrivilege(idPriv);
+    }
+
+    public void addPrivilege() {
+        Privilege p = new Privilege(name_priv);
+        PrivilegeDAO.addPrivilege(p);
+    }
+
+    public List<Privilege> getListPrivilege() {
+        return PrivilegeDAO.getAllPrivilege();
+    }
+
     /**
      * Get the value of idPriv
      *
@@ -41,7 +54,6 @@ public class PrivilegeBean implements Serializable
     public void setIdPriv(int idPriv) {
         this.idPriv = idPriv;
     }
-   
 
     /**
      * Get the value of name_priv
@@ -60,14 +72,7 @@ public class PrivilegeBean implements Serializable
     public void setName_priv(String name_priv) {
         this.name_priv = name_priv;
     }
-    public void addPrivilege()
-    {
-        Privilege p = new Privilege(name_priv);
-        PrivilegeDAO.addPrivilege(p);
-    }
-    public List<Privilege> getListPrivilege() {
-        return PrivilegeDAO.getAllPrivilege();
-    }
+
     public PrivilegeBean() {
     }
 }

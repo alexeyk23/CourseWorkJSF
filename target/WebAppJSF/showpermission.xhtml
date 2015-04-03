@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:rich="http://richfaces.org/rich"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a4j="http://richfaces.org/a4j">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
@@ -24,6 +25,9 @@
                                 <rich:column>
                                     <h:outputText value="PRIVILEGE" />
                                 </rich:column>
+                                <rich:column>
+                                    <h:outputText value="ACTIONS" />
+                                </rich:column>
                             </rich:columnGroup>
                         </f:facet>
                         <rich:column>
@@ -35,7 +39,22 @@
                         <rich:column>
                             <h:outputText value="#{perm.privelege.namePriv}"></h:outputText>                            
                         </rich:column>
+                        <rich:column>
+                             <a4j:commandButton value="Delete" oncomplete="#{rich:component('popup')}.show()">                           
+                                 <a4j:param  value="#{perm.idPerm}" assignTo="#{permissionBean.idPerm}"/>                             
+                            </a4j:commandButton>
+                        </rich:column>
                     </rich:dataTable>  
+                    <a4j:jsFunction name="remove" action="#{permissionBean.deletePermission()}" render="table" 
+                                    execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
+                    <rich:popupPanel id="popup" modal="true" resizeable="true"
+                                     onmaskclick="#{rich:component('popup')}.hide()"
+                                     header="Delete permission">
+                        Are you sure you want to delete the row?
+                        <br/>                  
+                        <a4j:commandButton value="Cancel" onclick="#{rich:component('popup')}.hide(); return false;" />
+                        <a4j:commandButton value="Delete" onclick="remove(); return false;" />
+                    </rich:popupPanel>
                     <h:commandButton action="addpermission" value="Add new Permission Page"></h:commandButton>
                 </h:form>
             </h:body>

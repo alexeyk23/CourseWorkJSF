@@ -18,7 +18,7 @@
                 <br/>   
                 <h:outputLabel value="Privileges:" />
                 <br/>                
-                <h:selectManyCheckbox  value="#{applicationBean.selectedPrivs}" >
+                <h:selectManyCheckbox layout="pageDirection"  value="#{applicationBean.selectedPrivs}" >
                     <f:selectItems var="priv" value="#{privilegeBean.listPrivilege}" itemLabel="#{priv.namePriv}"
                                    itemValue="#{priv.idPriv}" />    
                 </h:selectManyCheckbox>

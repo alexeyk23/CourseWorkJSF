@@ -18,6 +18,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -36,6 +37,7 @@ public class UserBean implements Serializable {
 
     public void  addUser() throws Exception
     {
+        roles.clear();
         for (String id:selectedRoles) {
             roles.add(RoleDAO.getRoleById(Integer.valueOf(id)));
         }

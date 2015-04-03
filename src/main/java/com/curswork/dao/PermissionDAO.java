@@ -7,6 +7,7 @@
 package com.curswork.dao;
 
 import com.curswork.model.Permission;
+import com.curswork.model.Role;
 import com.curswork.util.UtilHibernate;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -43,6 +44,27 @@ public class PermissionDAO {
        entityManager.getTransaction().commit();
        entityManager.close();
        return res;
+    }
+    public static void deletePermission(int id_perm) throws Exception
+    {
+        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+        try {        
+            entityManager.getTransaction().begin();      
+            Permission perm = entityManager.find(Permission.class, id_perm);
+            for (Role role : perm.getRoles()) {
+               role.getPermissions().remove(perm);
+            }
+            entityManager.remove(perm);
+            entityManager.getTransaction().commit();      
+        } catch (Exception e) {
+            if(entityManager.getTransaction()!=null)
+               entityManager.getTransaction().rollback();
+            throw e;
+        }
+        finally
+        {
+              entityManager.close();
+        }
     }
 
 }

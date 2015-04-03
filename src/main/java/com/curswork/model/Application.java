@@ -6,7 +6,6 @@
 
 package com.curswork.model;
 
-import com.curswork.bean.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;

@@ -46,5 +46,23 @@ public class ApplicationDAO
        entityManager.close();
        return res;
     }
-
+    public static void deleteApp(int id_app) throws Exception
+    {
+        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            Application app = entityManager.find(Application.class, id_app);
+            app.getPermissions().clear();
+            app.getPrivs().clear();
+            entityManager.remove(app);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            entityManager.close();
+        }
+    }
 }

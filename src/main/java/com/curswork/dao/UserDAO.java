@@ -92,7 +92,7 @@ public class UserDAO
         try {        
             entityManager.getTransaction().begin();      
             User u = entityManager.find(User.class, id_user);
-            u.getRoles().removeAll(u.getRoles());
+            u.getRoles().clear();
             entityManager.remove(u);
             entityManager.getTransaction().commit();      
         } catch (Exception e) {

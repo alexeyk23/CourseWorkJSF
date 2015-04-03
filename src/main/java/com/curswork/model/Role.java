@@ -37,9 +37,14 @@ public class Role implements Serializable {
     private int idRole;
     @Column(name = "name_role")
     private String nameRole;
-    @ManyToMany(fetch =FetchType.LAZY, mappedBy = "roles",cascade = CascadeType.ALL)
+    
+    @ManyToMany(fetch =FetchType.LAZY, mappedBy = "roles")
+//    @JoinTable(name = "\"User_role\"",
+//            joinColumns = {@JoinColumn(name = "id_role", nullable = false, updatable = false)},
+//            inverseJoinColumns = {@JoinColumn(name = "id_user", nullable = false, updatable = false)})
     private Set<User> users = new HashSet<User>(); 
-     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "\"Role_permission\"",
             joinColumns = {@JoinColumn(name = "id_role", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "id_perm", nullable = false, updatable = false)})
@@ -110,8 +115,9 @@ public class Role implements Serializable {
         this.nameRole = nameRole;
     }
 
-    public Role(String nameRole) {
+    public Role(String nameRole,Set<Permission> permissions) {
         this.nameRole = nameRole;
+        this.permissions=permissions;
     }
 
     public Role() {

@@ -6,6 +6,7 @@
 
 package com.curswork.dao;
 
+import com.curswork.model.Application;
 import com.curswork.model.Privilege;
 import com.curswork.util.UtilHibernate;
 import java.util.List;
@@ -45,5 +46,25 @@ public class PrivilegeDAO {
        entityManager.close();
        return res;
     }
-
+    public static void deletePrivilege(int id_priv) throws Exception
+    {
+       EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+        try {        
+            entityManager.getTransaction().begin();      
+            Privilege privilege = entityManager.find(Privilege.class, id_priv);
+            for (Application app : privilege.getApps()) {
+                app.getPrivs().remove(privilege);
+            }
+            entityManager.remove(privilege);
+            entityManager.getTransaction().commit();      
+        } catch (Exception e) {
+            if(entityManager.getTransaction()!=null)
+                entityManager.getTransaction().rollback();
+            throw e;
+        }
+        finally
+        {
+              entityManager.close();
+        }
+    }
 }

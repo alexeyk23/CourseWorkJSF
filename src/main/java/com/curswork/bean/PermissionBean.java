@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.curswork.bean;
 
 import com.curswork.dao.ApplicationDAO;
@@ -13,7 +12,6 @@ import com.curswork.model.Application;
 import com.curswork.model.Permission;
 import com.curswork.model.Privilege;
 import java.util.List;
-import static javassist.CtMethod.ConstParameter.string;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
@@ -25,12 +23,26 @@ import javax.faces.event.ValueChangeEvent;
 @ManagedBean
 @SessionScoped
 public class PermissionBean {
-    
-    private int idPerm;   
-    private String appId;    
+
+    private int idPerm;
+    private String appId;
     private String privilegeId;
     Application app;
     Privilege priv;
+
+    public void deletePermission() throws Exception {
+        PermissionDAO.deletePermission(idPerm);
+    }
+
+    public void addPermission() {
+        priv = PrivilegeDAO.getPrivilegeById(Integer.valueOf(privilegeId));
+        Permission p = new Permission(app, priv);
+        PermissionDAO.addPermission(p);
+    }
+
+    public List<Permission> getListPermission() {
+        return PermissionDAO.getAllPermission();
+    }
 
     public Application getApp() {
         return app;
@@ -47,15 +59,7 @@ public class PermissionBean {
     public void setPriv(Privilege priv) {
         this.priv = priv;
     }
-    public void addPermission()
-    {       
-        priv = PrivilegeDAO.getPrivilegeById(Integer.valueOf(privilegeId));
-        Permission p = new Permission(app,priv);
-        PermissionDAO.addPermission(p);
-    }
-    public List<Permission> getListPermission() {
-        return PermissionDAO.getAllPermission();
-    }
+
     /**
      * Get the value of privilegeId
      *
@@ -109,11 +113,13 @@ public class PermissionBean {
     public void setIdPerm(int idPerm) {
         this.idPerm = idPerm;
     }
-    public void changeApp(ValueChangeEvent event)
-    {
-        if(event.getNewValue()!=null)
-          app = ApplicationDAO.getAppById(Integer.valueOf((String)event.getNewValue()));        
+
+    public void changeApp(ValueChangeEvent event) {
+        if (event.getNewValue() != null) {
+            app = ApplicationDAO.getAppById(Integer.valueOf((String) event.getNewValue()));
+        }
     }
+
     public PermissionBean() {
     }
 

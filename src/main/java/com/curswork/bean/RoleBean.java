@@ -5,11 +5,17 @@
  */
 package com.curswork.bean;
 
+import com.curswork.dao.PermissionDAO;
 import com.curswork.dao.RoleDAO;
+import com.curswork.model.Permission;
 import com.curswork.model.Role;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -22,6 +28,33 @@ public class RoleBean implements Serializable {
 
     private int idRole;
     private String nameRole; 
+    private List<String> selectedPermission = new ArrayList<String>();
+  
+    public void addRole() {
+        
+        Set<Permission> perm = new HashSet<Permission>();
+        for (String permName : selectedPermission) {
+            perm.add(PermissionDAO.getPermissionById(Integer.valueOf(permName)));
+        }
+        Role r = new Role(nameRole,perm);
+        RoleDAO.addRole(r);
+    }
+    public void deleteRole() throws Exception
+    {
+        RoleDAO.deleteRole(idRole);        
+    }
+    public List<Role> getAllRole() {
+        return RoleDAO.getAllRole();
+    }
+
+    public List<String> getSelectedPermission() {
+        return selectedPermission;
+    }
+
+    public void setSelectedPermission(List<String> selectedPermission) {
+        this.selectedPermission = selectedPermission;
+    }
+
     /**
      * Get the value of idRole
      *
@@ -56,15 +89,6 @@ public class RoleBean implements Serializable {
      */
     public void setNameRole(String nameRole) {
         this.nameRole = nameRole;
-    }
-
-    public void addRole() {
-        Role r = new Role(nameRole);
-        RoleDAO.addRole(r);
-    }
-
-    public List<Role> getAllRole() {
-        return RoleDAO.getAllRole();
     }
 
     public RoleBean() {
