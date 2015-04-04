@@ -7,6 +7,9 @@
 package com.curswork.dao;
 
 import com.curswork.model.Application;
+import com.curswork.model.Permission;
+import com.curswork.model.Privilege;
+import com.curswork.model.Role;
 import com.curswork.util.UtilHibernate;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -52,8 +55,16 @@ public class ApplicationDAO
         try {
             entityManager.getTransaction().begin();
             Application app = entityManager.find(Application.class, id_app);
-            app.getPermissions().clear();
-            app.getPrivs().clear();
+            for (Permission p : app.getPermissions()) {
+                for (Role role : p.getRoles()) {
+                    role.getPermissions().remove(p);
+                }                
+                entityManager.remove(p);
+            }
+            for(Privilege p : app.getPrivs())
+            {
+                p.getApps().remove(app);
+            }
             entityManager.remove(app);
             entityManager.getTransaction().commit();
         } catch (Exception e) {

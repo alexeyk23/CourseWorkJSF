@@ -4,41 +4,62 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
-   <ui:composition template="/templates/template.xhtml">
+    <ui:composition template="/templates/template.xhtml">
         <ui:define name="body">
-             <h:body>
-       <h:form prependId="false">
-           <rich:dataTable var="appl" value="#{applicationBean.listApplication}">
-                   <f:facet name="header">
-                       <rich:columnGroup>                            
-                           <rich:column >
-                               <h:outputText value="ID" />
-                           </rich:column>                                                      
-                           <rich:column>
-                               <h:outputText value="NAME" />
-                           </rich:column>
-                           <rich:column>
-                               <h:outputText value="PRIVILEGES" />
-                           </rich:column>
-                       </rich:columnGroup>
-                   </f:facet>
-                   <rich:column>
-                       <h:outputText value="#{appl.idApp}"></h:outputText>                            
-                   </rich:column>                   
-                   <rich:column>
-                       <h:outputText value="#{appl.nameApp}"></h:outputText>                            
-                   </rich:column>
-                   <rich:column>
-                       #{appl.privs}              
-                   </rich:column>
-               </rich:dataTable>  
-                 <h:commandButton action="addAppPage" value="Add new Application Page"></h:commandButton>
-       </h:form>
-    </h:body>
+            <h:body>
+                <h:form prependId="false">
+                    <rich:dataTable id = "table" var="appl" value="#{applicationBean.listApplication}">
+                        <f:facet name="header">
+                            <rich:columnGroup>                            
+                                <rich:column >
+                                    <h:outputText value="ID" />
+                                </rich:column>                                                      
+                                <rich:column>
+                                    <h:outputText value="NAME" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="PRIVILEGES" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="ACTIONS" />
+                                </rich:column>
+                            </rich:columnGroup>
+                        </f:facet>
+                        <rich:column>
+                            <h:outputText value="#{appl.idApp}"></h:outputText>                            
+                        </rich:column>                   
+                        <rich:column>
+                            <h:outputText value="#{appl.nameApp}"></h:outputText>                            
+                        </rich:column>
+                        <rich:column>
+
+                        </rich:column>
+                        <rich:column>
+                            <a4j:commandButton value="Delete" oncomplete="#{rich:component('popup')}.show()">                           
+                                <a4j:param  value="#{appl.idApp}" assignTo="#{applicationBean.idApp}"/>                             
+                            </a4j:commandButton>
+                        </rich:column>
+                    </rich:dataTable>  
+                    <a4j:jsFunction name="remove" action="#{applicationBean.deleteApp()}" render="table" 
+                                    execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
+                    <rich:popupPanel id="popup" modal="true" resizeable="true"
+                                     onmaskclick="#{rich:component('popup')}.hide()"
+                                     header="Delete application">
+                        Are you sure you want to delete the row?
+                        <br/>                  
+                        <a4j:commandButton value="Cancel" onclick="#{rich:component('popup')}.hide();
+                                return false;" />
+                        <a4j:commandButton value="Delete" onclick="remove();
+                                return false;" />
+                    </rich:popupPanel>
+                    <h:commandButton action="addAppPage" value="Add new Application Page"></h:commandButton>
+                </h:form>
+            </h:body>
         </ui:define>
     </ui:composition>
 </html>

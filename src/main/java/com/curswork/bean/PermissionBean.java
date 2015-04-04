@@ -57,7 +57,7 @@ public class PermissionBean {
     }
 
     public void setPriv(Privilege priv) {
-        this.priv = priv;
+        this.priv = priv;       
     }
 
     /**
@@ -112,6 +112,10 @@ public class PermissionBean {
      */
     public void setIdPerm(int idPerm) {
         this.idPerm = idPerm;
+//        if(idPerm>0)
+//        {
+//            Permission p = PermissionDAO.getPermissionById(idPerm);            
+//        }
     }
 
     public void changeApp(ValueChangeEvent event) {

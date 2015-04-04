@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.curswork.dao;
 
 import com.curswork.model.Role;
@@ -22,87 +21,90 @@ import javax.persistence.Query;
  *
  * @author Kunakovsky A.
  */
-public class UserDAO 
-{
-  
+public class UserDAO {
 
-    public static void  addUser(User u) throws Exception
-    {
+    public static void addUser(User u) throws Exception {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-        try {        
+        try {
             entityManager.getTransaction().begin();
             entityManager.merge(u);  //!!!!!!!! !!!!!!!!!!! M E R G E 
-            entityManager.getTransaction().commit();      
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
-            if(entityManager.getTransaction()!=null)
-                entityManager.getTransaction().rollback();            
+            if (entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
             throw e;
+        } finally {
+            entityManager.close();
         }
-        finally
-        {
-              entityManager.close();
-        }
-               
-     
+
     }
-    public static List<User> getAllUsers()
-    {
-       EntityManager  entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-       entityManager.getTransaction().begin();
-       Query q = entityManager.createQuery("SELECT u FROM User u");
-       List<User> userList = (List<User>)q.getResultList();       
-       entityManager.getTransaction().commit();
-       entityManager.close();
-       return userList;
-    }
-    public static User getUserById(int id_user)
-    {
-       EntityManager  entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-       entityManager.getTransaction().begin();
-       User res = entityManager.find(User.class, id_user);
-       entityManager.getTransaction().commit();
-       entityManager.close();
-       return res;
-    }
-    public static void updateUser(int id_user, String userName, Date dateofb, List<String> roleIds)
-    {
+
+    public static List<User> getAllUsers() {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         entityManager.getTransaction().begin();
-        User upUser = entityManager.find(User.class, id_user);
-        upUser.setNameUser(userName);
-        upUser.setDateOfBirthday(dateofb);
-        Set<Role> currRoles = new HashSet<Role>();
-        currRoles.addAll(upUser.getRoles());
-        //delete role
-        for (Role role : currRoles) {
-            if(!roleIds.contains(String.valueOf(role.getIdRole())))
-                  upUser.getRoles().remove(role);
-        }
-        //set new roles
-        for (String id : roleIds) {
-            upUser.getRoles().add(entityManager.find(Role.class, Integer.valueOf(id)));
-        }
-        entityManager.merge(upUser);
+        Query q = entityManager.createQuery("SELECT u FROM User u");
+        List<User> userList = (List<User>) q.getResultList();
         entityManager.getTransaction().commit();
         entityManager.close();
+        return userList;
     }
-    public static void deleteUser(int id_user) throws Exception
-    {
+
+    public static User getUserById(int id_user) {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-        try {        
-            entityManager.getTransaction().begin();      
+        entityManager.getTransaction().begin();
+        User res = entityManager.find(User.class, id_user);
+        entityManager.getTransaction().commit();
+        entityManager.close();
+        return res;
+    }
+
+    public static void updateUser(int id_user, String userName, Date dateofb, List<String> roleIds) {
+        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            User upUser = entityManager.find(User.class, id_user);
+            upUser.setNameUser(userName);
+            upUser.setDateOfBirthday(dateofb);
+            Set<Role> currRoles = new HashSet<Role>();
+            currRoles.addAll(upUser.getRoles());
+            //delete role
+            for (Role role : currRoles) {
+                if (!roleIds.contains(String.valueOf(role.getIdRole()))) {
+                    upUser.getRoles().remove(role);
+                }
+            }
+            //set new roles
+            for (String id : roleIds) {
+                upUser.getRoles().add(entityManager.find(Role.class, Integer.valueOf(id)));
+            }
+            entityManager.merge(upUser);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            entityManager.close();
+        }
+    }
+
+    public static void deleteUser(int id_user) throws Exception {
+        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
             User u = entityManager.find(User.class, id_user);
             u.getRoles().clear();
             entityManager.remove(u);
-            entityManager.getTransaction().commit();      
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
-            if(entityManager.getTransaction()!=null)
+            if (entityManager.getTransaction() != null) {
                 entityManager.getTransaction().rollback();
+            }
             throw e;
-        }
-        finally
-        {
-              entityManager.close();
+        } finally {
+            entityManager.close();
         }
     }
 }

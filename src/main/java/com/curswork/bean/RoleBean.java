@@ -39,6 +39,11 @@ public class RoleBean implements Serializable {
         Role r = new Role(nameRole,perm);
         RoleDAO.addRole(r);
     }
+    public void updateRole() throws Exception
+    {
+        RoleDAO.updateRole(idRole, nameRole, selectedPermission);        
+    }
+    
     public void deleteRole() throws Exception
     {
         RoleDAO.deleteRole(idRole);        
@@ -71,6 +76,15 @@ public class RoleBean implements Serializable {
      */
     public void setIdRole(int idRole) {
         this.idRole = idRole;
+        if(idRole>0)
+        {
+            Role r =RoleDAO.getRoleById(idRole);
+            nameRole=r.getNameRole();
+            selectedPermission.clear();
+            for (Permission perm : r.getPermissions()) {
+                selectedPermission.add(String.valueOf(perm.getIdPerm()));
+            }
+        }
     }
 
     /**

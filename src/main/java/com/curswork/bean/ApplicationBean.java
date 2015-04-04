@@ -16,7 +16,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -32,13 +31,6 @@ public class ApplicationBean implements Serializable {
     private Set<Privilege> privileges = new HashSet<Privilege>();
     private List<String> selectedPrivs = new ArrayList<String>();
 
-    public List<String> getSelectedPrivs() {
-        return selectedPrivs;
-    }
-
-    public void setSelectedPrivs(List<String> selectedPrivs) {
-        this.selectedPrivs = selectedPrivs;
-    }
     public void addApplication()
     {
         for (String ids : selectedPrivs) {
@@ -47,6 +39,10 @@ public class ApplicationBean implements Serializable {
         Application p = new Application(name_app,privileges);
         ApplicationDAO.addApp(p);
     }
+    public void deleteApp() throws Exception
+    {
+        ApplicationDAO.deleteApp(idApp);
+    }
     public List<Application> getListApplication() {
         return ApplicationDAO.getAllApp();
     }
@@ -54,6 +50,13 @@ public class ApplicationBean implements Serializable {
         return privileges;
     }
 
+    public List<String> getSelectedPrivs() {
+        return selectedPrivs;
+    }
+
+    public void setSelectedPrivs(List<String> selectedPrivs) {
+        this.selectedPrivs = selectedPrivs;
+    }
     public void setPrivileges(Set<Privilege> privileges) {
         this.privileges = privileges;
     }

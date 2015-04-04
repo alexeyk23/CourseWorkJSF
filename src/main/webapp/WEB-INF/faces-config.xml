@@ -1,26 +1,28 @@
 <?xml version="1.0"?>
-<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xi="http://www.w3.org/2001/XInclude"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+<faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xi="http://www.w3.org/2001/XInclude"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
    <navigation-rule>
-    <navigation-case>
-        <from-view-id>/showusers.xhtml</from-view-id>         
-        <from-outcome>
-           edituser
-        </from-outcome>
-        <to-view-id>/edituser.xhtml</to-view-id>
-        <redirect/>
-    </navigation-case>
-     <navigation-case>
-        <from-view-id>/showapp.xhtml</from-view-id>         
-        <from-outcome>
-          addAppPage
-        </from-outcome>
-        <to-view-id>/addapp.xhtml</to-view-id>
-        <redirect/>
-    </navigation-case>
-     <navigation-case>
-        <from-view-id>/addapp.xhtml</from-view-id>         
+       <navigation-case>
+           <from-view-id>/showusers.xhtml</from-view-id>
+           <from-outcome>
+               edituser
+           </from-outcome>
+           <to-view-id>/edituser.xhtml</to-view-id>
+           <redirect/>
+
+           <from-view-id>/showapp.xhtml</from-view-id>
+           <from-outcome>
+               addAppPage
+           </from-outcome>
+           <to-view-id>/addapp.xhtml</to-view-id>
+           <redirect/>
+       </navigation-case>
+       <navigation-case>
+        <from-view-id>/addapp.xhtml</from-view-id>
         <from-outcome>
           goToAppTable
         </from-outcome>
@@ -28,7 +30,7 @@
         <redirect/>
     </navigation-case>
     <navigation-case>
-        <from-view-id>/showpriv.xhtml</from-view-id>         
+        <from-view-id>/showpriv.xhtml</from-view-id>
         <from-action>
              addPrivPage
         </from-action>
@@ -36,7 +38,7 @@
         <redirect/>
     </navigation-case>
     <navigation-case>
-        <from-view-id>/showusers.xhtml</from-view-id>         
+        <from-view-id>/showusers.xhtml</from-view-id>
         <from-action>
             addUserPage
         </from-action>
@@ -44,7 +46,7 @@
         <redirect/>
     </navigation-case>
      <navigation-case>
-        <from-view-id>/addprivilege.xhtml</from-view-id>         
+        <from-view-id>/addprivilege.xhtml</from-view-id>
         <from-action>
              goToPrivTable
         </from-action>
@@ -52,7 +54,7 @@
         <redirect/>
     </navigation-case>
     <navigation-case>
-        <from-view-id>/showroles.xhtml</from-view-id>         
+        <from-view-id>/showroles.xhtml</from-view-id>
         <from-action>
             addRolePage
         </from-action>

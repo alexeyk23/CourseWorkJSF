@@ -13,7 +13,7 @@
         <ui:define name="body">
             <h:body>
                 <h:form prependId="false">
-                    <rich:dataTable var="perm" value="#{permissionBean.listPermission}">
+                    <rich:dataTable id="table" var="perm" value="#{permissionBean.listPermission}">
                         <f:facet name="header">
                             <rich:columnGroup>                            
                                 <rich:column >
