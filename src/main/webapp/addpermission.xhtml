@@ -16,6 +16,7 @@
             <h:form prependId="false">                    
                 <h:outputLabel value="Chose application:" />
                 <h:selectOneMenu value="#{permissionBean.appId}" valueChangeListener="#{permissionBean.changeApp}">
+                    <f:selectItem value="#{null}"/>
                     <f:selectItems value="#{applicationBean.listApplication}" var = "app" 
                                    itemValue="#{app.idApp}" itemLabel="#{app.nameApp}"/>
                     <a4j:ajax event="valueChange" render="privsForApp" execute="@this" />

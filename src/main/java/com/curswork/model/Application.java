@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import javax.faces.bean.ManagedBean;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -41,7 +40,7 @@ public class Application implements Serializable {
     private String nameApp;
     @OneToMany(mappedBy = "application")
     private Set<Permission> permissions = new HashSet<Permission>();
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "\"App_priv\"",
             joinColumns = {@JoinColumn(name = "id_app", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "id_priv", nullable = false, updatable = false)})

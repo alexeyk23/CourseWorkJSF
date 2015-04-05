@@ -5,6 +5,8 @@
  */
 package com.curswork.dao;
 
+import com.curswork.model.Command;
+import com.curswork.model.Permission;
 import com.curswork.model.Role;
 import com.curswork.model.User;
 import com.curswork.util.UtilHibernate;
@@ -27,7 +29,20 @@ public class UserDAO {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
             entityManager.getTransaction().begin();
-            entityManager.merge(u);  //!!!!!!!! !!!!!!!!!!! M E R G E 
+            int idUser= entityManager.merge(u).getIdUser();  //!!!!!!!! !!!!!!!!!!! M E R G E 
+            //command for queue
+            Set<Permission> currPermissions = new HashSet<Permission>();
+            for (Role role : u.getRoles()) {
+                for (Permission perm : role.getPermissions()) {                    
+                    currPermissions.add(perm);
+                }
+            }
+            //insert command
+            for (Permission p : currPermissions) {
+                Command c = new Command(idUser, p.getApplication().getIdApp(), 
+                        p.getPrivelege().getIdPriv(),"add",new Date());
+                entityManager.persist(c);
+            }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             if (entityManager.getTransaction() != null) {
@@ -37,7 +52,6 @@ public class UserDAO {
         } finally {
             entityManager.close();
         }
-
     }
 
     public static List<User> getAllUsers() {
@@ -95,6 +109,19 @@ public class UserDAO {
         try {
             entityManager.getTransaction().begin();
             User u = entityManager.find(User.class, id_user);
+            //command for queue
+            Set<Permission> currPermissions = new HashSet<Permission>();
+            for (Role role : u.getRoles()) {
+                for (Permission perm : role.getPermissions()) {                    
+                    currPermissions.add(perm);
+                }
+            }
+            //insert command
+            for (Permission p : currPermissions) {
+                Command c = new Command(u.getIdUser(), p.getApplication().getIdApp(), 
+                        p.getPrivelege().getIdPriv(),"del",new Date());
+                entityManager.persist(c);
+            }
             u.getRoles().clear();
             entityManager.remove(u);
             entityManager.getTransaction().commit();

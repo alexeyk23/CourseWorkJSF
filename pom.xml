@@ -59,6 +59,7 @@
         <version.jstl-api>1.2</version.jstl-api>
         <version.servlet-api>3.0.1</version.servlet-api>
         <version.el-api>2.2</version.el-api>
+
     </properties>
 
     <build>

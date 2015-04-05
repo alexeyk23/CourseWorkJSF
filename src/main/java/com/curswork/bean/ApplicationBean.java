@@ -33,6 +33,7 @@ public class ApplicationBean implements Serializable {
 
     public void addApplication()
     {
+        privileges.clear();
         for (String ids : selectedPrivs) {
             privileges.add(PrivilegeDAO.getPrivilegeById(Integer.valueOf(ids)));
         }

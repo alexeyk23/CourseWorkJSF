@@ -122,6 +122,7 @@ public class PermissionBean {
         if (event.getNewValue() != null) {
             app = ApplicationDAO.getAppById(Integer.valueOf((String) event.getNewValue()));
         }
+        else app=null;
     }
 
     public PermissionBean() {
