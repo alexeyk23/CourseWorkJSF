@@ -13,8 +13,10 @@ import com.curswork.util.UtilHibernate;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -29,20 +31,22 @@ public class UserDAO {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
             entityManager.getTransaction().begin();
-            int idUser= entityManager.merge(u).getIdUser();  //!!!!!!!! !!!!!!!!!!! M E R G E 
+            int idUser = entityManager.merge(u).getIdUser();  //!!!!!!!! !!!!!!!!!!! M E R G E 
             //command for queue
-            Set<Permission> currPermissions = new HashSet<Permission>();
+//            Set<Permission> currPermissions = new HashSet<Permission>();
             for (Role role : u.getRoles()) {
-                for (Permission perm : role.getPermissions()) {                    
-                    currPermissions.add(perm);
+                for (Permission perm : role.getPermissions()) {
+                     Command c = new Command(idUser, perm.getApplication().getIdApp(),
+                        perm.getPrivelege().getIdPriv(), "add", new Date());
+                     entityManager.persist(c);                    
                 }
             }
-            //insert command
-            for (Permission p : currPermissions) {
-                Command c = new Command(idUser, p.getApplication().getIdApp(), 
-                        p.getPrivelege().getIdPriv(),"add",new Date());
-                entityManager.persist(c);
-            }
+//            //insert command
+//            for (Permission p : currPermissions) {
+//                Command c = new Command(idUser, p.getApplication().getIdApp(),
+//                        p.getPrivelege().getIdPriv(), "add", new Date());
+//                entityManager.persist(c);
+//            }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             if (entityManager.getTransaction() != null) {
@@ -82,15 +86,50 @@ public class UserDAO {
             upUser.setDateOfBirthday(dateofb);
             Set<Role> currRoles = new HashSet<Role>();
             currRoles.addAll(upUser.getRoles());
+            //частотный словарь разрешений
+            //после всех операций ключи с отрицательным значением удалим, 
+            //а с = 0 запишем как новые разрешения.
+            Map<Integer, Integer> dictPerm = new HashMap<Integer, Integer>();
+            for (Role role : currRoles) {
+                for (Permission perm : role.getPermissions()) {
+                    Integer foundPerm = dictPerm.put(perm.getIdPerm(), 0);
+                    if (foundPerm != null) 
+                        dictPerm.put(perm.getIdPerm(), foundPerm+1);                    
+                }
+            }
             //delete role
             for (Role role : currRoles) {
                 if (!roleIds.contains(String.valueOf(role.getIdRole()))) {
-                    upUser.getRoles().remove(role);
+                    {
+                        for (Permission perm : role.getPermissions()) 
+                            dictPerm.put(perm.getIdPerm(), dictPerm.get(perm.getIdPerm()) - 1);                        
+                        upUser.getRoles().remove(role);
+                    }
                 }
             }
             //set new roles
             for (String id : roleIds) {
-                upUser.getRoles().add(entityManager.find(Role.class, Integer.valueOf(id)));
+                Role r = entityManager.find(Role.class, Integer.valueOf(id));
+                for (Permission perm : r.getPermissions()) {
+                    Integer foundPerm = dictPerm.put(perm.getIdPerm(), 0);
+                    if (foundPerm != null) {
+                        //если попытаемся вернуть удаленную роль то foundPerm<0
+                        //роль повторно не назначаем, поэтому foundPerm+2.
+                        dictPerm.put(perm.getIdPerm(), foundPerm<0?foundPerm+2:foundPerm+1);
+                    }
+                }
+                upUser.getRoles().add(r);
+            }
+            for (Map.Entry<Integer, Integer> entrySet : dictPerm.entrySet()) {
+                Integer key = entrySet.getKey();
+                Integer value = entrySet.getValue();
+                //if value<=0 then permission will be deleted or persist
+                if (value <= 0) {
+                    Permission newPermission = entityManager.find(Permission.class, key);
+                    Command command = new Command(id_user, newPermission.getApplication().getIdApp(),
+                            newPermission.getPrivelege().getIdPriv(), (value == 0) ? "add" : "del", new Date());
+                    entityManager.persist(command);
+                }
             }
             entityManager.merge(upUser);
             entityManager.getTransaction().commit();
@@ -109,19 +148,20 @@ public class UserDAO {
         try {
             entityManager.getTransaction().begin();
             User u = entityManager.find(User.class, id_user);
-            //command for queue
-            Set<Permission> currPermissions = new HashSet<Permission>();
+//            Set<Permission> currPermissions = new HashSet<Permission>();
             for (Role role : u.getRoles()) {
-                for (Permission perm : role.getPermissions()) {                    
-                    currPermissions.add(perm);
+                for (Permission perm : role.getPermissions()) {
+                    Command c = new Command(u.getIdUser(), perm.getApplication().getIdApp(),
+                        perm.getPrivelege().getIdPriv(), "del", new Date());
+                    entityManager.persist(c);
                 }
             }
-            //insert command
-            for (Permission p : currPermissions) {
-                Command c = new Command(u.getIdUser(), p.getApplication().getIdApp(), 
-                        p.getPrivelege().getIdPriv(),"del",new Date());
-                entityManager.persist(c);
-            }
+//            //insert command
+//            for (Permission p : currPermissions) {
+//                Command c = new Command(u.getIdUser(), p.getApplication().getIdApp(),
+//                        p.getPrivelege().getIdPriv(), "del", new Date());
+//                entityManager.persist(c);
+//            }
             u.getRoles().clear();
             entityManager.remove(u);
             entityManager.getTransaction().commit();
