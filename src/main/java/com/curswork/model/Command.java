@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
+
 /**
  *
  * @author admin
@@ -36,7 +37,7 @@ public class Command implements Serializable {
     @Column(name = "id_priv")
     private int idPrivilege;
     @Column(name = "action_name")
-    private String actionName;
+    private String actionName;    
     @Column(name = "date_make")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dateMake;

@@ -156,10 +156,33 @@
             <artifactId>jstl-api</artifactId>
             <version>${version.jstl-api}</version>
         </dependency>
-
+        <!-- core library -->
+    <dependency>
+        <groupId>org.jboss.resteasy</groupId>
+         <artifactId>resteasy-jaxrs</artifactId>
+        <version>2.3.1.GA</version>
+    </dependency>
+    <dependency>
+        <groupId>net.sf.scannotation</groupId>
+        <artifactId>scannotation</artifactId>
+        <version>1.0.2</version>
+    </dependency>
+    <!-- Jackson support -->
+    <dependency>
+        <groupId>org.jboss.resteasy</groupId>
+        <artifactId>resteasy-jackson-provider</artifactId>
+        <version>2.3.1.GA</version>
+    </dependency>
+    
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+            <version>1.8.5</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>javax</groupId>
@@ -177,17 +200,7 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20140107</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>1.19</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-core</artifactId>
-            <version>1.19</version>
-        </dependency>
+        </dependency>    
     </dependencies>
 
     <profiles>

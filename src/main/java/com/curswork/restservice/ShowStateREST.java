@@ -12,9 +12,9 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.richfaces.json.JSONArray;
 
 /**
  *
@@ -26,11 +26,8 @@ public class ShowStateREST {
     @GET
     @Produces("application/json")
     public Response showResponse() throws JSONException {      
-     //   List<Command> list = CommandDAO.getAllCommand();
-       // JSONArray jarr = new JSONArray(list);
-        JSONObject jsonObject = new JSONObject();		
-		jsonObject.put("F Value", 1); 
-		jsonObject.put("C Value", 2);
-        return Response.status(200).entity(jsonObject).build();
+        List<Command> list = CommandDAO.getAllCommand();
+      
+        return Response.status(200).entity(list).build();
     }
 }

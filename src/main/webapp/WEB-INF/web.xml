@@ -44,17 +44,46 @@
         <param-name>org.richfaces.resourceMapping.enabled</param-name>
         <param-value>true</param-value>
     </context-param>
-    
+    <context-param>
+		<param-name>resteasy.resources</param-name>
+		<param-value>com.curswork.restservice.ShowStateREST</param-value>
+    </context-param>
+    <!-- this need same with resteasy servlet url-pattern -->
+    <context-param>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/rest</param-value>
+    </context-param>
+    <listener>
+        <listener-class>
+            org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap
+        </listener-class>
+    </listener>
+ 
     <servlet>
+        <servlet-name>resteasy-servlet</servlet-name>
+        <servlet-class>
+            org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+        </servlet-class>
+    </servlet>
+        
+    <servlet-mapping>
+        <servlet-name>resteasy-servlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
+  <!--  <servlet>
         <servlet-name>Jersey REST Service</servlet-name>
-        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>             
+        <servlet-class>com.sun.jersey.spi.container.servlet.ServletContainer</servlet-class>  
+        <init-param>
+        <param-name>com.sun.jersey.config.property.packages</param-name>
+        <param-value>com.curswork.restservice</param-value>
+        </init-param>           
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
         <servlet-name>Jersey REST Service</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
-    
+    -->
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
