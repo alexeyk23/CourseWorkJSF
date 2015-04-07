@@ -6,12 +6,9 @@
 
 package com.curswork.model;
 
-import com.curswork.bean.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import javax.faces.bean.ManagedBean;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -121,7 +118,7 @@ public class Privilege implements Serializable
     
     @Override
     public String toString() {
-        return String.valueOf(idPriv) ;
+        return namePriv;
     }
     
 }

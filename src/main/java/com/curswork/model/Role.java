@@ -39,9 +39,6 @@ public class Role implements Serializable {
     private String nameRole;
     
     @ManyToMany(fetch =FetchType.LAZY, mappedBy = "roles")
-//    @JoinTable(name = "\"User_role\"",
-//            joinColumns = {@JoinColumn(name = "id_role", nullable = false, updatable = false)},
-//            inverseJoinColumns = {@JoinColumn(name = "id_user", nullable = false, updatable = false)})
     private Set<User> users = new HashSet<User>(); 
     
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -81,7 +78,7 @@ public class Role implements Serializable {
     @Override
     public String toString()
     {
-        return String.valueOf(idRole);
+        return nameRole;
     }
     @Override
     public boolean equals(Object obj) {

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
 
@@ -14,7 +14,7 @@
 
     <repositories>
         <!-- You should seriously consider using a repository manager or declare repositories in your settings.xml.
-           See http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/   -->
+        See http://www.sonatype.com/people/2009/02/why-putting-repositories-in-your-poms-is-a-bad-idea/   -->
         <repository>
             <id>jboss-public-repository-group</id>
             <name>JBoss Public Maven Repository Group</name>
@@ -52,8 +52,8 @@
         <maven.compiler.source>1.7</maven.compiler.source>
         <maven.compiler.target>1.7</maven.compiler.target>
         <!-- Setting this property using archetype-metadata.xml requiredPorperty
-             so that generated project uses correct version of richfaces.
-         -->
+            so that generated project uses correct version of richfaces.
+        -->
         <org.richfaces.version>4.5.3.Final</org.richfaces.version>
         <version.jsp-api>2.1</version.jsp-api>
         <version.jstl-api>1.2</version.jstl-api>
@@ -77,7 +77,8 @@
     </build>
 
     <dependencyManagement>
-        <dependencies>	 
+        <dependencies>	
+
             <dependency>
                 <groupId>org.richfaces</groupId>
                 <artifactId>richfaces-cache-bom</artifactId>
@@ -97,29 +98,29 @@
 
     <dependencies>
         <dependency>
-        <groupId>log4j</groupId>
-        <artifactId>log4j</artifactId>
-        <version>1.2.16</version>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.16</version>
         </dependency>
         <dependency>
-             <groupId>org.slf4j</groupId>
-             <artifactId>slf4j-log4j12</artifactId>
-             <version>1.6.1</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.6.1</version>
         </dependency>
         <dependency>
-	<groupId>org.hibernate</groupId>
-	<artifactId>hibernate-core</artifactId>
-	<version>3.6.10.Final</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.6.10.Final</version>
         </dependency>
         <dependency>
-                <groupId>org.hibernate</groupId>
-                <artifactId>hibernate-entitymanager</artifactId>
-                <version>3.6.8.Final</version>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.6.8.Final</version>
         </dependency>
         <dependency>
-                <groupId>postgresql</groupId>
-                <artifactId>postgresql</artifactId>
-                <version>9.1-901.jdbc4</version>
+            <groupId>postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.1-901.jdbc4</version>
         </dependency>
         <dependency>
             <groupId>org.richfaces</groupId>
@@ -165,6 +166,27 @@
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
             <type>jar</type>
+        </dependency>
+        
+        <dependency>
+            <groupId>asm</groupId>
+            <artifactId>asm</artifactId>
+            <version>3.3.1</version>
+        </dependency>       
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20140107</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-server</artifactId>
+            <version>1.19</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-core</artifactId>
+            <version>1.19</version>
         </dependency>
     </dependencies>
 
