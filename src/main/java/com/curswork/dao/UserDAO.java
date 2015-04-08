@@ -32,21 +32,13 @@ public class UserDAO {
         try {
             entityManager.getTransaction().begin();
             int idUser = entityManager.merge(u).getIdUser();  //!!!!!!!! !!!!!!!!!!! M E R G E 
-            //command for queue
-//            Set<Permission> currPermissions = new HashSet<Permission>();
             for (Role role : u.getRoles()) {
                 for (Permission perm : role.getPermissions()) {
                      Command c = new Command(idUser, perm.getApplication().getIdApp(),
                         perm.getPrivelege().getIdPriv(), "add", new Date());
-                     entityManager.persist(c);                    
+                    entityManager.persist(c);                    
                 }
             }
-//            //insert command
-//            for (Permission p : currPermissions) {
-//                Command c = new Command(idUser, p.getApplication().getIdApp(),
-//                        p.getPrivelege().getIdPriv(), "add", new Date());
-//                entityManager.persist(c);
-//            }
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             if (entityManager.getTransaction() != null) {
@@ -148,7 +140,6 @@ public class UserDAO {
         try {
             entityManager.getTransaction().begin();
             User u = entityManager.find(User.class, id_user);
-//            Set<Permission> currPermissions = new HashSet<Permission>();
             for (Role role : u.getRoles()) {
                 for (Permission perm : role.getPermissions()) {
                     Command c = new Command(u.getIdUser(), perm.getApplication().getIdApp(),
@@ -156,12 +147,6 @@ public class UserDAO {
                     entityManager.persist(c);
                 }
             }
-//            //insert command
-//            for (Permission p : currPermissions) {
-//                Command c = new Command(u.getIdUser(), p.getApplication().getIdApp(),
-//                        p.getPrivelege().getIdPriv(), "del", new Date());
-//                entityManager.persist(c);
-//            }
             u.getRoles().clear();
             entityManager.remove(u);
             entityManager.getTransaction().commit();

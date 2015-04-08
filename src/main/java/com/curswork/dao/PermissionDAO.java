@@ -6,9 +6,12 @@
 
 package com.curswork.dao;
 
+import com.curswork.model.Command;
 import com.curswork.model.Permission;
 import com.curswork.model.Role;
+import com.curswork.model.User;
 import com.curswork.util.UtilHibernate;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -52,6 +55,11 @@ public class PermissionDAO {
             entityManager.getTransaction().begin();      
             Permission perm = entityManager.find(Permission.class, id_perm);
             for (Role role : perm.getRoles()) {
+                for (User user : role.getUsers()) {
+                    Command c = new Command(user.getIdUser(), perm.getApplication().getIdApp(),
+                            perm.getPrivelege().getIdPriv(), "del", new Date());
+                    entityManager.persist(c);
+                } 
                role.getPermissions().remove(perm);
             }
             entityManager.remove(perm);

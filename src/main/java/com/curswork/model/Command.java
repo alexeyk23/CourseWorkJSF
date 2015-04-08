@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 
 /**
@@ -23,20 +25,23 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name = "\"Command\"")
+@JsonIgnoreProperties({"id","dateMake","idApplication"}) //игнор ненужных параметров
 public class Command implements Serializable {
 
     @Id
     @Column(name = "id_command")
     @SequenceGenerator(name = "gen_id_comm",sequenceName = "\"Command_id_command_seq\"")
     @GeneratedValue(strategy = GenerationType.AUTO,generator = "gen_id_comm")
-    private int id;
-    @Column(name = "id_user")
+    private int id;   
+    @Column(name = "id_user")    
     private int idUser;
     @Column(name = "id_app")
     private int idApplication;
     @Column(name = "id_priv")
+    @JsonProperty(value = "id_priv")
     private int idPrivilege;
     @Column(name = "action_name")
+    @JsonProperty(value = "id_oper")
     private String actionName;    
     @Column(name = "date_make")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)

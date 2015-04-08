@@ -5,12 +5,16 @@
  */
 package com.curswork.dao;
 
+import com.curswork.model.Command;
 import com.curswork.model.Permission;
 import com.curswork.model.Role;
 import com.curswork.model.User;
 import com.curswork.util.UtilHibernate;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -56,17 +60,26 @@ public class RoleDAO {
             Role r = entityManager.find(Role.class, id_role);
             r.setNameRole(nameRole);
             Set<Permission> currPerm = new HashSet<Permission>();
-            currPerm.addAll(r.getPermissions());
+            currPerm.addAll(r.getPermissions());           
             //delete permission
             for (Permission perm : currPerm) {
-                if (!permIds.contains(String.valueOf(perm.getIdPerm()))) {
+                if (!permIds.contains(String.valueOf(perm.getIdPerm()))) { 
+                    for (User user : r.getUsers()) {
+                        Command c = new Command(user.getIdUser(),  perm.getApplication().getIdApp(),
+                            perm.getPrivelege().getIdPriv(), "del",new Date());
+                    }
                     r.getPermissions().remove(perm);
                 }
             }
             //add permission
             for (String permid : permIds) {
-                r.getPermissions().add(entityManager.find(Permission.class, Integer.valueOf(permid)));
-            }
+                Permission perm = entityManager.find(Permission.class, Integer.valueOf(permid));
+                r.getPermissions().add(perm);
+                for (User user : r.getUsers()) {
+                        Command c = new Command(user.getIdUser(),  perm.getApplication().getIdApp(),
+                            perm.getPrivelege().getIdPriv(), "add",new Date());
+                    }
+            }            
             entityManager.merge(r);
             entityManager.getTransaction().commit();
         } catch (Exception e) {

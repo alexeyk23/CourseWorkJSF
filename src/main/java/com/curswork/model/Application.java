@@ -27,7 +27,6 @@ import javax.persistence.Table;
  *
  * @author admin
  */
-@ManagedBean
 @Entity
 @Table(name = "\"Application\"")
 public class Application implements Serializable {

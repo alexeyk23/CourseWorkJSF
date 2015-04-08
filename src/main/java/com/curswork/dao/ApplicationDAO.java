@@ -23,12 +23,19 @@ public class ApplicationDAO
 {
     public static void  addApp(Application r)
     {
-        
-      EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-      entityManager.getTransaction().begin();
-      entityManager.merge(r);            
-      entityManager.getTransaction().commit();
-      entityManager.close();
+        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(r);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            entityManager.close();
+        }
     }
     public static List<Application> getAllApp()
     {
