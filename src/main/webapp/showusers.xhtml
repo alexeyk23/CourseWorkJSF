@@ -12,65 +12,67 @@
     </h:head>
     <ui:composition template="/templates/template.xhtml">
         <ui:define name="body">
-             <h:body>
-       <h:form prependId="false">
-               <rich:dataTable var="ubean" value="#{userBean.listUser}" id="table">
-                   <f:facet name="header">
-                       <rich:columnGroup>                            
-                           <rich:column >
-                               <h:outputText value="ID" />
-                           </rich:column>                                                      
-                           <rich:column>
-                               <h:outputText value="NAME" />
-                           </rich:column>                          
-                           <rich:column>
-                               <h:outputText value="DATE" />
-                           </rich:column>
-                         <rich:column>
-                               <h:outputText value="ROLES LIST" />
-                           </rich:column>
-                           <rich:column>
-                               <h:outputText value="Actions" />
-                           </rich:column>
-                       </rich:columnGroup>
-                   </f:facet>
-                   <rich:column>
-                       <h:outputText value="#{ubean.idUser}"></h:outputText>                            
-                   </rich:column>
-                   <rich:column>
-                       <h:outputText value="#{ubean.nameUser}"></h:outputText>                            
-                   </rich:column>                
-                   <rich:column>
-                       <h:outputText value="#{ubean.dateOfBirhday}"></h:outputText>                            
-                   </rich:column>
-                  <rich:column>
-                      <h:outputLabel value="#{ubean.roles}"/>                                               
-                  </rich:column>
-                  <rich:column>
-                      <h:button outcome="edituser" value="Edit">
-                          <f:param name="idUser" value="#{ubean.idUser}"/> 
-                      </h:button>  
-                      <a4j:commandButton value="Delete" oncomplete="#{rich:component('popup')}.show()">                           
-                          <a4j:param  value="#{ubean.idUser}" assignTo="#{userBean.idUser}"/>                             
-                      </a4j:commandButton> 
-                  </rich:column>
-               </rich:dataTable>  
-               <h:commandButton action="addUserPage" value="Add new User Page"></h:commandButton>
-               <a4j:jsFunction name="remove" action="#{userBean.deleteUser()}" render="table" 
-                               execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
-               <rich:popupPanel id="popup" modal="true" resizeable="true"
-                                onmaskclick="#{rich:component('popup')}.hide()"
-                                header="Delete user panel">
-                   Are you sure you want to delete the row?
-                   <br/>                  
-                   <a4j:commandButton value="Cancel" onclick="#{rich:component('popup')}.hide(); return false;" />
-                   <a4j:commandButton value="Delete" onclick="remove(); return false;" />
-               </rich:popupPanel>
-       </h:form>
-   
-    </h:body>
+            <h:body>      
+                <h:form prependId="false">
+                    <rich:dataTable var="ubean" value="#{userBean.listUser}" id="table">
+                        <f:facet name="header">
+                            <rich:columnGroup>                            
+                                <rich:column >
+                                    <h:outputText value="ID" />
+                                </rich:column>                                                      
+                                <rich:column>
+                                    <h:outputText value="NAME" />
+                                </rich:column>                          
+                                <rich:column>
+                                    <h:outputText value="DATE" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="ROLES LIST" />
+                                </rich:column>
+                                <rich:column>
+                                    <h:outputText value="Actions" />
+                                </rich:column>
+                            </rich:columnGroup>
+                        </f:facet>
+                        <rich:column>
+                            <h:outputText value="#{ubean.idUser}"></h:outputText>                            
+                        </rich:column>
+                        <rich:column>
+                            <h:outputText value="#{ubean.nameUser}"></h:outputText>                            
+                        </rich:column>                
+                        <rich:column>
+                            <h:outputText value="#{ubean.dateOfBirhday}"></h:outputText>                            
+                        </rich:column>
+                        <rich:column>
+                            <h:outputLabel value="#{ubean.roles}"/>                                               
+                        </rich:column>
+                        <rich:column>
+                            <h:button outcome="edituser" value="Edit">
+                                <f:param name="idUser" value="#{ubean.idUser}"/> 
+                            </h:button>  
+                            <a4j:commandButton value="Delete" oncomplete="#{rich:component('popup')}.show()">                           
+                                <a4j:param  value="#{ubean.idUser}" assignTo="#{userBean.idUser}"/>                             
+                            </a4j:commandButton> 
+                        </rich:column>
+                    </rich:dataTable>  
+                    <h:commandButton action="addUserPage" value="Add new User Page"></h:commandButton>
+                    <a4j:jsFunction name="remove" action="#{userBean.deleteUser()}" render="table" 
+                                    execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
+                    <rich:popupPanel id="popup" modal="true" resizeable="true"
+                                     onmaskclick="#{rich:component('popup')}.hide()"
+                                     header="Delete user panel">
+                        Are you sure you want to delete the row?
+                        <br/>                  
+                        <a4j:commandButton value="Cancel" onclick="#{rich:component('popup')}.hide();
+                                return false;" />
+                        <a4j:commandButton value="Delete" onclick="remove();
+                                return false;" />
+                    </rich:popupPanel>
+                </h:form>
+
+            </h:body>
         </ui:define>
     </ui:composition>
-   
+
 </html>
 

@@ -10,8 +10,6 @@ import com.curswork.model.Permission;
 import com.curswork.model.Role;
 import com.curswork.model.User;
 import com.curswork.util.UtilHibernate;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -31,12 +29,12 @@ public class UserDAO {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
             entityManager.getTransaction().begin();
-            int idUser = entityManager.merge(u).getIdUser();  //!!!!!!!! !!!!!!!!!!! M E R G E 
+            int idUser = entityManager.merge(u).getIdUser();  //!!!!!!!! !!!!!!!!!!! M E R G E
             for (Role role : u.getRoles()) {
                 for (Permission perm : role.getPermissions()) {
                      Command c = new Command(idUser, perm.getApplication().getIdApp(),
                         perm.getPrivelege().getIdPriv(), "add", new Date());
-                    entityManager.persist(c);                    
+                    entityManager.persist(c);
                 }
             }
             entityManager.getTransaction().commit();
@@ -79,22 +77,22 @@ public class UserDAO {
             Set<Role> currRoles = new HashSet<Role>();
             currRoles.addAll(upUser.getRoles());
             //частотный словарь разрешений
-            //после всех операций ключи с отрицательным значением удалим, 
+            //после всех операций ключи с отрицательным значением удалим,
             //а с = 0 запишем как новые разрешения.
             Map<Integer, Integer> dictPerm = new HashMap<Integer, Integer>();
             for (Role role : currRoles) {
                 for (Permission perm : role.getPermissions()) {
                     Integer foundPerm = dictPerm.put(perm.getIdPerm(), 0);
-                    if (foundPerm != null) 
-                        dictPerm.put(perm.getIdPerm(), foundPerm+1);                    
+                    if (foundPerm != null)
+                        dictPerm.put(perm.getIdPerm(), foundPerm+1);
                 }
             }
             //delete role
             for (Role role : currRoles) {
                 if (!roleIds.contains(String.valueOf(role.getIdRole()))) {
                     {
-                        for (Permission perm : role.getPermissions()) 
-                            dictPerm.put(perm.getIdPerm(), dictPerm.get(perm.getIdPerm()) - 1);                        
+                        for (Permission perm : role.getPermissions())
+                            dictPerm.put(perm.getIdPerm(), dictPerm.get(perm.getIdPerm()) - 1);
                         upUser.getRoles().remove(role);
                     }
                 }
