@@ -8,7 +8,7 @@
       xmlns:a4j="http://richfaces.org/a4j"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Пользователи</title>
     </h:head>
     <ui:composition template="/templates/template.xhtml">
         <ui:define name="body">
@@ -47,25 +47,26 @@
                             <h:outputLabel value="#{ubean.roles}"/>                                               
                         </rich:column>
                         <rich:column>
-                            <h:button outcome="edituser" value="Edit">
+                            <h:button outcome="editUser" value="Редактировать">
                                 <f:param name="idUser" value="#{ubean.idUser}"/> 
                             </h:button>  
-                            <a4j:commandButton value="Delete" oncomplete="#{rich:component('popup')}.show()">                           
+                            <a4j:commandButton value="Удалить" 
+                                               oncomplete="#{rich:component('popup')}.show()">                           
                                 <a4j:param  value="#{ubean.idUser}" assignTo="#{userBean.idUser}"/>                             
                             </a4j:commandButton> 
                         </rich:column>
                     </rich:dataTable>  
-                    <h:commandButton action="addUserPage" value="Add new User Page"></h:commandButton>
+                    <h:commandButton action="addUser" value="Добавить"></h:commandButton>
                     <a4j:jsFunction name="remove" action="#{userBean.deleteUser()}" render="table" 
                                     execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
                     <rich:popupPanel id="popup" modal="true" resizeable="true"
                                      onmaskclick="#{rich:component('popup')}.hide()"
-                                     header="Delete user panel">
-                        Are you sure you want to delete the row?
+                                     header="Удаление пользователя">
+                        Удалить запись?
                         <br/>                  
-                        <a4j:commandButton value="Cancel" onclick="#{rich:component('popup')}.hide();
+                        <a4j:commandButton value="Закрыть" onclick="#{rich:component('popup')}.hide();
                                 return false;" />
-                        <a4j:commandButton value="Delete" onclick="remove();
+                        <a4j:commandButton value="Удалить" onclick="remove();
                                 return false;" />
                     </rich:popupPanel>
                 </h:form>

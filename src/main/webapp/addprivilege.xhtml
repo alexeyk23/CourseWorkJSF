@@ -9,14 +9,14 @@
     <ui:composition template="/templates/template.xhtml">   
         <ui:define name="body">
             <h:form prependId="false">
-                <h:outputLabel value="Name:" for="nameInput" />
+                <h:outputLabel value="Название:" for="nameInput" />
                 <h:inputText id="nameInput" value="#{privilegeBean.name_priv}">
                 </h:inputText>                                         
                 <br/>                
 
-                <h:commandButton value="Save"
+                <h:commandButton value="Добавить"
                                  action="#{privilegeBean.addPrivilege()}" />
-                <h:commandButton value="Go to Privilege Table"
+                <h:commandButton value="Таблица привилегий"
                                  action="showPriv" />
             </h:form>
         </ui:define>

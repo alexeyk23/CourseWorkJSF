@@ -40,7 +40,7 @@
                             <h:outputText value="#{appl.privs}"></h:outputText> 
                         </rich:column>
                         <rich:column>
-                            <a4j:commandButton value="Delete" oncomplete="#{rich:component('popup')}.show()">                           
+                            <a4j:commandButton value="Удалить" oncomplete="#{rich:component('popup')}.show()">                           
                                 <a4j:param  value="#{appl.idApp}" assignTo="#{applicationBean.idApp}"/>                             
                             </a4j:commandButton>
                         </rich:column>
@@ -49,15 +49,15 @@
                                     execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
                     <rich:popupPanel id="popup" modal="true" resizeable="true"
                                      onmaskclick="#{rich:component('popup')}.hide()"
-                                     header="Delete application">
-                        Are you sure you want to delete the row?
+                                     header="Удалить приложение">
+                        Удалить запись?
                         <br/>                  
-                        <a4j:commandButton value="Cancel" onclick="#{rich:component('popup')}.hide();
+                        <a4j:commandButton value="Закрыть" onclick="#{rich:component('popup')}.hide();
                                 return false;" />
-                        <a4j:commandButton value="Delete" onclick="remove();
+                        <a4j:commandButton value="Удалить" onclick="remove();
                                 return false;" />
                     </rich:popupPanel>
-                    <h:commandButton action="addApp" value="Add new Application Page"></h:commandButton>
+                    <h:commandButton action="addApp" value="Добавить"></h:commandButton>
                 </h:form>
             </h:body>
         </ui:define>

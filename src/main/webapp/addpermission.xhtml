@@ -7,14 +7,14 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:a4j="http://richfaces.org/a4j">
 <h:head>
-    <title>Facelet Title</title>
+    <title>Разрешения</title>
 </h:head>
 <body>
     
     <ui:composition template="/templates/template.xhtml">   
         <ui:define name="body">
             <h:form prependId="false">                    
-                <h:outputLabel value="Chose application:" />
+                <h:outputLabel value="Выберите приложение:" />
                 <h:selectOneMenu value="#{permissionBean.appId}" valueChangeListener="#{permissionBean.changeApp}">
                     <f:selectItem value="#{null}"/>
                     <f:selectItems value="#{applicationBean.listApplication}" var = "app" 
@@ -22,15 +22,15 @@
                     <a4j:ajax event="valueChange" render="privsForApp" execute="@this" />
                 </h:selectOneMenu>
                 <br/>
-                <h:outputLabel value="Chose privilege:"/>
+                <h:outputLabel value="Выберите привилегию:"/>
                 <h:selectOneMenu value="#{permissionBean.privilegeId}" id="privsForApp">
                     <f:selectItems value="#{permissionBean.app.privs}" var="priv" itemLabel="#{priv.namePriv}"
                                    itemValue="#{priv.idPriv}"/>
                 </h:selectOneMenu>
                 <br/>
-                <h:commandButton value="Add" 
+                <h:commandButton value="Добавить разрешение" 
                                  action="#{permissionBean.addPermission()}" />
-                <h:commandButton value="Go to Permission table"
+                <h:commandButton value="Таблица разрешений"
                                  action="showPerm" />
             </h:form>
         </ui:define>

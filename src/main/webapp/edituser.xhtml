@@ -17,11 +17,11 @@
         </f:metadata>
         <h:body>                         
             <h:form prependId="false">
-                <h:outputLabel value="Name:" for="nameInput" />
+                <h:outputLabel value="ФИО:" for="nameInput" />
                 <h:inputText id="nameInput" value="#{userBean.nameUser}">
                 </h:inputText>                                         
                 <br/>            
-                <h:outputLabel value="Data of birthday:" for="dataInput" />
+                <h:outputLabel value="дата рождения:" for="dataInput" />
                 <rich:calendar id="date" value="#{userBean.dateOfBirthday}"/>
                 <br/>
                 <h:selectManyCheckbox layout="pageDirection" value="#{userBean.selectedRoles}" >
@@ -29,9 +29,9 @@
                                    itemValue="#{role.idRole}" >                       
                     </f:selectItems>
                 </h:selectManyCheckbox>
-                <h:commandButton value="Update"
+                <h:commandButton value="Сохранить изменения"
                                  action="#{userBean.updateUser()}"/>
-                <h:commandButton value="Go to User Table"
+                <h:commandButton value="Таблица пользователей"
                                  action="showUser" />
             </h:form>
         </h:body>

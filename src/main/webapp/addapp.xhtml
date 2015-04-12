@@ -5,24 +5,24 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Приложения</title>
     </h:head>
     <ui:composition template="/templates/template.xhtml">   
         <ui:define name="body">
             <h:form prependId="false">
-                <h:outputLabel value="Name:" for="nameInput" />
+                <h:outputLabel value="Название: " for="nameInput" />
                 <h:inputText id="nameInput" value="#{applicationBean.name_app}">
                 </h:inputText>                                         
                 <br/>   
-                <h:outputLabel value="Privileges:" />
+                <h:outputLabel value="Привилегии: " />
                 <br/>                
                 <h:selectManyCheckbox layout="pageDirection"  value="#{applicationBean.selectedPrivs}" >
                     <f:selectItems var="priv" value="#{privilegeBean.listPrivilege}" itemLabel="#{priv.namePriv}"
                                    itemValue="#{priv.idPriv}" />    
                 </h:selectManyCheckbox>
-                <h:commandButton value="Save"
+                <h:commandButton value="Сохранить"
                                  action="#{applicationBean.addApplication()}" />
-                <h:commandButton value="Go to Application Table"
+                <h:commandButton value="Таблица приложений"
                                  action="showApp" />
             </h:form>
         </ui:define>

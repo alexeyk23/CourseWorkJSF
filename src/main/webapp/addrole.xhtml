@@ -11,7 +11,7 @@
     <ui:composition template="/templates/template.xhtml">   
         <ui:define name="body">
             <h:form prependId="false">
-                <h:outputLabel value="Name:" for="nameInput" />
+                <h:outputLabel value="Название:" for="nameInput" />
                 <h:inputText id="nameInput" value="#{roleBean.nameRole}">
                 </h:inputText>                                         
                 <br/>                
@@ -19,9 +19,9 @@
                     <f:selectItems value="#{permissionBean.listPermission}" var ="perm"
                                    itemValue="#{perm.idPerm}" itemLabel="#{perm.application.nameApp}: #{perm.privelege.namePriv}"/>
                 </h:selectManyCheckbox>
-                <h:commandButton value="Save"
+                <h:commandButton value="Добавить"
                                  action="#{roleBean.addRole()}" />
-                <h:commandButton value="Go to Role Table"
+                <h:commandButton value="Таблица ролей"
                                  action="showRole" />
             </h:form>
         </ui:define>
