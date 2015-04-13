@@ -27,7 +27,7 @@ import javax.faces.bean.SessionScoped;
 public class ApplicationBean implements Serializable {  
     
     private int idApp;
-    private String name_app;
+    private String nameApp;
     private Set<Privilege> privileges = new HashSet<Privilege>();
     private List<String> selectedPrivs = new ArrayList<String>();
 
@@ -37,7 +37,7 @@ public class ApplicationBean implements Serializable {
         for (String ids : selectedPrivs) {
             privileges.add(PrivilegeDAO.getPrivilegeById(Integer.valueOf(ids)));
         }
-        Application p = new Application(name_app,privileges);
+        Application p = new Application(nameApp,privileges);
         ApplicationDAO.addApp(p);
     }
     public void deleteApp() throws Exception
@@ -62,21 +62,21 @@ public class ApplicationBean implements Serializable {
         this.privileges = privileges;
     }
     /**
-     * Get the value of name_app
+     * Get the value of nameApp
      *
-     * @return the value of name_app
+     * @return the value of nameApp
      */
-    public String getName_app() {
-        return name_app;
+    public String getNameApp() {
+        return nameApp;
     }
 
     /**
-     * Set the value of name_app
+     * Set the value of nameApp
      *
-     * @param name_app new value of name_app
+     * @param nameApp new value of nameApp
      */
-    public void setName_app(String name_app) {
-        this.name_app = name_app;
+    public void setNameApp(String nameApp) {
+        this.nameApp = nameApp;
     }
 
     /**

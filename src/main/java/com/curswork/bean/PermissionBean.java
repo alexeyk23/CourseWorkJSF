@@ -12,6 +12,7 @@ import com.curswork.model.Application;
 import com.curswork.model.Permission;
 import com.curswork.model.Privilege;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.event.ValueChangeEvent;
@@ -37,7 +38,11 @@ public class PermissionBean {
     public void addPermission() {
         priv = PrivilegeDAO.getPrivilegeById(Integer.valueOf(privilegeId));
         Permission p = new Permission(app, priv);
-        PermissionDAO.addPermission(p);
+        if(PermissionDAO.addPermission(p)){
+            FacesMessage message = new FacesMessage("Invalid email!");
+            message.rendered();
+        }
+        
     }
 
     public List<Permission> getListPermission() {

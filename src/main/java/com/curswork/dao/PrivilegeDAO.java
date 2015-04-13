@@ -23,14 +23,25 @@ import javax.persistence.Query;
  * @author Kunakovsky A.
  */
 public class PrivilegeDAO {
-    public static void  addPrivilege(Privilege r)
+    public static boolean addPrivilege(Privilege r)
     {
-        
-      EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-      entityManager.getTransaction().begin();
-      entityManager.persist(r);            
-      entityManager.getTransaction().commit();
-      entityManager.close();
+        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+        try {
+            entityManager.getTransaction().begin();
+            if (entityManager.find(Privilege.class, r.getNamePriv()) != null) {
+                return false;
+            }
+            entityManager.persist(r);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            entityManager.close();
+        }
+        return true;
     }
     public static List<Privilege> getAllPrivilege()
     {

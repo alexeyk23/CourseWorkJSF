@@ -37,11 +37,9 @@ public class Command implements Serializable {
     private int idUser;
     @Column(name = "id_app")
     private int idApplication;
-    @Column(name = "id_priv")
-    @JsonProperty(value = "id_priv")
+    @Column(name = "id_priv")   
     private int idPrivilege;
-    @Column(name = "action_name")
-    @JsonProperty(value = "id_oper")
+    @Column(name = "action_name")    
     private String actionName;    
     @Column(name = "date_make")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)

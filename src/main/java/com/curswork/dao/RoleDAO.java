@@ -10,9 +10,12 @@ import com.curswork.model.Permission;
 import com.curswork.model.Role;
 import com.curswork.model.User;
 import com.curswork.util.UtilHibernate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -24,12 +27,19 @@ import javax.persistence.Query;
 public class RoleDAO {
 
     public static void addRole(Role r) {
-
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.merge(r);
-        entityManager.getTransaction().commit();
-        entityManager.close();
+        try {
+            entityManager.getTransaction().begin();
+            entityManager.merge(r);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            entityManager.close();
+        }
     }
 
     public static List<Role> getAllRole() {
@@ -58,26 +68,39 @@ public class RoleDAO {
             Role r = entityManager.find(Role.class, id_role);
             r.setNameRole(nameRole);
             Set<Permission> currPerm = new HashSet<Permission>();
-            currPerm.addAll(r.getPermissions());           
+            currPerm.addAll(r.getPermissions());
+            Set<User> rolesUsers = r.getUsers();
             //delete permission
             for (Permission perm : currPerm) {
-                if (!permIds.contains(String.valueOf(perm.getIdPerm()))) { 
-                    for (User user : r.getUsers()) {
-                        Command c = new Command(user.getIdUser(),  perm.getApplication().getIdApp(),
-                            perm.getPrivelege().getIdPriv(), "del",new Date());
+                if (!permIds.contains(String.valueOf(perm.getIdPerm()))) {
+                    for (User user : rolesUsers) {
+                        Map<Integer, Integer> dictPerm = UserDAO.createPermMap(user);
+                        Integer value = dictPerm.get(perm.getIdPerm());
+                        //если это разрешение один раз встречалось, то его мы удалим
+                        if (value != null && value == 1) {
+                            Command c = new Command(user.getIdUser(), perm.getApplication().getIdApp(),
+                                    perm.getPrivelege().getIdPriv(), "del", new Date());
+                            entityManager.persist(c);
+                        }
                     }
                     r.getPermissions().remove(perm);
                 }
             }
             //add permission
             for (String permid : permIds) {
-                Permission perm = entityManager.find(Permission.class, Integer.valueOf(permid));
+                Permission perm = entityManager.find(Permission.class, Integer.valueOf(permid));                
+                for (User user : rolesUsers) {
+                    Map<Integer, Integer> dictPerm = UserDAO.createPermMap(user);
+                    Integer value = dictPerm.get(perm.getIdPerm());
+                    //если такого разрешения заведомо не было, то добавим его
+                    if (value == null) {
+                        Command c = new Command(user.getIdUser(), perm.getApplication().getIdApp(),
+                                perm.getPrivelege().getIdPriv(), "add", new Date());
+                        entityManager.persist(c);
+                    }                    
+                }
                 r.getPermissions().add(perm);
-                for (User user : r.getUsers()) {
-                        Command c = new Command(user.getIdUser(),  perm.getApplication().getIdApp(),
-                            perm.getPrivelege().getIdPriv(), "add",new Date());
-                    }
-            }            
+            }
             entityManager.merge(r);
             entityManager.getTransaction().commit();
         } catch (Exception e) {

@@ -66,7 +66,18 @@ public class UserDAO {
         entityManager.close();
         return res;
     }
-
+    public static Map<Integer,Integer> createPermMap(User user) {
+        Map<Integer, Integer> dictPerm = new HashMap<Integer, Integer>();
+        for (Role role : user.getRoles()) {
+            for (Permission p : role.getPermissions()) {
+                Integer foundPerm = dictPerm.put(p.getIdPerm(), 0);
+                if (foundPerm != null) {
+                    dictPerm.put(p.getIdPerm(), foundPerm + 1);
+                }
+            }
+        }
+        return dictPerm;
+    }
     public static void updateUser(int id_user, String userName, Date dateofb, List<String> roleIds) {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
