@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curswork.bean;
+package com.coursework.bean;
 
-import com.curswork.dao.RoleDAO;
-import com.curswork.dao.UserDAO;
-import com.curswork.model.Role;
-import com.curswork.model.User;
+import com.coursework.dao.RoleDAO;
+import com.coursework.dao.UserDAO;
+import com.coursework.model.Role;
+import com.coursework.model.User;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;

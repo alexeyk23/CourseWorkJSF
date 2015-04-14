@@ -4,13 +4,13 @@
  * and open the template in the editor.
  */
 
-package com.curswork.dao;
+package com.coursework.dao;
 
-import com.curswork.model.Application;
-import com.curswork.model.Permission;
-import com.curswork.model.Privilege;
-import com.curswork.model.Role;
-import com.curswork.util.UtilHibernate;
+import com.coursework.model.Application;
+import com.coursework.model.Permission;
+import com.coursework.model.Privilege;
+import com.coursework.model.Role;
+import com.coursework.util.UtilHibernate;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;

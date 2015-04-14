@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curswork.dao;
+package com.coursework.dao;
 
-import com.curswork.model.Command;
-import com.curswork.util.UtilHibernate;
+import com.coursework.model.Command;
+import com.coursework.util.UtilHibernate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;

@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.curswork.model;
+package com.coursework.model;
 
 
 import java.io.Serializable;

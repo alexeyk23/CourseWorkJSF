@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curswork.restservice;
+package com.coursework.restservice;
 
-import com.curswork.dao.CommandDAO;
+import com.coursework.dao.CommandDAO;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;

@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curswork.bean;
+package com.coursework.bean;
 
-import com.curswork.dao.ApplicationDAO;
-import com.curswork.dao.PermissionDAO;
-import com.curswork.dao.PrivilegeDAO;
-import com.curswork.model.Application;
-import com.curswork.model.Permission;
-import com.curswork.model.Privilege;
+import com.coursework.dao.ApplicationDAO;
+import com.coursework.dao.PermissionDAO;
+import com.coursework.dao.PrivilegeDAO;
+import com.coursework.model.Application;
+import com.coursework.model.Permission;
+import com.coursework.model.Privilege;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;

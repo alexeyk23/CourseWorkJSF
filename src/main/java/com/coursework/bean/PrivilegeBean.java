@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.curswork.bean;
+package com.coursework.bean;
 
-import com.curswork.dao.PrivilegeDAO;
-import com.curswork.model.Privilege;
+import com.coursework.dao.PrivilegeDAO;
+import com.coursework.model.Privilege;
 import java.io.Serializable;
 import java.util.List;
 import javax.faces.bean.ManagedBean;

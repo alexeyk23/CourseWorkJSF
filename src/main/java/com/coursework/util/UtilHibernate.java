@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.curswork.util;
+package com.coursework.util;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;

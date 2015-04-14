@@ -4,12 +4,12 @@
  * and open the template in the editor.
  */
 
-package com.curswork.bean;
+package com.coursework.bean;
 
-import com.curswork.dao.ApplicationDAO;
-import com.curswork.dao.PrivilegeDAO;
-import com.curswork.model.Application;
-import com.curswork.model.Privilege;
+import com.coursework.dao.ApplicationDAO;
+import com.coursework.dao.PrivilegeDAO;
+import com.coursework.model.Application;
+import com.coursework.model.Privilege;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
