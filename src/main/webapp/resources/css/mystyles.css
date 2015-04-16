@@ -13,5 +13,7 @@ and open the template in the editor.
 .rf-dt-r{font-size: 14px;}
 .rf-dt-cap{font-size: 14px;}
 .rf-dt-hdr-c{font-size: 14px;}
+table{margin: auto;}
+#dataTable{width: 100%; text-align:center;}
 button,input[type="reset"],input[type="submit"],input[type="button"],input[type="text"]{font-size: 14px;}
 label{font-size: 14px;}

@@ -40,9 +40,19 @@ public class ApplicationBean implements Serializable {
         Application p = new Application(nameApp,privileges);
         ApplicationDAO.addApp(p);
     }
-    public void deleteApp() throws Exception
+    public void updateApp()
     {
-        ApplicationDAO.deleteApp(idApp);
+        ApplicationDAO.updateApp(idApp, nameApp, selectedPrivs);
+    }
+    public void deleteApp() 
+    {
+        try{
+           ApplicationDAO.deleteApp(idApp);
+        }
+        catch(Exception e)
+        {
+            System.err.println(e.getMessage());
+        }
     }
     public List<Application> getListApplication() {
         return ApplicationDAO.getAllApp();
@@ -95,6 +105,14 @@ public class ApplicationBean implements Serializable {
      */
     public void setIdApp(int idApp) {
         this.idApp = idApp;
+        if(idApp>0){
+            Application application= ApplicationDAO.getAppById(idApp);
+            nameApp=application.getNameApp();
+            selectedPrivs.clear();
+            for (Privilege privilege : application.getPrivs()) {
+                selectedPrivs.add(String.valueOf(privilege.getIdPriv()));
+            }
+        }
     }
 
     public ApplicationBean() {

@@ -29,7 +29,7 @@ public class UserDAO {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
             entityManager.getTransaction().begin();
-            int idUser = entityManager.merge(u).getIdUser();  //!!!!!!!! !!!!!!!!!!! M E R G E
+            int idUser = entityManager.merge(u).getIdUser();  //!!!!!!!! !!!!!!!!!!! M E R G E            
             for (Role role : u.getRoles()) {
                 for (Permission perm : role.getPermissions()) {
                      Command c = new Command(idUser, perm.getApplication().getIdApp(),

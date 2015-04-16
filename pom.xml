@@ -4,9 +4,9 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.curs</groupId>
+    <groupId>com.course</groupId>
     <artifactId>WebAppJSF</artifactId>
-    <name>CursWorkJSF</name>
+    <name>CourseWorkJSF</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 

@@ -5,11 +5,9 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-<body>
+
     <ui:composition template="/templates/template.xhtml">   
+        <ui:define name="title">Добавление пользователя</ui:define>
         <ui:define name="body">
             <h:form prependId="false">
                 <h:outputLabel value="ФИО:" for="nameInput" />
@@ -31,6 +29,6 @@
             </h:form>
         </ui:define>
     </ui:composition>
-</body>
+
 </html>
 

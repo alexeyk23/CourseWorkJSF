@@ -57,7 +57,7 @@
     </context-param>
     <context-param>
 		<param-name>resteasy.resources</param-name>
-		<param-value>com.curswork.restservice.ShowStateREST</param-value>
+		<param-value>com.coursework.restservice.ShowStateREST</param-value>
     </context-param>
     <!-- this need same with resteasy servlet url-pattern -->
     <context-param>

@@ -5,25 +5,22 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:rich="http://richfaces.org/rich"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:a4j="http://richfaces.org/a4j">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
+      xmlns:a4j="http://richfaces.org/a4j">    
     <ui:composition template="/templates/template.xhtml">
-        <ui:define name="body">
-            <h:body>
+        <ui:define name="title">Таблица привилегий</ui:define>
+        <ui:define name="body">            
                 <h:form prependId="false">
-                    <rich:dataTable id ="table" var="priv" value="#{privilegeBean.listPrivilege}">
+                    <rich:dataTable id ="dataTable" var="priv" value="#{privilegeBean.listPrivilege}">
                         <f:facet name="header">
                             <rich:columnGroup>                            
                                 <rich:column >
                                     <h:outputText value="ID" />
                                 </rich:column>                                                      
                                 <rich:column>
-                                    <h:outputText value="NAME" />
+                                    <h:outputText value="Название" />
                                 </rich:column>
                                <!--   <rich:column>
-                                    <h:outputText value="ACTIONS" />
+                                    <h:outputText value="Действия" />
                                 </rich:column> -->
                             </rich:columnGroup>
                         </f:facet>
@@ -39,7 +36,7 @@
                             </a4j:commandButton>
                         </rich:column> -->
                     </rich:dataTable>  
-                    <a4j:jsFunction name="remove" action="#{privilegeBean.deletePrivilege()}" render="table" 
+                    <a4j:jsFunction name="remove" action="#{privilegeBean.deletePrivilege()}" render="dataTable" 
                                     execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
                     <rich:popupPanel id="popup" modal="true" resizeable="true"
                                      onmaskclick="#{rich:component('popup')}.hide()"
@@ -50,8 +47,7 @@
                         <a4j:commandButton value="Delete" onclick="remove(); return false;" />
                     </rich:popupPanel>
                     <h:commandButton action="addPriv" value="Добавить"></h:commandButton>
-                </h:form>
-            </h:body>
+                </h:form>            
         </ui:define>
     </ui:composition>
 </html>

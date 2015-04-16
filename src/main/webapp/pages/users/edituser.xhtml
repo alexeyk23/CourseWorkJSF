@@ -3,25 +3,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"   
       xmlns:rich="http://richfaces.org/rich">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
-    <body>
-       
-     <ui:composition template="/templates/template.xhtml">
-       <ui:define name="body">
-        <f:metadata>
-            <f:viewParam  name="idUser" value="#{userBean.idUser}"/> 
-        </f:metadata>
-        <h:body>                         
+    <ui:composition template="/templates/template.xhtml">
+        <ui:define name="title">Редактирование пользователя</ui:define>
+        <ui:define name="body">
+            <f:metadata>
+                <f:viewParam  name="idUser" value="#{userBean.idUser}"/> 
+            </f:metadata>                                 
             <h:form prependId="false">
                 <h:outputLabel value="ФИО:" for="nameInput" />
                 <h:inputText id="nameInput" value="#{userBean.nameUser}">
                 </h:inputText>                                         
                 <br/>            
-                <h:outputLabel value="дата рождения:" for="dataInput" />
+                <h:outputLabel value="Дата рождения:" for="dataInput" />
                 <rich:calendar id="date" value="#{userBean.dateOfBirthday}"/>
                 <br/>
                 <h:selectManyCheckbox layout="pageDirection" value="#{userBean.selectedRoles}" >
@@ -33,10 +28,8 @@
                                  action="#{userBean.updateUser()}"/>
                 <h:commandButton value="Таблица пользователей"
                                  action="showUser" />
-            </h:form>
-        </h:body>
-       </ui:define>     
-     </ui:composition>
-    </body>     
+            </h:form>        
+        </ui:define>     
+     </ui:composition>        
 </html>
 

@@ -2,62 +2,56 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:rich="http://richfaces.org/rich"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j">
-    <h:head>
-        <title>Facelet Title</title>
-    </h:head>
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"> 
     <ui:composition template="/templates/template.xhtml">
-        <ui:define name="body">
-            <h:body>
+        <ui:define name="title">Таблица ролей</ui:define>
+        <ui:define name="body">          
                 <h:form prependId="false">
-                    <rich:dataTable id="table" var="perm" value="#{permissionBean.listPermission}">
+                    <rich:dataTable id = "dataTable"                                  
+                                    var="rbean" value="#{roleBean.allRole}">
                         <f:facet name="header">
                             <rich:columnGroup>                            
                                 <rich:column >
                                     <h:outputText value="ID" />
                                 </rich:column>                                                      
                                 <rich:column>
-                                    <h:outputText value="APPLICATION" />
+                                    <h:outputText value="Название" />
                                 </rich:column>
                                 <rich:column>
-                                    <h:outputText value="PRIVILEGE" />
-                                </rich:column>
-                                <rich:column>
-                                    <h:outputText value="ACTIONS" />
+                                    <h:outputText value="Действия" />
                                 </rich:column>
                             </rich:columnGroup>
                         </f:facet>
                         <rich:column>
-                            <h:outputText value="#{perm.idPerm}"></h:outputText>                            
-                        </rich:column> 
-                        <rich:column>
-                            <h:outputText value="#{perm.application.nameApp}"></h:outputText>                            
+                            <h:outputText value="#{rbean.idRole}"></h:outputText>                            
                         </rich:column>                   
                         <rich:column>
-                            <h:outputText value="#{perm.privelege.namePriv}"></h:outputText>                            
+                            <h:outputText value="#{rbean.nameRole}"></h:outputText>                            
                         </rich:column>
                         <rich:column>
-                             <a4j:commandButton value="Удалить" oncomplete="#{rich:component('popup')}.show()">                           
-                                 <a4j:param  value="#{perm.idPerm}" assignTo="#{permissionBean.idPerm}"/>                             
+                            <h:button outcome="editRole" value="Редактировать">
+                                <f:param name="idRole" value="#{rbean.idRole}"/> 
+                            </h:button> 
+                            <a4j:commandButton value="Удалить" oncomplete="#{rich:component('popup')}.show()">                           
+                                <a4j:param  value="#{rbean.idRole}" assignTo="#{roleBean.idRole}"/>                             
                             </a4j:commandButton>
                         </rich:column>
                     </rich:dataTable>  
-                    <a4j:jsFunction name="remove" action="#{permissionBean.deletePermission()}" render="table" 
+                    <a4j:jsFunction name="remove" action="#{roleBean.deleteRole()}" render="dataTable" 
                                     execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
                     <rich:popupPanel id="popup" modal="true" resizeable="true"
                                      onmaskclick="#{rich:component('popup')}.hide()"
-                                     header="Удалить разрешение">
-                       Удалить запись?
+                                     header="Удаление роли">
+                        Удалить запись?
                         <br/>                  
                         <a4j:commandButton value="Закрыть" onclick="#{rich:component('popup')}.hide(); return false;" />
                         <a4j:commandButton value="Удалить" onclick="remove(); return false;" />
                     </rich:popupPanel>
-                    <h:commandButton action="addPerm" value="Добавить"></h:commandButton>
-                </h:form>
-            </h:body>
+                    <h:commandButton action="addRole" value="Добавить"></h:commandButton>
+                </h:form>           
         </ui:define>
     </ui:composition>
 </html>

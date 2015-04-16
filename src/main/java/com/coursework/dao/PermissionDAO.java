@@ -36,7 +36,7 @@ public class PermissionDAO {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             if(entityManager.getTransaction()!=null)            
-                entityManager.getTransaction().rollback();
+               entityManager.getTransaction().rollback();
             throw e;
         } finally {
             entityManager.close();

@@ -10,84 +10,91 @@ http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
             <from-outcome>
                 editUser
             </from-outcome>
-            <to-view-id>/edituser.xhtml</to-view-id>
+            <to-view-id>/pages/users/edituser.xhtml</to-view-id>
+            <redirect/>           
+        </navigation-case>
+        <navigation-case>           
+            <from-outcome>
+                editApp
+            </from-outcome>
+            <to-view-id>/pages/apps/editapp.xhtml</to-view-id>
             <redirect/>           
         </navigation-case>
         <navigation-case>           
             <from-outcome>
                 editRole
             </from-outcome>
-            <to-view-id>/editrole.xhtml</to-view-id>
+            <to-view-id>/pages/roles/editrole.xhtml</to-view-id>
             <redirect/>           
         </navigation-case>
         <navigation-case> 
             <from-action>
                 addApp
             </from-action>
-            <to-view-id>/addapp.xhtml</to-view-id>
+            <to-view-id>/pages/apps/addapp.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>        
             <from-outcome>
                 addPriv
             </from-outcome>
-            <to-view-id>/addprivilege.xhtml</to-view-id>
+            <to-view-id>/pages/privs/addprivilege.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>        
             <from-outcome>
                 addPerm
             </from-outcome>
-            <to-view-id>/addpermission.xhtml</to-view-id>
+            <to-view-id>/pages/perms/addpermission.xhtml</to-view-id>
             <redirect/>
         </navigation-case>   
         <navigation-case>        
             <from-action>
                 addUser
             </from-action>
-            <to-view-id>/adduser.xhtml</to-view-id>
+            <to-view-id>/pages/users/adduser.xhtml</to-view-id>
             <redirect/>
         </navigation-case>     
         <navigation-case>       
             <from-action>
                 addRole
             </from-action>
-            <to-view-id>/addrole.xhtml</to-view-id>
+            <to-view-id>/pages/roles/addrole.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>       
             <from-action>
                 showPriv
             </from-action>
-            <to-view-id>/showpriv.xhtml</to-view-id>
+            <to-view-id>/pages/privs/showpriv.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case> 
             <from-action>
                 showUser
             </from-action>
-            <to-view-id>/showusers.xhtml</to-view-id>
+            <to-view-id>/pages/users/showusers.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case> 
             <from-action>
                 showRole
             </from-action>
-            <to-view-id>/showroles.xhtml</to-view-id>
+            <to-view-id>/pages/roles/showroles.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>         
             <from-action>
                 showPerm
             </from-action>
-            <to-view-id>/showpermission.xhtml</to-view-id>
+            <to-view-id>/pages/perms/showpermission.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case> 
             <from-action>
                 showApp
             </from-action>
-            <to-view-id>/showapp.xhtml</to-view-id>
+            <to-view-id>/pages/apps/showapp.xhtml</to-view-id>
             <redirect/>
         </navigation-case>    
     </navigation-rule>

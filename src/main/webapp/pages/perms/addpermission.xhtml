@@ -6,12 +6,8 @@
       xmlns:rich="http://richfaces.org/rich"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:a4j="http://richfaces.org/a4j">
-<h:head>
-    <title>Разрешения</title>
-</h:head>
-<body>
-    
-    <ui:composition template="/templates/template.xhtml">   
+    <ui:composition template="/templates/template.xhtml">           
+        <ui:define name="title">Добавление разрешения</ui:define>        
         <ui:define name="body">
             <h:form prependId="false">                    
                 <h:outputLabel value="Выберите приложение:" />
@@ -35,6 +31,6 @@
             </h:form>
         </ui:define>
     </ui:composition>
-</body>
+
 </html>
 
