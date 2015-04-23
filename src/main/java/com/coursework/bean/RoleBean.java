@@ -54,7 +54,13 @@ public class RoleBean implements Serializable {
         RoleDAO.deleteRole(idRole);        
     }
     public List<Role> getAllRole() {
-        return RoleDAO.getAllRole();
+        List<Role> listRole =  new ArrayList<Role>();
+        try {
+            listRole = RoleDAO.getAllRole();
+        } catch (Exception ex) {
+            Logger.getLogger(RoleBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listRole;
     }
 
     public List<String> getSelectedPermission() {
@@ -83,11 +89,15 @@ public class RoleBean implements Serializable {
         this.idRole = idRole;
         if(idRole>0)
         {
-            Role r =RoleDAO.getRoleById(idRole);
-            nameRole=r.getNameRole();
-            selectedPermission.clear();
-            for (Permission perm : r.getPermissions()) {
-                selectedPermission.add(String.valueOf(perm.getIdPerm()));
+            try {
+                Role r =RoleDAO.getRoleById(idRole);
+                nameRole=r.getNameRole();
+                selectedPermission.clear();
+                for (Permission perm : r.getPermissions()) {
+                    selectedPermission.add(String.valueOf(perm.getIdPerm()));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(RoleBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

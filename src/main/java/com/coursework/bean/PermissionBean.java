@@ -137,9 +137,15 @@ public class PermissionBean {
 
     public void changeApp(ValueChangeEvent event) {
         if (event.getNewValue() != null) {
-            app = ApplicationDAO.getAppById(Integer.valueOf((String) event.getNewValue()));
+            try {
+                app = ApplicationDAO.getAppById(Integer.valueOf((String) event.getNewValue()));
+            } catch (Exception ex) {
+                Logger.getLogger(PermissionBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
-        else app=null;
+        else {
+            app=null;
+        }
     }
 
     public PermissionBean() {

@@ -77,7 +77,13 @@ public class ApplicationBean implements Serializable {
         }
     }
     public List<Application> getListApplication() {
-        return ApplicationDAO.getAllApp();
+        List<Application> listApp = new ArrayList<Application>();
+        try {
+             listApp =  ApplicationDAO.getAllApp();
+        } catch (Exception ex) {
+            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listApp;
     }
     public Set<Privilege> getPrivileges() {
         return privileges;
@@ -128,11 +134,15 @@ public class ApplicationBean implements Serializable {
     public void setIdApp(int idApp) {
         this.idApp = idApp;
         if(idApp>0){
-            Application application= ApplicationDAO.getAppById(idApp);
-            nameApp=application.getNameApp();
-            selectedPrivs.clear();
-            for (Privilege privilege : application.getPrivs()) {
-                selectedPrivs.add(String.valueOf(privilege.getIdPriv()));
+            try {
+                Application application= ApplicationDAO.getAppById(idApp);
+                nameApp=application.getNameApp();
+                selectedPrivs.clear();
+                for (Privilege privilege : application.getPrivs()) {
+                    selectedPrivs.add(String.valueOf(privilege.getIdPriv()));
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

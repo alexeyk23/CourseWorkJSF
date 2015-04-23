@@ -8,7 +8,6 @@ package com.coursework.restservice;
 import com.coursework.dao.CommandDAO;
 import com.coursework.model.Command;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;

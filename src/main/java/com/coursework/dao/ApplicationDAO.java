@@ -25,7 +25,7 @@ import javax.persistence.Query;
  */
 public class ApplicationDAO {
 
-    public static boolean addApp(Application r) {
+    public static boolean addApp(Application r) throws Exception {
         EntityManager entityManager = null;
         try {
             entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
@@ -51,7 +51,7 @@ public class ApplicationDAO {
         return  true;
     }
 
-    public static List<Application> getAllApp() {
+    public static List<Application> getAllApp() throws Exception {
         EntityManager entityManager = null;
         List<Application> appList = null;
         try {
@@ -73,7 +73,7 @@ public class ApplicationDAO {
         return appList;
     }
 
-    public static Application getAppById(int id_app) {
+    public static Application getAppById(int id_app) throws Exception {
         Application res = null;
         EntityManager entityManager = null;
         try {

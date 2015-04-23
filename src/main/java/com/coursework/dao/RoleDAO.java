@@ -24,7 +24,7 @@ import javax.persistence.Query;
  */
 public class RoleDAO {
 
-    public static void addRole(Role r) {
+    public static void addRole(Role r) throws Exception {
         EntityManager entityManager = null; 
         try {
             entityManager=UtilHibernate.getEntityManagerFactory().createEntityManager();
@@ -37,12 +37,13 @@ public class RoleDAO {
             }
             throw e;
         } finally {
-            if(entityManager!=null)
+            if(entityManager!=null) {
                 entityManager.close();
+            }
         }
     }
 
-    public static List<Role> getAllRole() {
+    public static List<Role> getAllRole() throws Exception {
         EntityManager entityManager = null;
         List<Role> userList=null;
         try {          
@@ -64,7 +65,7 @@ public class RoleDAO {
         return userList;
     }
 
-    public static Role getRoleById(int id_role) {       
+    public static Role getRoleById(int id_role) throws Exception {       
         Role res =null;
         EntityManager entityManager = null;        
         try {          
@@ -85,7 +86,7 @@ public class RoleDAO {
         return res;
     }
 
-    public static void updateRole(int id_role, String nameRole, List<String> permIds) {
+    public static void updateRole(int id_role, String nameRole, List<String> permIds) throws Exception {
         EntityManager entityManager = null; 
         try {
             entityManager=UtilHibernate.getEntityManagerFactory().createEntityManager();
@@ -134,8 +135,9 @@ public class RoleDAO {
             }
             throw e;
         } finally {
-            if(entityManager!=null)
-              entityManager.close();
+            if(entityManager!=null) {
+                entityManager.close();
+            }
         }
 
     }
@@ -158,8 +160,9 @@ public class RoleDAO {
             }
             throw e;
         } finally {
-            if(entityManager!=null)
-             entityManager.close();
+            if(entityManager!=null) {
+                entityManager.close();
+            }
         }
     }
 }
