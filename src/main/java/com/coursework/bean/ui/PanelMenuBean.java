@@ -18,15 +18,15 @@ import org.richfaces.event.ItemChangeEvent;
 @SessionScoped
 public class PanelMenuBean {
     private String current;
-    private boolean singleMode;
-
-    public boolean isSingleMode() {
-        return singleMode;
-    }
-
-    public void setSingleMode(boolean singleMode) {
-        this.singleMode = singleMode;
-    }
+//    private boolean singleMode;
+//
+//    public boolean isSingleMode() {
+//        return singleMode;
+//    }
+//
+//    public void setSingleMode(boolean singleMode) {
+//        this.singleMode = singleMode;
+//    }
 
     public String getCurrent() {
         return this.current;

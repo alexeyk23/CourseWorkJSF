@@ -17,8 +17,12 @@ import javax.persistence.Persistence;
 public class UtilHibernate {
     private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = buildEntityManager();
     private static EntityManagerFactory buildEntityManager()
-    {    
-        return Persistence.createEntityManagerFactory("manager");
+    {   EntityManagerFactory emf=null;
+        try {
+            emf = Persistence.createEntityManagerFactory("manager");
+        } catch (Exception e) {            
+        }
+        return emf;
     }
     public static EntityManagerFactory getEntityManagerFactory()
     {

@@ -8,19 +8,22 @@
         <ui:define name="title">Добавить приложение</ui:define>
         <ui:define name="body">
             <h:form prependId="false">
-                <h:outputLabel value="Название: " for="nameInput" />
-                <h:inputText id="nameInput" value="#{applicationBean.nameApp}"/>                                                    
+                <h:outputLabel value="Название: " for="nameLabel" />
+                <h:inputText id="nameInput" value="#{applicationBean.nameApp}"/>    
+                <h:message style="color: red;margin: 8px;" for="nameInput" />                
                 <br/>   
                 <h:outputLabel value="Привилегии: " />
                 <br/>                
-                <h:selectManyCheckbox layout="pageDirection"  value="#{applicationBean.selectedPrivs}" >
+                <h:selectManyCheckbox id="selectMany" layout="pageDirection"  value="#{applicationBean.selectedPrivs}" >
                     <f:selectItems var="priv" value="#{privilegeBean.listPrivilege}" itemLabel="#{priv.namePriv}"
                                    itemValue="#{priv.idPriv}" />    
-                </h:selectManyCheckbox>
+                </h:selectManyCheckbox>                
                 <h:commandButton value="Сохранить"
                                  action="#{applicationBean.addApplication()}" />
                 <h:commandButton value="Таблица приложений"
                                  action="showApp" />
+                <br/>
+                <h:messages for="errors" style="color: red;margin: 8px;"/>
             </h:form>
         </ui:define>
     </ui:composition>

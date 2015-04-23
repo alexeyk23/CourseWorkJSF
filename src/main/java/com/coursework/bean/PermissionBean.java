@@ -11,6 +11,7 @@ import com.coursework.dao.PrivilegeDAO;
 import com.coursework.model.Application;
 import com.coursework.model.Permission;
 import com.coursework.model.Privilege;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -38,21 +39,26 @@ public class PermissionBean {
     }
 
     public void addPermission() {
-        priv = PrivilegeDAO.getPrivilegeById(Integer.valueOf(privilegeId));
-        Permission p = new Permission(app, priv);
         try {
-            if(PermissionDAO.addPermission(p)){
+            priv = PrivilegeDAO.getPrivilegeById(Integer.valueOf(privilegeId));
+            Permission p = new Permission(app, priv);
+            if (PermissionDAO.addPermission(p)) {
                 FacesMessage message = new FacesMessage("Invalid email!");
                 message.rendered();
             }
         } catch (Exception ex) {
             Logger.getLogger(PermissionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }
 
     public List<Permission> getListPermission() {
-        return PermissionDAO.getAllPermission();
+        List<Permission> res = new ArrayList<Permission>();
+        try {
+           res  = PermissionDAO.getAllPermission();
+        } catch (Exception ex) {
+            Logger.getLogger(PermissionBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return  res;
     }
 
     public Application getApp() {

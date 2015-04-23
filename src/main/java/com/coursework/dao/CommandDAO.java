@@ -7,9 +7,7 @@ package com.coursework.dao;
 
 import com.coursework.model.Command;
 import com.coursework.util.UtilHibernate;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -21,26 +19,49 @@ import javax.persistence.TemporalType;
  */
 public class CommandDAO {
 
-    public static List<Command> getAllCommand() {
-        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-        entityManager.getTransaction().begin();
-        Query q = entityManager.createQuery("Select c FROM Command c");
-        List<Command> listRes = q.getResultList();
-        entityManager.getTransaction().commit();
+    public static List<Command> getAllCommand() throws Exception {
+        EntityManager entityManager = null;
+        List<Command> listRes = null;
+        try {
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createQuery("Select c FROM Command c");
+            listRes = q.getResultList();
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager != null && entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
         return listRes;
     }
-    static private int hour =8;
-    public static List<Command> getLastCommandsForApp(int idApp)
-    {
-        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-        entityManager.getTransaction().begin();
-        Calendar calendar = new GregorianCalendar();
-        calendar.roll(Calendar.HOUR, -hour);
-        Query q = entityManager.createQuery("Select c FROM Command c WHERE c.idApplication = ?1")
-                .setParameter(1, idApp);
-               // .setParameter(2, calendar.getTime(),TemporalType.TIMESTAMP);                
-        List<Command> listRes = q.getResultList();
-        entityManager.getTransaction().commit();
+
+    public static List<Command> getLastCommandsForApp(int idApp, Date date)throws Exception  {
+        EntityManager entityManager = null;
+        List<Command> listRes = null;
+        try {
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createQuery("Select c FROM Command c WHERE c.idApplication = ?1 AND c.dateMake>?2")
+                    .setParameter(1, idApp)
+                    .setParameter(2, date, TemporalType.TIMESTAMP);
+            listRes = q.getResultList();
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager != null && entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
         return listRes;
     }
 }

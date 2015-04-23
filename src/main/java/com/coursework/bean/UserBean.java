@@ -15,6 +15,8 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -30,7 +32,7 @@ public class UserBean implements Serializable {
     private String nameUser;  
     private Date dateOfBirthday;
     private Set<Role>  roles = new HashSet<Role>();
-    private List<String> selectedRoles = new ArrayList<String>();
+    private List<String> selectedRoles = new ArrayList<String>();//выбранные роли в UI
 
     public void  addUser() throws Exception
     {
@@ -43,7 +45,11 @@ public class UserBean implements Serializable {
     }  
     public void updateUser() throws Exception
     {               
-        UserDAO.updateUser(idUser, nameUser, dateOfBirthday,selectedRoles);
+        try {
+            UserDAO.updateUser(idUser, nameUser, dateOfBirthday,selectedRoles);
+        } catch (Exception ex) {
+            Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void deleteUser() throws Exception
     {      
@@ -51,9 +57,15 @@ public class UserBean implements Serializable {
     }
     public List<User> getListUser()
     {
-        return UserDAO.getAllUsers();
+        List<User> res = new ArrayList<User>();
+        try {
+            res = UserDAO.getAllUsers();
+        } catch (Exception ex) {
+            Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
     }
-    
+
     public List<String> getSelectedRoles() {
         return selectedRoles;
     }
@@ -82,14 +94,22 @@ public class UserBean implements Serializable {
      */
     public void setIdUser(int idUser) {
        this.idUser = idUser;
+       //если id>0, то следует загрузить из базы пользователя
        if(idUser>0)
        {
-           User u = UserDAO.getUserById(idUser);
-           nameUser=u.getNameUser();
-           dateOfBirthday = u.getDateOfBirhday();
-           selectedRoles.clear();
-           for(Role r : u.getRoles())           
-               selectedRoles.add(String.valueOf(r.getIdRole()));       
+           User u;
+           try {
+               u = UserDAO.getUserById(idUser);
+               nameUser = u.getNameUser();
+               dateOfBirthday = u.getDateOfBirhday();
+               selectedRoles.clear();
+               for (Role r : u.getRoles()) {
+                   selectedRoles.add(String.valueOf(r.getIdRole()));
+               }
+           } catch (Exception ex) {
+               Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+           }
+                 
        }
     }
 

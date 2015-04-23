@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.coursework.dao;
 
 import com.coursework.model.Application;
@@ -23,10 +22,11 @@ import javax.persistence.Query;
  * @author Kunakovsky A.
  */
 public class PrivilegeDAO {
-    public static boolean addPrivilege(Privilege r) throws Exception
-    {
-        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+
+    public static boolean addPrivilege(Privilege r) throws Exception {
+        EntityManager entityManager = null;
         try {
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
             entityManager.getTransaction().begin();
             if (entityManager.find(Privilege.class, r.getNamePriv()) != null) {
                 return false;
@@ -34,46 +34,74 @@ public class PrivilegeDAO {
             entityManager.persist(r);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            if (entityManager.getTransaction() != null) {
+            if (entityManager != null && entityManager.getTransaction() != null) {
                 entityManager.getTransaction().rollback();
             }
             throw e;
         } finally {
-            entityManager.close();
+            if (entityManager != null) {
+                entityManager.close();
+            }
         }
         return true;
     }
-    public static List<Privilege> getAllPrivilege()
-    {
-       EntityManager  entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-       entityManager.getTransaction().begin();
-       Query q = entityManager.createQuery("SELECT u FROM Privilege u");
-       List<Privilege> userList = (List<Privilege>)q.getResultList();       
-       entityManager.getTransaction().commit();
-       entityManager.close();
-       return userList;
+
+    public static List<Privilege> getAllPrivilege() throws Exception {
+        List<Privilege> privList = null;
+        EntityManager entityManager = null;
+        try {
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createQuery("SELECT u FROM Privilege u");
+            privList = (List<Privilege>) q.getResultList();
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager != null && entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+
+        return privList;
     }
-    public static Privilege getPrivilegeById(int id_priv)
-    {
-       EntityManager  entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-       entityManager.getTransaction().begin();
-       Privilege res = entityManager.find(Privilege.class, id_priv);
-       entityManager.getTransaction().commit();
-       entityManager.close();
-       return res;
+
+    public static Privilege getPrivilegeById(int id_priv) throws Exception {
+        Privilege res = null;
+        EntityManager entityManager = null;
+        try {
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+            entityManager.getTransaction().begin();
+            res = entityManager.find(Privilege.class, id_priv);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager != null && entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return res;
     }
-    public static void deletePrivilege(int id_priv) throws Exception
-    {
-       EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-        try {        
-            entityManager.getTransaction().begin();      
+
+    public static void deletePrivilege(int id_priv) throws Exception {
+        EntityManager entityManager = null;
+        try {
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+            entityManager.getTransaction().begin();
             Privilege privilege = entityManager.find(Privilege.class, id_priv);
             for (Application app : privilege.getApps()) {
                 for (Permission perm : app.getPermissions()) {
                     for (Role role : perm.getRoles()) {
                         for (User user : role.getUsers()) {
                             Command c = new Command(user.getIdUser(), perm.getApplication().getIdApp(),
-                                    perm.getPrivelege().getIdPriv(), "del", new Date());
+                                    perm.getPrivelege().getIdPriv(), "revoke priv", new Date());
                             entityManager.persist(c);
                         }
                     }
@@ -81,16 +109,16 @@ public class PrivilegeDAO {
                 app.getPrivs().remove(privilege);
             }
             entityManager.remove(privilege);
-            entityManager.getTransaction().commit();      
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
-            if(entityManager.getTransaction()!=null) {
+            if (entityManager != null && entityManager.getTransaction() != null) {
                 entityManager.getTransaction().rollback();
             }
             throw e;
-        }
-        finally
-        {
-              entityManager.close();
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
         }
     }
 }
