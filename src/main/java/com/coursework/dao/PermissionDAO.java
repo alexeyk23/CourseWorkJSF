@@ -21,7 +21,7 @@ import javax.persistence.Query;
  * @author Kunakovsky A.
  */
 public class PermissionDAO {
-    public static boolean addPermission(Permission r)
+    public static boolean addPermission(Permission r) throws Exception
     {        
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
@@ -30,13 +30,15 @@ public class PermissionDAO {
             Query q = entityManager.createQuery("SELECT u FROM Permission u WHERE u.application=?1 and u.privelege=?2")
                     .setParameter(1, r.getApplication())
                     .setParameter(2, r.getPrivelege());
-            if(q.getResultList().size()>0)
-                return false;            
+            if(q.getResultList().size()>0) {
+                return false;
+            }            
             entityManager.merge(r);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            if(entityManager.getTransaction()!=null)            
-               entityManager.getTransaction().rollback();
+            if(entityManager.getTransaction()!=null) {
+                entityManager.getTransaction().rollback();
+            }
             throw e;
         } finally {
             entityManager.close();

@@ -24,7 +24,7 @@ import javax.persistence.Query;
  */
 public class RoleDAO {
 
-    public static void addRole(Role r) {
+    public static void addRole(Role r) throws Exception {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
             entityManager.getTransaction().begin();
@@ -59,7 +59,7 @@ public class RoleDAO {
         return res;
     }
 
-    public static void updateRole(int id_role, String nameRole, List<String> permIds) {
+    public static void updateRole(int id_role, String nameRole, List<String> permIds) throws Exception {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
             entityManager.getTransaction().begin();

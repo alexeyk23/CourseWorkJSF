@@ -26,7 +26,7 @@ import javax.persistence.Query;
  */
 public class ApplicationDAO 
 {
-    public static void  addApp(Application r)
+    public static void  addApp(Application r) throws Exception
     {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
@@ -61,7 +61,7 @@ public class ApplicationDAO
        entityManager.close();
        return res;
     }
-    public static void updateApp(int id_app, String nameApp, List<String> selectedPrivs)
+    public static void updateApp(int id_app, String nameApp, List<String> selectedPrivs) throws Exception
     {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {

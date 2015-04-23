@@ -41,7 +41,7 @@ public class UserBean implements Serializable {
         User  u = new User(nameUser, dateOfBirthday, roles);
         UserDAO.addUser(u);        
     }  
-    public void updateUser()
+    public void updateUser() throws Exception
     {               
         UserDAO.updateUser(idUser, nameUser, dateOfBirthday,selectedRoles);
     }

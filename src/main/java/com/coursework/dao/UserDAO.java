@@ -78,7 +78,7 @@ public class UserDAO {
         }
         return dictPerm;
     }
-    public static void updateUser(int id_user, String userName, Date dateofb, List<String> roleIds) {
+    public static void updateUser(int id_user, String userName, Date dateofb, List<String> roleIds) throws Exception {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
             entityManager.getTransaction().begin();
@@ -94,16 +94,18 @@ public class UserDAO {
             for (Role role : currRoles) {
                 for (Permission perm : role.getPermissions()) {
                     Integer foundPerm = dictPerm.put(perm.getIdPerm(), 0);
-                    if (foundPerm != null)
+                    if (foundPerm != null) {
                         dictPerm.put(perm.getIdPerm(), foundPerm+1);
+                    }
                 }
             }
             //delete role
             for (Role role : currRoles) {
                 if (!roleIds.contains(String.valueOf(role.getIdRole()))) {
                     {
-                        for (Permission perm : role.getPermissions())
+                        for (Permission perm : role.getPermissions()) {
                             dictPerm.put(perm.getIdPerm(), dictPerm.get(perm.getIdPerm()) - 1);
+                        }
                         upUser.getRoles().remove(role);
                     }
                 }

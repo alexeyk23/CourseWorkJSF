@@ -9,6 +9,8 @@ import com.coursework.dao.PrivilegeDAO;
 import com.coursework.model.Privilege;
 import java.io.Serializable;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
@@ -30,7 +32,11 @@ public class PrivilegeBean implements Serializable {
 
     public void addPrivilege() {
         Privilege p = new Privilege(name_priv);
-        PrivilegeDAO.addPrivilege(p);
+        try {
+            PrivilegeDAO.addPrivilege(p);
+        } catch (Exception ex) {
+            Logger.getLogger(PrivilegeBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public List<Privilege> getListPrivilege() {

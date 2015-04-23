@@ -14,8 +14,9 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 
 /**
@@ -37,7 +38,11 @@ public class RoleBean implements Serializable {
             perm.add(PermissionDAO.getPermissionById(Integer.valueOf(permName)));
         }
         Role r = new Role(nameRole,perm);
-        RoleDAO.addRole(r);
+        try {
+            RoleDAO.addRole(r);
+        } catch (Exception ex) {
+            Logger.getLogger(RoleBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void updateRole() throws Exception
     {

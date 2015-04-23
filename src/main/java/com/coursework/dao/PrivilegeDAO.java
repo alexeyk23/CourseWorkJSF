@@ -23,7 +23,7 @@ import javax.persistence.Query;
  * @author Kunakovsky A.
  */
 public class PrivilegeDAO {
-    public static boolean addPrivilege(Privilege r)
+    public static boolean addPrivilege(Privilege r) throws Exception
     {
         EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
         try {
@@ -83,8 +83,9 @@ public class PrivilegeDAO {
             entityManager.remove(privilege);
             entityManager.getTransaction().commit();      
         } catch (Exception e) {
-            if(entityManager.getTransaction()!=null)
+            if(entityManager.getTransaction()!=null) {
                 entityManager.getTransaction().rollback();
+            }
             throw e;
         }
         finally

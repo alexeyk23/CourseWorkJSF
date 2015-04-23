@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
@@ -38,11 +40,19 @@ public class ApplicationBean implements Serializable {
             privileges.add(PrivilegeDAO.getPrivilegeById(Integer.valueOf(ids)));
         }
         Application p = new Application(nameApp,privileges);
-        ApplicationDAO.addApp(p);
+        try {
+            ApplicationDAO.addApp(p);
+        } catch (Exception ex) {
+            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void updateApp()
     {
-        ApplicationDAO.updateApp(idApp, nameApp, selectedPrivs);
+        try {
+            ApplicationDAO.updateApp(idApp, nameApp, selectedPrivs);
+        } catch (Exception ex) {
+            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     public void deleteApp() 
     {
