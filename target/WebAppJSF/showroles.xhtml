@@ -34,6 +34,9 @@
                             <h:outputText value="#{rbean.nameRole}"></h:outputText>                            
                         </rich:column>
                         <rich:column>
+                            <h:button outcome="editrole" value="Edit">
+                                <f:param name="idRole" value="#{rbean.idRole}"/> 
+                            </h:button> 
                             <a4j:commandButton value="Delete" oncomplete="#{rich:component('popup')}.show()">                           
                                 <a4j:param  value="#{rbean.idRole}" assignTo="#{roleBean.idRole}"/>                             
                             </a4j:commandButton>

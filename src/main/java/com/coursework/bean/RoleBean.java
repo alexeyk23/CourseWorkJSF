@@ -33,11 +33,15 @@ public class RoleBean implements Serializable {
     public void addRole() {
         
         Set<Permission> perm = new HashSet<Permission>();
-        for (String permName : selectedPermission) {
-            perm.add(PermissionDAO.getPermissionById(Integer.valueOf(permName)));
+        try {
+            for (String permName : selectedPermission) {
+                perm.add(PermissionDAO.getPermissionById(Integer.valueOf(permName)));
+            }
+            Role r = new Role(nameRole, perm);
+            RoleDAO.addRole(r);
+        } catch (Exception e) {
         }
-        Role r = new Role(nameRole,perm);
-        RoleDAO.addRole(r);
+       
     }
     public void updateRole() throws Exception
     {

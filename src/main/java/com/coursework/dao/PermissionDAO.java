@@ -3,7 +3,6 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package com.coursework.dao;
 
 import com.coursework.model.Command;
@@ -21,71 +20,102 @@ import javax.persistence.Query;
  * @author Kunakovsky A.
  */
 public class PermissionDAO {
-    public static boolean addPermission(Permission r)
-    {        
-        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+
+    public static boolean addPermission(Permission r)throws Exception  {
+        EntityManager entityManager = null;
         try {
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
             entityManager.getTransaction().begin();
             //проверяем, есть ли уже такое
             Query q = entityManager.createQuery("SELECT u FROM Permission u WHERE u.application=?1 and u.privelege=?2")
                     .setParameter(1, r.getApplication())
                     .setParameter(2, r.getPrivelege());
-            if(q.getResultList().size()>0)
-                return false;            
+            if (q.getResultList().size() > 0) {
+                return false;
+            }
             entityManager.merge(r);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            if(entityManager.getTransaction()!=null)            
-               entityManager.getTransaction().rollback();
+            if (entityManager != null && entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
             throw e;
         } finally {
-            entityManager.close();
+            if (entityManager != null) {
+                entityManager.close();
+            }
         }
         return true;
     }
-    public static List<Permission> getAllPermission()
-    {
-       EntityManager  entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-       entityManager.getTransaction().begin();
-       Query q = entityManager.createQuery("SELECT u FROM Permission u");
-       List<Permission> userList = (List<Permission>)q.getResultList();       
-       entityManager.getTransaction().commit();
-       entityManager.close();
-       return userList;
+
+    public static List<Permission> getAllPermission()throws Exception  {
+        List<Permission> permissionList = null;
+        EntityManager entityManager = null;
+        try {
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+            entityManager.getTransaction().begin();
+            Query q = entityManager.createQuery("SELECT u FROM Permission u");
+            permissionList = (List<Permission>) q.getResultList();
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager != null && entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return permissionList;
     }
-    public static Permission getPermissionById(int id_perm)
-    {
-       EntityManager  entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-       entityManager.getTransaction().begin();
-       Permission res = entityManager.find(Permission.class, id_perm);
-       entityManager.getTransaction().commit();
-       entityManager.close();
-       return res;
+
+    public static Permission getPermissionById(int id_perm)throws Exception  {
+        Permission res = null;
+        EntityManager entityManager = null;
+        try {
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+            entityManager.getTransaction().begin();
+            res = entityManager.find(Permission.class, id_perm);
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager != null && entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
+            throw e;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }
+        return res;
     }
-    public static void deletePermission(int id_perm) throws Exception
-    {
-        EntityManager entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-        try {        
-            entityManager.getTransaction().begin();      
+
+    public static void deletePermission(int id_perm) throws Exception {
+        EntityManager entityManager = null;
+        try {
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+            entityManager.getTransaction().begin();
             Permission perm = entityManager.find(Permission.class, id_perm);
             for (Role role : perm.getRoles()) {
                 for (User user : role.getUsers()) {
                     Command c = new Command(user.getIdUser(), perm.getApplication().getIdApp(),
-                            perm.getPrivelege().getIdPriv(), "del", new Date());
+                            perm.getPrivelege().getIdPriv(), "revoke priv", new Date());
                     entityManager.persist(c);
-                } 
-               role.getPermissions().remove(perm);
+                }
+                role.getPermissions().remove(perm);
             }
             entityManager.remove(perm);
-            entityManager.getTransaction().commit();      
+            entityManager.getTransaction().commit();
         } catch (Exception e) {
-            if(entityManager.getTransaction()!=null)
-               entityManager.getTransaction().rollback();
+            if (entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }
             throw e;
-        }
-        finally
-        {
-              entityManager.close();
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
         }
     }
 

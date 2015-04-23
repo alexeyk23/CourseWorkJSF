@@ -8,7 +8,10 @@ package com.coursework.bean;
 import com.coursework.dao.PrivilegeDAO;
 import com.coursework.model.Privilege;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
@@ -22,19 +25,29 @@ import javax.faces.bean.SessionScoped;
 public class PrivilegeBean implements Serializable {
 
     private int idPriv;
-    private String name_priv;
+    private String namePriv;
 
     public void deletePrivilege() throws Exception {
         PrivilegeDAO.deletePrivilege(idPriv);
     }
 
     public void addPrivilege() {
-        Privilege p = new Privilege(name_priv);
-        PrivilegeDAO.addPrivilege(p);
+        Privilege p = new Privilege(namePriv);
+        try {
+            PrivilegeDAO.addPrivilege(p);
+        } catch (Exception ex) {
+            Logger.getLogger(PrivilegeBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     public List<Privilege> getListPrivilege() {
-        return PrivilegeDAO.getAllPrivilege();
+        List<Privilege> res = new ArrayList<Privilege>();
+        try {
+           res= PrivilegeDAO.getAllPrivilege();
+        } catch (Exception ex) {
+            Logger.getLogger(PrivilegeBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return  res;
     }
 
     /**
@@ -56,21 +69,21 @@ public class PrivilegeBean implements Serializable {
     }
 
     /**
-     * Get the value of name_priv
+     * Get the value of namePriv
      *
-     * @return the value of name_priv
+     * @return the value of namePriv
      */
     public String getName_priv() {
-        return name_priv;
+        return namePriv;
     }
 
     /**
-     * Set the value of name_priv
+     * Set the value of namePriv
      *
-     * @param name_priv new value of name_priv
+     * @param namePriv new value of namePriv
      */
-    public void setName_priv(String name_priv) {
-        this.name_priv = name_priv;
+    public void setName_priv(String namePriv) {
+        this.namePriv = namePriv;
     }
 
     public PrivilegeBean() {

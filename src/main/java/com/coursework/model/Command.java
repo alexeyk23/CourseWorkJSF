@@ -44,6 +44,24 @@ public class Command implements Serializable {
     @Column(name = "date_make")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dateMake;
+//    @Column(name = "parameters")
+//    private String parameters;
+//
+//    public String getParameters() {
+//        return parameters;
+//    }
+//
+//    public void setParameters(String parameters) {
+//        this.parameters = parameters;        
+//    }
+    
+    public Command(int idUser,int idApplication, String actionName, Date dateMake) {
+        this.idUser = idUser;
+        this.idApplication = idApplication;
+        this.idPrivilege = -1;
+        this.actionName = actionName;
+        this.dateMake = dateMake;
+    }
 
     public Command(int idUser, int idApplication, int idPrivilege, String actionName, Date dateMake) {
         this.idUser = idUser;
@@ -52,7 +70,7 @@ public class Command implements Serializable {
         this.actionName = actionName;
         this.dateMake = dateMake;
     }
-
+    
     public Command() {
     }
 

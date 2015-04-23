@@ -15,8 +15,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -34,15 +38,29 @@ public class ApplicationBean implements Serializable {
     public void addApplication()
     {
         privileges.clear();
-        for (String ids : selectedPrivs) {
-            privileges.add(PrivilegeDAO.getPrivilegeById(Integer.valueOf(ids)));
+        try {
+            for (String ids : selectedPrivs) {
+                privileges.add(PrivilegeDAO.getPrivilegeById(Integer.valueOf(ids)));
+            }
+             Application p = new Application(nameApp,privileges);
+             if (!ApplicationDAO.addApp(p)) {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
+            }
+        } catch (Exception e) {
+             FacesContext fc = FacesContext.getCurrentInstance();
+             fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null)); 
         }
-        Application p = new Application(nameApp,privileges);
-        ApplicationDAO.addApp(p);
     }
     public void updateApp()
     {
-        ApplicationDAO.updateApp(idApp, nameApp, selectedPrivs);
+        try {
+            ApplicationDAO.updateApp(idApp, nameApp, selectedPrivs);
+        } catch (Exception ex) {
+            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null)); 
+        }
     }
     public void deleteApp() 
     {
@@ -51,7 +69,9 @@ public class ApplicationBean implements Serializable {
         }
         catch(Exception e)
         {
-            System.err.println(e.getMessage());
+            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, e);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
         }
     }
     public List<Application> getListApplication() {

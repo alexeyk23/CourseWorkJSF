@@ -1,15 +1,50 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j">
+      xmlns:ui="http://java.sun.com/jsf/facelets" xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich">
 
-<h:head>
-    <title><ui:insert name="title">RichFaces Application</ui:insert></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <h:head>
+        <title><ui:insert name="title">RichFaces Application</ui:insert></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     </h:head>
 
-<h:body>
-    <ui:insert name="body">
+    <h:body>
+        <h:outputStylesheet library="css" name="mystyles.css"/>
+        <h:panelGrid columns="2">
+            <h:form>
+                <rich:panelMenu style="width:200px;height: 400px;" itemMode="server"
+                                groupMode="ajax" groupExpandedLeftIcon="triangleUp"
+                                groupCollapsedLeftIcon="triangleDown"
+                                topGroupExpandedRightIcon="chevronUp" 
+                                topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc"
+                                itemChangeListener="#{panelMenuBean.updateCurrent}"
+                                activeItem="#{panelMenuBean.current}">
+                <rich:panelMenuGroup label="Пользователи">
+                    <rich:panelMenuItem label="Таблица"  action="showUser"></rich:panelMenuItem>
+                    <rich:panelMenuItem label="Добавить" action="addUser"></rich:panelMenuItem>
+                </rich:panelMenuGroup>
+                <rich:panelMenuGroup label="Приложения">
+                    <rich:panelMenuItem label="Таблица" action="showApp" ></rich:panelMenuItem>
+                    <rich:panelMenuItem label="Добавить" action="addApp"></rich:panelMenuItem>
+                </rich:panelMenuGroup>
+                <rich:panelMenuGroup label="Привилегии">
+                    <rich:panelMenuItem label="Таблица" action="showPriv"></rich:panelMenuItem>
+                    <rich:panelMenuItem label="Добавить" action="addPriv"></rich:panelMenuItem>
+                </rich:panelMenuGroup>
+                <rich:panelMenuGroup label="Роли">
+                    <rich:panelMenuItem label="Таблица" action="showRole"></rich:panelMenuItem>
+                    <rich:panelMenuItem label="Добавить" action="addRole"></rich:panelMenuItem>
+                </rich:panelMenuGroup>
+                <rich:panelMenuGroup label="Разрешения">
+                    <rich:panelMenuItem label="Таблица" action="showPerm"></rich:panelMenuItem>
+                    <rich:panelMenuItem label="Добавить" action="addPerm"></rich:panelMenuItem>
+                </rich:panelMenuGroup>
+                </rich:panelMenu>
+            </h:form>
+            <rich:panel id="contextPanel" style="width: 600px; height: 400px;" >                                
+                <ui:insert name="body"></ui:insert>
+            </rich:panel>
+        </h:panelGrid>
         
-    </ui:insert>
-</h:body>
+    </h:body>
 </html>

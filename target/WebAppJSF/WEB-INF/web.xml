@@ -12,8 +12,19 @@
     <context-param>
         <param-name>javax.faces.SKIP_COMMENTS</param-name>
         <param-value>true</param-value>
+    </context-param>    
+    <context-param>  
+    <param-name>org.richfaces.CONTROL_SKINNING</param-name>  
+    <param-value>enable</param-value>  
     </context-param>
-
+   <!-- <context-param>
+        <param-name>org.richfaces.skin</param-name>
+        <param-value>myskin</param-value>
+    </context-param>   --> 
+    <context-param>
+        <param-name>org.richfaces.enableControlSkinning</param-name>
+        <param-value>false</param-value>
+    </context-param>
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -44,7 +55,32 @@
         <param-name>org.richfaces.resourceMapping.enabled</param-name>
         <param-value>true</param-value>
     </context-param>
-
+    <context-param>
+		<param-name>resteasy.resources</param-name>
+		<param-value>com.coursework.restservice.ShowStateREST</param-value>
+    </context-param>
+    <!-- this need same with resteasy servlet url-pattern -->
+    <context-param>
+        <param-name>resteasy.servlet.mapping.prefix</param-name>
+        <param-value>/rest</param-value>
+    </context-param>
+    <listener>
+        <listener-class>
+            org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap
+        </listener-class>
+    </listener>
+ 
+    <servlet>
+        <servlet-name>resteasy-servlet</servlet-name>
+        <servlet-class>
+            org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
+        </servlet-class>
+    </servlet>
+        
+    <servlet-mapping>
+        <servlet-name>resteasy-servlet</servlet-name>
+        <url-pattern>/rest/*</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
