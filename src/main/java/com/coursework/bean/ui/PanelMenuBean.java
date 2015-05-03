@@ -5,15 +5,14 @@
  */
 package com.coursework.bean.ui;
 
-/**
- *
- * @author admin
- */
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import org.richfaces.event.ItemChangeEvent;
 
+/**
+ *
+ * @author User
+ */
 @ManagedBean
 @SessionScoped
 public class PanelMenuBean {
@@ -28,14 +27,26 @@ public class PanelMenuBean {
 //        this.singleMode = singleMode;
 //    }
 
+    /**
+     * Получить текущий выбор
+     * @return текущий выбор
+     */
     public String getCurrent() {
         return this.current;
     }
 
+    /**
+     * Установить текущий выбор
+     * @param current новое значание текущего выбора
+     */
     public void setCurrent(String current) {
         this.current = current;
     }
 
+    /**
+     * Обработчик события ItemChangeEvent
+     * @param event
+     */
     public void updateCurrent(ItemChangeEvent event) {
         setCurrent(event.getNewItemName());
     }

@@ -31,6 +31,9 @@ public class RoleBean implements Serializable {
     private String nameRole; 
     private List<String> selectedPermission = new ArrayList<String>();
   
+    /**
+     * Добавить роль
+     */
     public void addRole() {
         
         Set<Permission> perm = new HashSet<Permission>();
@@ -44,15 +47,29 @@ public class RoleBean implements Serializable {
         }
        
     }
+
+    /**
+     * Редактировать роль
+     * @throws Exception
+     */
     public void updateRole() throws Exception
     {
         RoleDAO.updateRole(idRole, nameRole, selectedPermission);        
     }
     
+    /**
+     * Удалить роль
+     * @throws Exception
+     */
     public void deleteRole() throws Exception
     {
         RoleDAO.deleteRole(idRole);        
     }
+
+    /**
+     * Получить список всех ролей
+     * @return
+     */
     public List<Role> getAllRole() {
         List<Role> listRole =  new ArrayList<Role>();
         try {
@@ -63,30 +80,39 @@ public class RoleBean implements Serializable {
         return listRole;
     }
 
+    /**
+     * Получить список ID(String) выбранных разрешений
+     * @return
+     */
     public List<String> getSelectedPermission() {
         return selectedPermission;
     }
 
+    /**
+     * Установить список ID(String) выбранных разрешений
+     * @param selectedPermission
+     */
     public void setSelectedPermission(List<String> selectedPermission) {
         this.selectedPermission = selectedPermission;
     }
 
     /**
-     * Get the value of idRole
+     * Получить ID роли
      *
-     * @return the value of idRole
+     * @return ID роли
      */
     public int getIdRole() {
         return idRole;
     }
 
     /**
-     * Set the value of idRole
+     * Установть ID роли
      *
-     * @param idRole new value of idRole
+     * @param idRole новое значение ID роли
      */
     public void setIdRole(int idRole) {
         this.idRole = idRole;
+        //если ID > 0, то такую роль загружаем из базы
         if(idRole>0)
         {
             try {
@@ -103,24 +129,26 @@ public class RoleBean implements Serializable {
     }
 
     /**
-     * Get the value of nameRole
+     * Получить имя роли
      *
-     * @return the value of nameRole
+     * @return имя роли
      */
     public String getNameRole() {
         return nameRole;
     }
 
     /**
-     * Set the value of nameRole
+     * Установить имя роли
      *
-     * @param nameRole new value of nameRole
+     * @param nameRole новое значение имени роли
      */
     public void setNameRole(String nameRole) {
         this.nameRole = nameRole;
     }
 
+    /**
+     * Пустой конструктор
+     */
     public RoleBean() {
     }
-
 }

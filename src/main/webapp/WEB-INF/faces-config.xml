@@ -9,7 +9,7 @@ http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
         <navigation-case>           
             <from-outcome>
                 editUser
-            </from-outcome>
+            </from-outcome>            
             <to-view-id>/pages/users/edituser.xhtml</to-view-id>
             <redirect/>           
         </navigation-case>

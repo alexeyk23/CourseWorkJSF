@@ -34,10 +34,17 @@ public class PermissionBean {
     Application app;
     Privilege priv;
 
+    /**
+     * Удалить разрешение
+     * @throws Exception
+     */
     public void deletePermission() throws Exception {
         PermissionDAO.deletePermission(idPerm);
     }
 
+    /**
+     * Добавить разрешение
+     */
     public void addPermission() {
         try {
             priv = PrivilegeDAO.getPrivilegeById(Integer.valueOf(privilegeId));
@@ -51,6 +58,10 @@ public class PermissionBean {
         }
     }
 
+    /**
+     * Получить список разрешений
+     * @return список разрешений
+     */ 
     public List<Permission> getListPermission() {
         List<Permission> res = new ArrayList<Permission>();
         try {
@@ -61,80 +72,94 @@ public class PermissionBean {
         return  res;
     }
 
+    /**
+     * Получить приложение, учавствующее в разрешении
+     * @return приложение
+     */
     public Application getApp() {
         return app;
     }
 
+    /**
+     * Установить приложение, учавствующее в разрешении
+     * @param app - новое приложение
+     */
     public void setApp(Application app) {
         this.app = app;
     }
 
+    /**
+     * Получить привилегию, учавствующую в разрешении
+     * @return привилегия
+     */
     public Privilege getPriv() {
         return priv;
     }
 
+    /**
+     * Установить привилегию, учавствующую в разрешении
+     * @param priv - новая привилегия
+     */
     public void setPriv(Privilege priv) {
         this.priv = priv;       
     }
 
     /**
-     * Get the value of privilegeId
-     *
-     * @return the value of privilegeId
+     * Получить значение ID выбранной привилегии
+     * @return значение ID
      */
     public String getPrivilegeId() {
         return privilegeId;
     }
 
     /**
-     * Set the value of privilegeId
+     * Установить значение ID выбранной привилегии
      *
-     * @param privilegeId new value of privilegeId
+     * @param privilegeId новое значение ID выбранной привилегии
      */
     public void setPrivilegeId(String privilegeId) {
         this.privilegeId = privilegeId;
     }
 
     /**
-     * Get the value of appId
-     *
-     * @return the value of appId
+     * Получить значение ID выбранного приложения
+     * @return значение ID выбранного приложения
      */
     public String getAppId() {
         return appId;
     }
 
     /**
-     * Set the value of appId
+     * Устнановить значение ID выбранного приложения
      *
-     * @param appId new value of appId
+     * @param appId новое значение ID выбранного приложения
      */
     public void setAppId(String appId) {
         this.appId = appId;
     }
 
     /**
-     * Get the value of idPerm
+     * Получить значение ID разрешения
      *
-     * @return the value of idPerm
+     * @return значение ID разрешения
      */
     public int getIdPerm() {
         return idPerm;
     }
 
     /**
-     * Set the value of idPerm
+     * Установить значение ID разрешения
      *
-     * @param idPerm new value of idPerm
+     * @param idPerm новое значение ID разрешения
      */
     public void setIdPerm(int idPerm) {
         this.idPerm = idPerm;
-//        if(idPerm>0)
-//        {
-//            Permission p = PermissionDAO.getPermissionById(idPerm);            
-//        }
     }
 
+    /**
+     * Обработик события ValueChangeEvent
+     * @param event
+     */
     public void changeApp(ValueChangeEvent event) {
         if (event.getNewValue() != null) {
             try {
@@ -148,6 +173,9 @@ public class PermissionBean {
         }
     }
 
+    /**
+     * Пустой конструктор
+     */
     public PermissionBean() {
     }
 

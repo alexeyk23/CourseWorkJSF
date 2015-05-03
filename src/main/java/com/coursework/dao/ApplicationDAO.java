@@ -40,7 +40,7 @@ public class ApplicationDAO {
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             if (entityManager != null && entityManager.getTransaction() != null) {
-                entityManager.getTransaction().rollback();
+                    entityManager.getTransaction().rollback();
             }
             throw e;
         } finally {

@@ -18,17 +18,26 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 /**
- *
+ * 
  * @author Kunakovsky A.
  */
 public class PrivilegeDAO {
 
+    /**
+     * Добавить привилегию
+     * @param r - привилегия
+     * @return true если добавление, false если привилегия с таким именем есть
+     * @throws Exception
+     */
     public static boolean addPrivilege(Privilege r) throws Exception {
         EntityManager entityManager = null;
         try {
             entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
             entityManager.getTransaction().begin();
-            if (entityManager.find(Privilege.class, r.getNamePriv()) != null) {
+             //проверяем, есть ли уже такое
+            Query q = entityManager.createQuery("SELECT p FROM Privilege p WHERE p.namePriv=?1 ")
+                    .setParameter(1, r.getNamePriv());
+            if (q.getResultList().size()>0) {
                 return false;
             }
             entityManager.persist(r);
@@ -46,6 +55,11 @@ public class PrivilegeDAO {
         return true;
     }
 
+    /**
+     * Получить список всех привилегий
+     * @return список всех привилегий
+     * @throws Exception
+     */
     public static List<Privilege> getAllPrivilege() throws Exception {
         List<Privilege> privList = null;
         EntityManager entityManager = null;
@@ -69,6 +83,12 @@ public class PrivilegeDAO {
         return privList;
     }
 
+    /**
+     * Получить привилегию по ID
+     * @param id_priv - ID привилегии
+     * @return найденная привилегия
+     * @throws Exception
+     */
     public static Privilege getPrivilegeById(int id_priv) throws Exception {
         Privilege res = null;
         EntityManager entityManager = null;
@@ -90,6 +110,11 @@ public class PrivilegeDAO {
         return res;
     }
 
+    /**
+     * Удаление привилегии по ID
+     * @param id_priv ID привилегии
+     * @throws Exception
+     */
     public static void deletePrivilege(int id_priv) throws Exception {
         EntityManager entityManager = null;
         try {

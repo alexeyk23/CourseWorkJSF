@@ -12,8 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
@@ -26,19 +28,35 @@ public class PrivilegeBean implements Serializable {
     private int idPriv;
     private String namePriv;
 
+    /**
+     * Удалить привилегию
+     * @throws Exception
+     */
     public void deletePrivilege() throws Exception {
         PrivilegeDAO.deletePrivilege(idPriv);
     }
 
+    /**
+     * Добавить привилегию
+     */
     public void addPrivilege() {
         Privilege p = new Privilege(namePriv);
         try {
-            PrivilegeDAO.addPrivilege(p);
+            if (PrivilegeDAO.addPrivilege(p)) {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
+            }
         } catch (Exception ex) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
             Logger.getLogger(PrivilegeBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /** 
+     * Получить список привилегий
+     * @return список привилегий
+     */
     public List<Privilege> getListPrivilege() {
         List<Privilege> res = new ArrayList<Privilege>();
         try {
@@ -50,41 +68,44 @@ public class PrivilegeBean implements Serializable {
     }
 
     /**
-     * Get the value of idPriv
+     * Получить ID привилегии
      *
-     * @return the value of idPriv
+     * @return ID привилегии
      */
     public int getIdPriv() {
         return idPriv;
     }
 
     /**
-     * Set the value of idPriv
+     * Установить ID привилегии
      *
-     * @param idPriv new value of idPriv
+     * @param idPriv новый ID привилегии
      */
     public void setIdPriv(int idPriv) {
         this.idPriv = idPriv;
     }
 
     /**
-     * Get the value of namePriv
+     * Получить имя привилегии
      *
-     * @return the value of namePriv
+     * @return имя привилегии
      */
     public String getName_priv() {
         return namePriv;
     }
 
     /**
-     * Set the value of namePriv
+     * Установить имя привилегии
      *
-     * @param namePriv new value of namePriv
+     * @param namePriv новое имя привилегии
      */
     public void setName_priv(String namePriv) {
         this.namePriv = namePriv;
     }
 
+    /**
+     * Пустой конструктор
+     */
     public PrivilegeBean() {
     }
 }

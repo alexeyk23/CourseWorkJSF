@@ -44,17 +44,7 @@ public class Command implements Serializable {
     @Column(name = "date_make")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dateMake;
-//    @Column(name = "parameters")
-//    private String parameters;
-//
-//    public String getParameters() {
-//        return parameters;
-//    }
-//
-//    public void setParameters(String parameters) {
-//        this.parameters = parameters;        
-//    }
-    
+
     public Command(int idUser,int idApplication, String actionName, Date dateMake) {
         this.idUser = idUser;
         this.idApplication = idApplication;

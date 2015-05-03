@@ -35,6 +35,9 @@ public class ApplicationBean implements Serializable {
     private Set<Privilege> privileges = new HashSet<Privilege>();
     private List<String> selectedPrivs = new ArrayList<String>();
 
+    /**
+     * Добавить приложение
+     */
     public void addApplication()
     {
         privileges.clear();
@@ -53,6 +56,10 @@ public class ApplicationBean implements Serializable {
         }
 
     }
+
+    /**
+     * Редактировать приложение
+     */
     public void updateApp()
     {
         try {
@@ -64,6 +71,10 @@ public class ApplicationBean implements Serializable {
 
         }
     }
+
+    /**
+     * Удалить приложение
+     */
     public void deleteApp() 
     {
         try{
@@ -76,6 +87,11 @@ public class ApplicationBean implements Serializable {
             fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
         }
     }
+
+    /**
+     * Получить список приложений
+     * @return список приложений    
+     */
     public List<Application> getListApplication() {
         List<Application> listApp = new ArrayList<Application>();
         try {
@@ -85,54 +101,73 @@ public class ApplicationBean implements Serializable {
         }
         return listApp;
     }
+
+    /**
+     * Получить привилегии для приложения
+     * @return привилегии для приложения
+     */
     public Set<Privilege> getPrivileges() {
         return privileges;
     }
 
+    /**
+     * Получить выбранные ID привилегий
+     * @return выбранные ID привилегий
+     */
     public List<String> getSelectedPrivs() {
         return selectedPrivs;
     }
 
+    /**
+     * Установить выбранные ID привилегий
+     * @param selectedPrivs новые выбранные ID привилегий
+     */
     public void setSelectedPrivs(List<String> selectedPrivs) {
         this.selectedPrivs = selectedPrivs;
     }
+
+    /**
+     * Установить привилегии для приложения
+     * @param privileges новые привилегии для приложения
+     */
     public void setPrivileges(Set<Privilege> privileges) {
         this.privileges = privileges;
     }
     /**
-     * Get the value of nameApp
+     * Получить имя приложения
      *
-     * @return the value of nameApp
+     * @return имя приложения
      */
     public String getNameApp() {
         return nameApp;
     }
 
     /**
-     * Set the value of nameApp
+     * Установить имя приложения
      *
-     * @param nameApp new value of nameApp
+     * @param nameApp новое имя приложения
      */
     public void setNameApp(String nameApp) {
         this.nameApp = nameApp;
     }
 
     /**
-     * Get the value of idApp
+     * Получить ID приложения
      *
-     * @return the value of idApp
+     * @return ID приложения
      */
     public int getIdApp() {
         return idApp;
     }
 
     /**
-     * Set the value of idApp
+     * Установить ID приложения
      *
-     * @param idApp new value of idApp
+     * @param idApp новое ID приложения
      */
     public void setIdApp(int idApp) {
         this.idApp = idApp;
+        //если ID > 0, то загружаем из базы приложение
         if(idApp>0){
             try {
                 Application application= ApplicationDAO.getAppById(idApp);
@@ -147,6 +182,9 @@ public class ApplicationBean implements Serializable {
         }
     }
 
+    /**
+     * Пустой конструктор
+     */
     public ApplicationBean() {
     }
         

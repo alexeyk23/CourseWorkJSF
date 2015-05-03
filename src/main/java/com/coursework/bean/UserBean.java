@@ -34,6 +34,10 @@ public class UserBean implements Serializable {
     private Set<Role>  roles = new HashSet<Role>();
     private List<String> selectedRoles = new ArrayList<String>();//выбранные роли в UI
 
+    /**
+     * Добавление пользователя
+     * @throws Exception
+     */
     public void  addUser() throws Exception
     {
         roles.clear();
@@ -43,7 +47,11 @@ public class UserBean implements Serializable {
         User  u = new User(nameUser, dateOfBirthday, roles);
         UserDAO.addUser(u);        
     }  
-    public void updateUser() throws Exception
+
+    /**
+     * Редактирование пользователя     * 
+     */
+    public void updateUser()
     {               
         try {
             UserDAO.updateUser(idUser, nameUser, dateOfBirthday,selectedRoles);
@@ -51,10 +59,20 @@ public class UserBean implements Serializable {
             Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    /**
+     * Удаление прользователя
+     * @throws Exception
+     */
     public void deleteUser() throws Exception
     {      
         UserDAO.deleteUser(idUser);        
     }
+
+    /**
+     * Получить список пользователей
+     * @return список пользователей
+     */
     public List<User> getListUser()
     {
         List<User> res = new ArrayList<User>();
@@ -66,22 +84,39 @@ public class UserBean implements Serializable {
         return res;
     }
 
+    /**
+     * Получить ID(String) выбранныех ролей
+     * @return
+     */
     public List<String> getSelectedRoles() {
         return selectedRoles;
     }
 
+    /**
+     * Установить ID(String) выбранныех ролей
+     * @param selectedRoles
+     */
     public void setSelectedRoles(List<String> selectedRoles) {
         this.selectedRoles = selectedRoles;
     }
+
+    /**
+     * Получить роли
+     * @return
+     */
     public Set<Role> getRoles() {
         return roles;
     }
 
+    /**
+     *Установить роли
+     * @param roles
+     */
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
     /**
-     * Get User ID
+     * Получить User ID
      * @return idUser
      */    
     public int getIdUser() {
@@ -89,8 +124,8 @@ public class UserBean implements Serializable {
     }
 
     /**
-     * Set id for user
-     * @param idUser - id of user
+     * Установить ID для пользователя
+     * @param idUser - ID пользователя
      */
     public void setIdUser(int idUser) {
        this.idUser = idUser;
@@ -114,39 +149,39 @@ public class UserBean implements Serializable {
     }
 
     /**
-     * Get name of user
-     * @return name user
+     * Получить имя пользователя
+     * @return имя пользователя
      */
     public String getNameUser() {
         return nameUser;
     }
 
     /**
-     * Set user name
-     * @param nameUser - name of user
+     * Установить имя пользователя
+     * @param nameUser - имя пользователя
      */
     public void setNameUser(String nameUser) {
         this.nameUser = nameUser;
     }
     
     /**
-     * Get date of b-day
-     * @return dateOfBirthday
+     * Получить дату рождения
+     * @return дата рождения
      */
     public Date getDateOfBirthday() {
         return dateOfBirthday;
     }
 
     /**
-     * Set Date of B-day
-     * @param dateOfBirthday - date
+     * Установить дату рождения
+     * @param dateOfBirthday - дата рождения
      */
     public void setDateOfBirthday(Date dateOfBirthday) {
         this.dateOfBirthday = dateOfBirthday;
     }
 
     /**
-     * Empty constructor
+     * Пустой конструктор 
      */
     public UserBean() {
     }

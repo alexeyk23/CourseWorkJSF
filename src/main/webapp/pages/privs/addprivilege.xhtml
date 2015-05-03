@@ -8,14 +8,15 @@
         <ui:define name="body">
             <h:form prependId="false">
                 <h:outputLabel value="Название:" for="nameInput" />
-                <h:inputText id="nameInput" value="#{privilegeBean.name_priv}">
-                </h:inputText>                                         
+                <h:inputText id="nameInput" value="#{privilegeBean.name_priv}"/>
+                <h:message for="nameInput" style="color: red; margin: 3px;"></h:message>                                        
                 <br/>                
-
                 <h:commandButton value="Добавить"
                                  action="#{privilegeBean.addPrivilege()}" />
                 <h:commandButton value="Таблица привилегий"
                                  action="showPriv" />
+                <br/>
+                <h:messages for="errors" style="color: red;margin: 8px;"/>
             </h:form>
         </ui:define>
      </ui:composition>

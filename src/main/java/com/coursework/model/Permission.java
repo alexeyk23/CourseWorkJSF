@@ -88,7 +88,7 @@ public class Permission implements Serializable {
      * Set the value of idPerm
      *
      * @param idPerm new value of idPerm
-     */
+     */    
     public void setIdPerm(int idPerm) {
         this.idPerm = idPerm;
     }
@@ -96,4 +96,23 @@ public class Permission implements Serializable {
     public Permission() {
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 23 * hash + this.idPerm;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Permission other = (Permission) obj;
+        return this.idPerm == other.idPerm;
+    }
+    
 }

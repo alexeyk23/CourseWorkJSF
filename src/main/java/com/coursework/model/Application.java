@@ -105,5 +105,24 @@ public class Application implements Serializable {
     public void setNameApp(String nameApp) {
         this.nameApp = nameApp;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + this.idApp;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Application other = (Application) obj;
+        return this.idApp == other.idApp;
+    }
         
 }
