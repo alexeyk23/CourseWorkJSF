@@ -16,15 +16,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *
  * @author admin
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class RoleBean implements Serializable {
 
     private int idRole;
@@ -34,36 +37,51 @@ public class RoleBean implements Serializable {
     /**
      * Добавить роль
      */
-    public void addRole() {
-        
+    public void addRole() {       
         Set<Permission> perm = new HashSet<Permission>();
         try {
             for (String permName : selectedPermission) {
                 perm.add(PermissionDAO.getPermissionById(Integer.valueOf(permName)));
             }
             Role r = new Role(nameRole, perm);
-            RoleDAO.addRole(r);
+            if (!RoleDAO.addRole(r)) {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
+            }
         } catch (Exception e) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
+
         }
-       
     }
 
     /**
-     * Редактировать роль
-     * @throws Exception
+     * Редактировать роль      
      */
-    public void updateRole() throws Exception
+    public void updateRole() 
     {
-        RoleDAO.updateRole(idRole, nameRole, selectedPermission);        
-    }
+       try{
+            if (!RoleDAO.updateRole(idRole,nameRole,selectedPermission)) {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
+            }
+        } catch (Exception e) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
+        }
+    }     
+    
     
     /**
      * Удалить роль
-     * @throws Exception
      */
-    public void deleteRole() throws Exception
-    {
-        RoleDAO.deleteRole(idRole);        
+    public void deleteRole()  {
+        try{
+           RoleDAO.deleteRole(idRole);
+        } catch (Exception e) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
+        }        
     }
 
     /**

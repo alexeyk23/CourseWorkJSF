@@ -16,7 +16,8 @@ and open the template in the editor.
 table{margin: auto;}
 #dataTable{width: 100%; text-align:center;}
 #selectMany{margin: 0;}
+#messInp{color: red;margin: 8px;}
 button,input[type="reset"],input[type="submit"],input[type="button"],input[type="text"]{
-    margin: 8px;
+    margin: 3px;
     font-size: 14px;}
 label{font-size: 14px;}

@@ -94,12 +94,14 @@ public class ApplicationDAO {
         return res;
     }
 
-    public static void updateApp(int id_app, String nameApp, List<String> selectedPrivs) throws Exception {
+    public static boolean updateApp(int id_app, String nameApp, List<String> selectedPrivs) throws Exception {
         EntityManager entityManager = null;
         try {
             entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
             entityManager.getTransaction().begin();
             Application app = entityManager.find(Application.class, id_app);
+            if(app.getNameApp().equals(nameApp))
+                return false;
             app.setNameApp(nameApp);
             Set<Privilege> currPrivs = new HashSet<Privilege>();
             currPrivs.addAll(app.getPrivs());
@@ -138,6 +140,7 @@ public class ApplicationDAO {
                 entityManager.close();
             }
         }
+        return true;
     }
 
     public static void deleteApp(int id_app) throws Exception {

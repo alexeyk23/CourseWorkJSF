@@ -12,7 +12,10 @@
             </f:metadata>
             <h:form prependId="false">
                 <h:outputLabel value="Название: " for="nameInput" />
-                <h:inputText id="nameInput" value="#{applicationBean.nameApp}"/>                                                    
+                <h:inputText id="nameInput" value="#{applicationBean.nameApp}">
+                    <f:validateLength minimum="3"></f:validateLength>
+                </h:inputText>
+                <h:message style="color: red;margin: 8px;" for="nameInput" />
                 <br/>   
                 <h:outputLabel value="Привилегии: " />
                 <br/>                
@@ -24,6 +27,8 @@
                                  action="#{applicationBean.updateApp()}" />
                 <h:commandButton value="Таблица приложений"
                                  action="showApp" />
+                <br/>
+                <h:messages for="errors" style="color: red;margin: 8px;"/>
             </h:form>
         </ui:define>
      </ui:composition>

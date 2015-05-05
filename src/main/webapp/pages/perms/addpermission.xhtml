@@ -23,11 +23,15 @@
                     <f:selectItems value="#{permissionBean.app.privs}" var="priv" itemLabel="#{priv.namePriv}"
                                    itemValue="#{priv.idPriv}"/>
                 </h:selectOneMenu>
+                <br/> 
+                <h:messages for="messPerm" style="color: red; margin: 8px;"/>
                 <br/>
                 <h:commandButton value="Добавить разрешение" 
                                  action="#{permissionBean.addPermission()}"/>                
                 <h:commandButton value="Таблица разрешений"
                                  action="showPerm" />
+                <br/>
+                <h:messages for="errors" style="color: red;margin: 8px;"/>
             </h:form>
         </ui:define>
     </ui:composition>

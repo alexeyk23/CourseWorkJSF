@@ -28,7 +28,6 @@ import javax.persistence.Temporal;
  *  User 
  * @author Kunakovsky A. 
  */
-@ManagedBean
 @Entity
 @Table(name = "\"User\"")
 public class User implements Serializable {

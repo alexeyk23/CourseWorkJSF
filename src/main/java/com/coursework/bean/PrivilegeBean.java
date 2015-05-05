@@ -15,6 +15,7 @@ import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -22,7 +23,7 @@ import javax.faces.context.FacesContext;
  * @author admin
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PrivilegeBean implements Serializable {
 
     private int idPriv;
@@ -33,7 +34,13 @@ public class PrivilegeBean implements Serializable {
      * @throws Exception
      */
     public void deletePrivilege() throws Exception {
-        PrivilegeDAO.deletePrivilege(idPriv);
+        try {
+            PrivilegeDAO.deletePrivilege(idPriv);
+        } catch (Exception e) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
+            Logger.getLogger(PrivilegeBean.class.getName()).log(Level.SEVERE, null, e);
+        }
     }
 
     /**
@@ -42,7 +49,7 @@ public class PrivilegeBean implements Serializable {
     public void addPrivilege() {
         Privilege p = new Privilege(namePriv);
         try {
-            if (PrivilegeDAO.addPrivilege(p)) {
+            if (!PrivilegeDAO.addPrivilege(p)) {
                 FacesContext fc = FacesContext.getCurrentInstance();
                 fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
             }

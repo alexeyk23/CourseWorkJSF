@@ -45,7 +45,7 @@
                                 <a4j:param  value="#{appl.idApp}" assignTo="#{applicationBean.idApp}"/>                             
                             </a4j:commandButton>
                         </rich:column>
-                    </rich:dataTable>  
+                    </rich:dataTable>                     
                     <a4j:jsFunction name="remove" action="#{applicationBean.deleteApp()}" render="dataTable" 
                                     execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
                     <rich:popupPanel id="popup" modal="true" resizeable="true"
@@ -57,8 +57,10 @@
                                 return false;" />
                         <a4j:commandButton value="Удалить" onclick="remove();
                                 return false;" />
-                    </rich:popupPanel>
+                    </rich:popupPanel>                    
                     <h:commandButton action="addApp" value="Добавить"></h:commandButton>
+                    <br/>
+                    <h:messages for="errors" style="color: red;margin: 8px;"/>
                 </h:form>
             </h:body>
         </ui:define>

@@ -108,7 +108,7 @@ public class PermissionDAO {
             entityManager.remove(perm);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
-            if (entityManager.getTransaction() != null) {
+            if ( entityManager!=null && entityManager.getTransaction() != null) {
                 entityManager.getTransaction().rollback();
             }
             throw e;

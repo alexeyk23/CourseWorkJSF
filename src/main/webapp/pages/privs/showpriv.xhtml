@@ -19,9 +19,9 @@
                                 <rich:column>
                                     <h:outputText value="Название" />
                                 </rich:column>
-                               <!--   <rich:column>
+                                <rich:column>
                                     <h:outputText value="Действия" />
-                                </rich:column> -->
+                                </rich:column> 
                             </rich:columnGroup>
                         </f:facet>
                         <rich:column>
@@ -30,23 +30,25 @@
                         <rich:column>
                             <h:outputText value="#{priv.namePriv}"></h:outputText>                            
                         </rich:column>
-                    <!--    <rich:column>
-                            <a4j:commandButton value="Delete" oncomplete="#{rich:component('popup')}.show()">                           
+                        <rich:column>
+                            <a4j:commandButton value="Удалить" oncomplete="#{rich:component('popup')}.show()">                           
                                 <a4j:param  value="#{priv.idPriv}" assignTo="#{privilegeBean.idPriv}"/>                             
                             </a4j:commandButton>
-                        </rich:column> -->
+                        </rich:column> 
                     </rich:dataTable>  
                     <a4j:jsFunction name="remove" action="#{privilegeBean.deletePrivilege()}" render="dataTable" 
                                     execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
                     <rich:popupPanel id="popup" modal="true" resizeable="true"
                                      onmaskclick="#{rich:component('popup')}.hide()"
                                      header="Delete privilege">
-                        Are you sure you want to delete the row?
+                        Удалить запись?
                         <br/>                  
-                        <a4j:commandButton value="Cancel" onclick="#{rich:component('popup')}.hide(); return false;" />
-                        <a4j:commandButton value="Delete" onclick="remove(); return false;" />
+                        <a4j:commandButton value="Закрыть" onclick="#{rich:component('popup')}.hide(); return false;" />
+                        <a4j:commandButton value="Удалить" onclick="remove(); return false;" />
                     </rich:popupPanel>
                     <h:commandButton action="addPriv" value="Добавить"></h:commandButton>
+                    <br/>
+                    <h:messages for="errors" style="color: red;margin: 8px;"/>
                 </h:form>            
         </ui:define>
     </ui:composition>

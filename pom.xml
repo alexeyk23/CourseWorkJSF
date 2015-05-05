@@ -59,7 +59,7 @@
         <version.jstl-api>1.2</version.jstl-api>
         <version.servlet-api>3.0.1</version.servlet-api>
         <version.el-api>2.2</version.el-api>
-
+        <jsf.version>2.2.2</jsf.version>
     </properties>
 
     <build>
@@ -97,6 +97,19 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+    <groupId>com.sun.faces</groupId>
+    <artifactId>jsf-api</artifactId>
+    <version>${jsf.version}</version>
+    <scope>provided</scope>
+</dependency>
+
+<dependency>
+    <groupId>com.sun.faces</groupId>
+    <artifactId>jsf-impl</artifactId>
+    <version>${jsf.version}</version>
+    <scope>provided</scope>
+</dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
@@ -155,13 +168,8 @@
             <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>jstl-api</artifactId>
             <version>${version.jstl-api}</version>
-        </dependency>
-        <!-- core library -->
-    <dependency>
-        <groupId>org.jboss.resteasy</groupId>
-         <artifactId>resteasy-jaxrs</artifactId>
-        <version>2.3.1.GA</version>
-    </dependency>
+        </dependency>        
+    
     <dependency>
         <groupId>net.sf.scannotation</groupId>
         <artifactId>scannotation</artifactId>
@@ -170,10 +178,14 @@
     <!-- Jackson support -->
     <dependency>
         <groupId>org.jboss.resteasy</groupId>
+         <artifactId>resteasy-jaxrs</artifactId>
+        <version>2.3.1.GA</version>
+    </dependency>		
+		<dependency>
+        <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-jackson-provider</artifactId>
         <version>2.3.1.GA</version>
     </dependency>
-    
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>

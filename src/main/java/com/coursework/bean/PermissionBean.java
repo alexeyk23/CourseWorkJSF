@@ -18,6 +18,8 @@ import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 
 /**
@@ -25,7 +27,7 @@ import javax.faces.event.ValueChangeEvent;
  * @author Kunakovsky A.
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class PermissionBean {
 
     private int idPerm;
@@ -49,12 +51,14 @@ public class PermissionBean {
         try {
             priv = PrivilegeDAO.getPrivilegeById(Integer.valueOf(privilegeId));
             Permission p = new Permission(app, priv);
-            if (PermissionDAO.addPermission(p)) {
-                FacesMessage message = new FacesMessage("Invalid email!");
-                message.rendered();
+            if (!PermissionDAO.addPermission(p)) {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                fc.addMessage("messPerm", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое разрешение уже существует!", null));
             }
         } catch (Exception ex) {
             Logger.getLogger(PermissionBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
         }
     }
 

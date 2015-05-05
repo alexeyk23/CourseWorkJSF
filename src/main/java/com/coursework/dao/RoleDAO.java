@@ -10,6 +10,7 @@ import com.coursework.model.Permission;
 import com.coursework.model.Role;
 import com.coursework.model.User;
 import com.coursework.util.UtilHibernate;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -24,11 +25,17 @@ import javax.persistence.Query;
  */
 public class RoleDAO {
 
-    public static void addRole(Role r) throws Exception {
+    public static boolean addRole(Role r) throws Exception {
         EntityManager entityManager = null; 
         try {
             entityManager=UtilHibernate.getEntityManagerFactory().createEntityManager();
             entityManager.getTransaction().begin();
+             //проверяем, есть ли уже такое
+            Query q = entityManager.createQuery("SELECT a FROM Role a WHERE a.nameRole=?1 ")
+                    .setParameter(1, r.getNameRole());
+            if (q.getResultList().size() > 0) {
+                return false;
+            }
             entityManager.merge(r);
             entityManager.getTransaction().commit();
         } catch (Exception e) {
@@ -41,16 +48,17 @@ public class RoleDAO {
                 entityManager.close();
             }
         }
+        return true;
     }
 
     public static List<Role> getAllRole() throws Exception {
         EntityManager entityManager = null;
-        List<Role> userList=null;
+        List<Role> roleList=null;
         try {          
             entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
             entityManager.getTransaction().begin();
             Query q = entityManager.createQuery("SELECT u FROM Role u");
-            userList = (List<Role>) q.getResultList();
+            roleList = (List<Role>) q.getResultList();
             entityManager.getTransaction().commit();
         } catch (Exception e) {
             if (entityManager != null && entityManager.getTransaction() != null) {
@@ -62,9 +70,31 @@ public class RoleDAO {
                 entityManager.close();
             }
         }           
-        return userList;
+        return roleList;
     }
-
+    public static Set<Role> getAllRoleById(List<String> ids) throws Exception {
+        EntityManager entityManager = null;
+        Set<Role> roleList=null;
+        try {          
+            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
+            entityManager.getTransaction().begin();          
+            roleList = new HashSet<Role>();
+            for (String id : ids) {
+                roleList.add(entityManager.find(Role.class, Integer.valueOf(id)));
+            }
+            entityManager.getTransaction().commit();
+        } catch (Exception e) {
+            if (entityManager != null && entityManager.getTransaction() != null) {
+                entityManager.getTransaction().rollback();
+            }            
+            throw e;
+        } finally {
+            if (entityManager != null) {
+                entityManager.close();
+            }
+        }           
+        return roleList;
+    }
     public static Role getRoleById(int id_role) throws Exception {       
         Role res =null;
         EntityManager entityManager = null;        
@@ -86,13 +116,15 @@ public class RoleDAO {
         return res;
     }
 
-    public static void updateRole(int id_role, String nameRole, List<String> permIds) throws Exception {
+    public static boolean updateRole(int id_role, String nameRole, List<String> permIds) throws Exception {
         EntityManager entityManager = null; 
         try {
             entityManager=UtilHibernate.getEntityManagerFactory().createEntityManager();
             entityManager.getTransaction().begin();
             Role r = entityManager.find(Role.class, id_role);
-            r.setNameRole(nameRole);
+            if(r.getNameRole().equals(nameRole))
+                return false;
+            r.setNameRole(nameRole);          
             Set<Permission> currPerm = new HashSet<Permission>();
             currPerm.addAll(r.getPermissions());
             Set<User> rolesUsers = r.getUsers();
@@ -139,7 +171,7 @@ public class RoleDAO {
                 entityManager.close();
             }
         }
-
+        return true;
     }
 
     public static void deleteRole(int id_role) throws Exception {

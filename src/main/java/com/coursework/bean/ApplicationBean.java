@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 /**
@@ -27,7 +28,7 @@ import javax.faces.context.FacesContext;
  * @author admin
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class ApplicationBean implements Serializable {  
     
     private int idApp;
@@ -60,15 +61,16 @@ public class ApplicationBean implements Serializable {
     /**
      * Редактировать приложение
      */
-    public void updateApp()
-    {
+    public void updateApp() {
         try {
-            ApplicationDAO.updateApp(idApp, nameApp, selectedPrivs);
+            if (!ApplicationDAO.updateApp(idApp, nameApp, selectedPrivs)) {
+                FacesContext fc = FacesContext.getCurrentInstance();
+                fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
+            }
         } catch (Exception ex) {
             Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext fc = FacesContext.getCurrentInstance();
-            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null)); 
-
+            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
         }
     }
 
@@ -80,8 +82,7 @@ public class ApplicationBean implements Serializable {
         try{
            ApplicationDAO.deleteApp(idApp);
         }
-        catch(Exception e)
-        {
+        catch(Exception e){
             Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, e);
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));

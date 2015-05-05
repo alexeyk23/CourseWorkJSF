@@ -41,10 +41,8 @@ public class UserDAO {
                         entityManager.persist(c);
                         addAppsId.add(idApp);
                     }
-                    c.setOperation("grant priv");
-                    c.setIdPrivilege(perm.getPrivelege().getIdPriv());
-                    c.setDateMake(new Date());
-                    entityManager.persist(c);
+                    Command commandGrant = new Command(idUser, idApp,perm.getPrivelege().getIdPriv(),"grant priv", new Date());
+                    entityManager.persist(commandGrant);
                 }
             }
             entityManager.getTransaction().commit();

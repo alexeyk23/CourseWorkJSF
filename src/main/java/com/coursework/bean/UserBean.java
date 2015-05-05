@@ -17,15 +17,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 /**
  *  User 
  * @author Kunakovsky A. 
  */
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class UserBean implements Serializable {
     
     private int idUser;  
@@ -36,20 +38,22 @@ public class UserBean implements Serializable {
 
     /**
      * Добавление пользователя
-     * @throws Exception
+     * 
      */
-    public void  addUser() throws Exception
+    public void  addUser()
     {
-        roles.clear();
-        for (String id:selectedRoles) {
-            roles.add(RoleDAO.getRoleById(Integer.valueOf(id)));
+        try {
+            roles = RoleDAO.getAllRoleById(selectedRoles);
+            User u = new User(nameUser, dateOfBirthday, roles);
+            UserDAO.addUser(u);
+        } catch (Exception e) {
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
         }
-        User  u = new User(nameUser, dateOfBirthday, roles);
-        UserDAO.addUser(u);        
     }  
 
     /**
-     * Редактирование пользователя     * 
+     * Редактирование пользователя      
      */
     public void updateUser()
     {               
@@ -57,6 +61,8 @@ public class UserBean implements Serializable {
             UserDAO.updateUser(idUser, nameUser, dateOfBirthday,selectedRoles);
         } catch (Exception ex) {
             Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
         }
     }
 

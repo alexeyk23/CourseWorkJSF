@@ -12,7 +12,10 @@
         </f:metadata>
             <h:form prependId="false">
                 <h:outputLabel value="Название:" for="nameInput" />
-                <h:inputText id="nameInput" value="#{roleBean.nameRole}"/>                                                       
+                <h:inputText id="nameInput" value="#{roleBean.nameRole}">  
+                    <f:validateLength minimum="3"></f:validateLength>
+                </h:inputText>
+                <h:message for="nameInput" style="color: red;margin: 8px;" />    
                 <br/>                
                 <h:selectManyCheckbox layout="pageDirection" value="#{roleBean.selectedPermission}">
                     <f:selectItems value="#{permissionBean.listPermission}" var ="perm"
@@ -22,6 +25,8 @@
                                  action="#{roleBean.updateRole()}" />
                 <h:commandButton value="Таблица ролей"
                                  action="showRole" />
+                <br/>
+                 <h:messages for="errors" style="color: red;margin: 8px;"/>
             </h:form>
         </ui:define>
      </ui:composition>

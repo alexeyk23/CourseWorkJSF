@@ -12,8 +12,10 @@
             <h:form prependId="false">
                 <h:outputLabel value="ФИО:" for="nameInput" />
                 <h:inputText id="nameInput" value="#{userBean.nameUser}">
-                </h:inputText>                                         
-                <h:body><br/></h:body>                 
+                    <f:validateLength minimum="3"></f:validateLength>
+                </h:inputText>        
+                <h:message for="nameInput" style="color: red;margin: 8px;"/>               
+                <br/>                 
                 <h:outputLabel value="Дата рождения:" for="dataInput" />
                 <rich:calendar id="date" value="#{userBean.dateOfBirthday}"/>
                 <br/>
@@ -26,6 +28,8 @@
                                  action="#{userBean.addUser}" />
                 <h:commandButton value="Таблица пользователей"
                                  action="showUser" />
+                <br/>
+                <h:messages for="errors" style="color: red;margin: 8px;"/>
             </h:form>
         </ui:define>
     </ui:composition>
