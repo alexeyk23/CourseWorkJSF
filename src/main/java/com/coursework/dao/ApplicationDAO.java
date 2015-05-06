@@ -24,7 +24,6 @@ import javax.persistence.Query;
  * @author Kunakovsky A.
  */
 public class ApplicationDAO {
-
     public static boolean addApp(Application r) throws Exception {
         EntityManager entityManager = null;
         try {

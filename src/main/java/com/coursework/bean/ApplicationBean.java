@@ -19,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
@@ -39,8 +38,7 @@ public class ApplicationBean implements Serializable {
     /**
      * Добавить приложение
      */
-    public void addApplication()
-    {
+    public void addApplication(){
         privileges.clear();
         try {
             for (String ids : selectedPrivs) {
@@ -55,7 +53,6 @@ public class ApplicationBean implements Serializable {
              FacesContext fc = FacesContext.getCurrentInstance();
              fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null)); 
         }
-
     }
 
     /**

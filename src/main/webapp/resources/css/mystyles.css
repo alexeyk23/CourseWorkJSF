@@ -8,13 +8,14 @@ and open the template in the editor.
     Author     : admin
 */
 
-.rf-dt-c{font-size: 14px;}
-.rf-dt{font-size: 14px;}
+.rf-dt-c{font-size: 14px;border-right: 0px;}
+.rf-dt{font-size: 14px;border:0px;}
 .rf-dt-r{font-size: 14px;}
 .rf-dt-cap{font-size: 14px;}
 .rf-dt-hdr-c{font-size: 14px;}
+.rf-p-b{padding: 0px;}
 table{margin: auto;}
-#dataTable{width: 100%; text-align:center;}
+#dataTable{width: 100%; text-align:center; margin-top: 0px;}
 #selectMany{margin: 0;}
 #messInp{color: red;margin: 8px;}
 button,input[type="reset"],input[type="submit"],input[type="button"],input[type="text"]{
