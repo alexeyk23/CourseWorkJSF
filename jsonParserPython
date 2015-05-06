@@ -1,0 +1,13 @@
+import json
+from datetime import datetime, timedelta
+import urllib.request, codecs
+
+urlJson = 'http://localhost:8084/WebAppJSF'
+d = datetime.today() - timedelta(hours=8)
+formatdate = "%Y/%m/%d/%H/%M"
+urlJson += '/rest' + '/state/15/' + d.strftime(formatdate)
+reader = codecs.getreader("utf-8")
+response = urllib.request.urlopen(urlJson)
+data = json.load(reader(response))
+for x in data:
+    print(x["operation"], x["idUser"])
