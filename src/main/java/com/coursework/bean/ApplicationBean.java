@@ -17,17 +17,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
+import javax.inject.Named;
 import javax.faces.context.FacesContext;
 
 /**
  *
  * @author admin
  */
-@ManagedBean
-@ViewScoped
+@SessionScoped
+@Named
 public class ApplicationBean implements Serializable {  
     
     private int idApp;

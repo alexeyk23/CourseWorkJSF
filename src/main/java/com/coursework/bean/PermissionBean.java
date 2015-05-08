@@ -11,24 +11,24 @@ import com.coursework.dao.PrivilegeDAO;
 import com.coursework.model.Application;
 import com.coursework.model.Permission;
 import com.coursework.model.Privilege;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.inject.Named;
 
 /**
  *
  * @author Kunakovsky A.
  */
-@ManagedBean
-@ViewScoped
-public class PermissionBean {
+@SessionScoped
+@Named
+public class PermissionBean implements Serializable{
 
     private int idPerm;
     private String appId;

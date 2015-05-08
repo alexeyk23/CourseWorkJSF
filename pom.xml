@@ -175,7 +175,7 @@
         <artifactId>scannotation</artifactId>
         <version>1.0.2</version>
     </dependency>
-    <!-- Jackson support -->
+    <!-- Jackson support
     <dependency>
         <groupId>org.jboss.resteasy</groupId>
          <artifactId>resteasy-jaxrs</artifactId>
@@ -185,7 +185,44 @@
         <groupId>org.jboss.resteasy</groupId>
         <artifactId>resteasy-jackson-provider</artifactId>
         <version>2.3.1.GA</version>
+    </dependency> -->
+    
+      <!-- core library -->
+   <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxrs</artifactId>
+      <version>3.0.2.Final</version>
+      <scope>provided</scope>
+   </dependency>
+   <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-client</artifactId>
+      <version>3.0.2.Final</version>
+      <scope>provided</scope>
+   </dependency>
+<dependency>
+       <groupId>org.jboss.resteasy</groupId>
+       <artifactId>resteasy-jackson-provider</artifactId>
+       <version>1.1.GA</version>
+       <scope>provided</scope>
     </dependency>
+   <!-- optional modules -->
+
+   <!-- JAXB support -->
+   <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-jaxb-provider</artifactId>
+      <version>3.0.2.Final</version>
+      <scope>provided</scope>
+   </dependency>
+   <!-- multipart/form-data and multipart/mixed support -->
+   <dependency>
+      <groupId>org.jboss.resteasy</groupId>
+      <artifactId>resteasy-multipart-provider</artifactId>
+      <version>3.0.2.Final</version>
+      <scope>provided</scope>
+   </dependency>
+    
         <dependency>
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache</artifactId>
@@ -194,8 +231,9 @@
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-core-asl</artifactId>
             <version>1.8.5</version>
+            <scope>provided</scope>
             <type>jar</type>
-        </dependency>
+        </dependency>     
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>

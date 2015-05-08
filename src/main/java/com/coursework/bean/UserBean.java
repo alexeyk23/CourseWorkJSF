@@ -17,17 +17,17 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.inject.Named;
 
 /**
  *  User 
  * @author Kunakovsky A. 
  */
-@ManagedBean
-@ViewScoped
+@SessionScoped
+@Named
 public class UserBean implements Serializable {
     
     private int idUser;  
