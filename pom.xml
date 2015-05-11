@@ -55,11 +55,11 @@
             so that generated project uses correct version of richfaces.
         -->
         <org.richfaces.version>4.5.3.Final</org.richfaces.version>
-        <version.jsp-api>2.1</version.jsp-api>
+        <version.jsp-api>2.2.1</version.jsp-api>
         <version.jstl-api>1.2</version.jstl-api>
         <version.servlet-api>3.0.1</version.servlet-api>
-        <version.el-api>2.2</version.el-api>
-        <jsf.version>2.2.2</jsf.version>
+        <version.el-api>2.2.2</version.el-api>
+        <jsf.version>2.2.5</jsf.version>
     </properties>
 
     <build>
@@ -95,8 +95,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
+    <dependencies>  
         <dependency>
     <groupId>com.sun.faces</groupId>
     <artifactId>jsf-api</artifactId>
@@ -134,11 +133,19 @@
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>9.1-901.jdbc4</version>
-        </dependency>
+             <scope>provided</scope>
+        </dependency>       
         <dependency>
             <groupId>org.richfaces</groupId>
             <artifactId>richfaces</artifactId>
+            <scope>provided</scope>
         </dependency>
+        <dependency>
+	<groupId>org.richfaces</groupId>
+	<artifactId>richfaces-core</artifactId>
+	<version>4.5.3.Final</version>
+</dependency>
+
         <dependency>
             <groupId>javax.faces</groupId>
             <artifactId>javax.faces-api</artifactId>
@@ -147,27 +154,30 @@
         <dependency>
             <groupId>org.glassfish</groupId>
             <artifactId>javax.faces</artifactId>
-            <scope>compile</scope>
+            <scope>compile</scope>        
         </dependency>
         <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>${version.servlet-api}</version>
+	<groupId>javax.servlet</groupId>
+             <artifactId>javax.servlet-api</artifactId>
+             <version>3.0.1</version>
+             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>${version.jsp-api}</version>
-        </dependency>
-        <dependency>
-            <groupId>javax.el</groupId>
-            <artifactId>el-api</artifactId>
-            <version>${version.el-api}</version>
-        </dependency>
+	<groupId>javax.servlet.jsp</groupId>
+	<artifactId>javax.servlet.jsp-api</artifactId>
+	<version>2.2.1</version>
+</dependency>
+
+       <dependency>
+	<groupId>javax.el</groupId>
+	<artifactId>javax.el-api</artifactId>
+	<version>2.2.1</version>
+</dependency>
         <dependency>
             <groupId>javax.servlet.jsp.jstl</groupId>
             <artifactId>jstl-api</artifactId>
             <version>${version.jstl-api}</version>
+             <scope>provided</scope>
         </dependency>        
     
     <dependency>
@@ -239,6 +249,7 @@
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
             <type>jar</type>
+             <scope>provided</scope>
         </dependency>
         
         <dependency>

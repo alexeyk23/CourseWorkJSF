@@ -5,17 +5,18 @@
  */
 package com.coursework.bean.ui;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import java.io.Serializable;
+import javax.inject.Named;
+import javax.enterprise.context.SessionScoped;
 import org.richfaces.event.ItemChangeEvent;
 
 /**
  *
  * @author User
  */
-@ManagedBean
 @SessionScoped
-public class PanelMenuBean {
+@Named
+public class PanelMenuBean implements Serializable{
     private String current;
 //    private boolean singleMode;
 //
