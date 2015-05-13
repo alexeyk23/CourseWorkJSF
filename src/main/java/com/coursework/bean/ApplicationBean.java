@@ -7,6 +7,7 @@
 package com.coursework.bean;
 
 import com.coursework.dao.ApplicationDAO;
+import com.coursework.dao.ApplicationFacade;
 import com.coursework.dao.PrivilegeDAO;
 import com.coursework.model.Application;
 import com.coursework.model.Privilege;
@@ -17,10 +18,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 
 /**
  *
@@ -34,7 +37,8 @@ public class ApplicationBean implements Serializable {
     private String nameApp;
     private Set<Privilege> privileges = new HashSet<Privilege>();
     private List<String> selectedPrivs = new ArrayList<String>();
-
+    @EJB
+    ApplicationFacade af;
     /**
      * Добавить приложение
      */
@@ -91,15 +95,15 @@ public class ApplicationBean implements Serializable {
      * @return список приложений    
      */
     public List<Application> getListApplication() {
-        List<Application> listApp = new ArrayList<Application>();
-        try {
-             listApp =  ApplicationDAO.getAllApp();
-        } catch (Exception ex) {
-            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
-            FacesContext fc = FacesContext.getCurrentInstance();
-            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения" + ex.getMessage(), null));
-        }
-        return listApp;
+//        List<Application> listApp = new ArrayList<Application>();
+//        try {
+//             listApp =  ApplicationDAO.getAllApp();
+//        } catch (Exception ex) {
+//            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
+//            FacesContext fc = FacesContext.getCurrentInstance();
+//            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения" + ex.getMessage(), null));
+//        }
+        return af.findAll();
     }
 
     /**

@@ -1,45 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
+<web-app version="2.5" 
+         xmlns="http://java.sun.com/xml/ns/javaee" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"> 
     <display-name>Sample RichFaces 4 Application</display-name>
-
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
-
     <context-param>
         <param-name>javax.faces.SKIP_COMMENTS</param-name>
         <param-value>true</param-value>
-    </context-param>    
-    <context-param>  
-    <param-name>org.richfaces.CONTROL_SKINNING</param-name>  
-    <param-value>enable</param-value>  
     </context-param>
-   <!-- <context-param>
-        <param-name>org.richfaces.skin</param-name>
-        <param-value>myskin</param-value>
-    </context-param>   --> 
+    <context-param>
+        <param-name>org.richfaces.CONTROL_SKINNING</param-name>
+        <param-value>enable</param-value>
+    </context-param>
     <context-param>
         <param-name>org.richfaces.enableControlSkinning</param-name>
         <param-value>false</param-value>
     </context-param>
+    
     <servlet>
-        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-name>facesServlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
     <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>*.jsf</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/</url-pattern>
+        <servlet-name>facesServlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>      
     </servlet-mapping>
     
-    <!-- Resource Servlet - serves static resources and resources for specific components -->
     <servlet>
         <servlet-name>Resource Servlet</servlet-name>
         <servlet-class>org.richfaces.webapp.ResourceServlet</servlet-class>
@@ -49,17 +40,14 @@
         <servlet-name>Resource Servlet</servlet-name>
         <url-pattern>/org.richfaces.resources/*</url-pattern>
     </servlet-mapping>
-    
-    <!-- Resource Mapping - resources will be served compressed and packed in production -->
     <context-param>
         <param-name>org.richfaces.resourceMapping.enabled</param-name>
         <param-value>true</param-value>
     </context-param>
     <context-param>
-		<param-name>resteasy.resources</param-name>
-		<param-value>com.coursework.restservice.ShowStateREST</param-value>
+        <param-name>resteasy.resources</param-name>
+        <param-value>com.coursework.restservice.ShowStateREST</param-value>
     </context-param>
-    <!-- this need same with resteasy servlet url-pattern -->
     <context-param>
         <param-name>resteasy.servlet.mapping.prefix</param-name>
         <param-value>/rest</param-value>
@@ -69,14 +57,12 @@
             org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap
         </listener-class>
     </listener>
- 
     <servlet>
         <servlet-name>resteasy-servlet</servlet-name>
         <servlet-class>
             org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher
         </servlet-class>
     </servlet>
-        
     <servlet-mapping>
         <servlet-name>resteasy-servlet</servlet-name>
         <url-pattern>/rest/*</url-pattern>
@@ -84,13 +70,10 @@
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-
     <welcome-file-list>
         <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
-
     <login-config>
         <auth-method>BASIC</auth-method>
     </login-config>
-
 </web-app>
