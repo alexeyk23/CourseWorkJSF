@@ -17,16 +17,16 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 
 /**
  *
  * @author admin
  */
-@SessionScoped
+@ViewScoped
 @Named
 public class ApplicationBean implements Serializable {  
     
@@ -67,7 +67,7 @@ public class ApplicationBean implements Serializable {
         } catch (Exception ex) {
             Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext fc = FacesContext.getCurrentInstance();
-            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
+            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения" + ex.getMessage(), null));
         }
     }
 
@@ -96,6 +96,8 @@ public class ApplicationBean implements Serializable {
              listApp =  ApplicationDAO.getAllApp();
         } catch (Exception ex) {
             Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения" + ex.getMessage(), null));
         }
         return listApp;
     }

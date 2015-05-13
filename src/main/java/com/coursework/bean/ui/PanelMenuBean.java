@@ -11,7 +11,6 @@ import javax.enterprise.context.SessionScoped;
 import org.richfaces.event.ItemChangeEvent;
 
 /**
- *
  * @author User
  */
 @SessionScoped
