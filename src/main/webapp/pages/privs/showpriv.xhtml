@@ -35,20 +35,21 @@
                                 <a4j:param  value="#{priv.idPriv}" assignTo="#{privilegeBean.idPriv}"/>                             
                             </a4j:commandButton>
                         </rich:column> 
-                    </rich:dataTable>  
+                    </rich:dataTable> 
+                    <h:messages for="errors" style="color: red;margin: 8px;"/>
                     <a4j:jsFunction name="remove" action="#{privilegeBean.deletePrivilege()}" render="dataTable" 
                                     execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
                     <rich:popupPanel id="popup" modal="true" resizeable="true"
                                      onmaskclick="#{rich:component('popup')}.hide()"
-                                     header="Delete privilege">
-                        Удалить запись?
+                                     header="Удаление">
+                        <div align="center" style="font-size: 14px">Удалить запись?
                         <br/>                  
-                        <a4j:commandButton value="Закрыть" onclick="#{rich:component('popup')}.hide(); return false;" />
                         <a4j:commandButton value="Удалить" onclick="remove(); return false;" />
+                        <a4j:commandButton value="Закрыть" onclick="#{rich:component('popup')}.hide(); return false;" />                     
+                        </div>
                     </rich:popupPanel>
                     <h:commandButton action="addPriv" value="Добавить"></h:commandButton>
-                    <br/>
-                    <h:messages for="errors" style="color: red;margin: 8px;"/>
+                    <br/>                   
                 </h:form>            
         </ui:define>
     </ui:composition>

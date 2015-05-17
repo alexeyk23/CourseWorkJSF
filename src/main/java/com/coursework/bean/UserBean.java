@@ -5,8 +5,8 @@
  */
 package com.coursework.bean;
 
-import com.coursework.dao.RoleDAO;
-import com.coursework.dao.UserDAO;
+import com.coursework.dao.RoleFacade;
+import com.coursework.dao.UserFacade;
 import com.coursework.model.Role;
 import com.coursework.model.User;
 import java.io.Serializable;
@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -35,7 +36,10 @@ public class UserBean implements Serializable {
     private Date dateOfBirthday;
     private Set<Role>  roles = new HashSet<Role>();
     private List<String> selectedRoles = new ArrayList<String>();//выбранные роли в UI
-
+    @EJB
+    UserFacade userDao;
+    @EJB
+    RoleFacade roleDao;
     /**
      * Добавление пользователя
      * 
@@ -43,12 +47,12 @@ public class UserBean implements Serializable {
     public void  addUser()
     {
         try {
-            roles = RoleDAO.getAllRoleById(selectedRoles);
+            roles = roleDao.getAllRoleById(selectedRoles);
             User u = new User(nameUser, dateOfBirthday, roles);
-            UserDAO.addUser(u);
+            userDao.addUser(u);
         } catch (Exception e) {
             FacesContext fc = FacesContext.getCurrentInstance();
-            fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
+            fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения"+e.getMessage(), null));
         }
     }  
 
@@ -58,7 +62,7 @@ public class UserBean implements Serializable {
     public void updateUser()
     {               
         try {
-            UserDAO.updateUser(idUser, nameUser, dateOfBirthday,selectedRoles);
+            userDao.updateUser(idUser, nameUser, dateOfBirthday,selectedRoles);
         } catch (Exception ex) {
             Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext fc = FacesContext.getCurrentInstance();
@@ -72,7 +76,13 @@ public class UserBean implements Serializable {
      */
     public void deleteUser() throws Exception
     {      
-        UserDAO.deleteUser(idUser);        
+       try{ userDao.deleteUser(idUser);        
+       }catch (Exception ex) {
+            Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения "+ex.getMessage(), null));
+        }
+       
     }
 
     /**
@@ -83,7 +93,7 @@ public class UserBean implements Serializable {
     {
         List<User> res = new ArrayList<User>();
         try {
-            res = UserDAO.getAllUsers();
+            res = userDao.findAll();
         } catch (Exception ex) {
             Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -140,7 +150,7 @@ public class UserBean implements Serializable {
        {
            User u;
            try {
-               u = UserDAO.getUserById(idUser);
+               u = userDao.find(idUser);
                nameUser = u.getNameUser();
                dateOfBirthday = u.getDateOfBirhday();
                selectedRoles.clear();

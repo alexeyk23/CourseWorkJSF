@@ -5,8 +5,8 @@
  */
 package com.coursework.bean;
 
-import com.coursework.dao.PermissionDAO;
-import com.coursework.dao.RoleDAO;
+import com.coursework.dao.PermissionFacade;
+import com.coursework.dao.RoleFacade;
 import com.coursework.model.Permission;
 import com.coursework.model.Role;
 import java.io.Serializable;
@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -33,7 +33,10 @@ public class RoleBean implements Serializable {
     private int idRole;
     private String nameRole; 
     private List<String> selectedPermission = new ArrayList<String>();
-  
+    @EJB
+    RoleFacade roleDao;
+    @EJB
+    PermissionFacade permissionDao;
     /**
      * Добавить роль
      */
@@ -41,10 +44,10 @@ public class RoleBean implements Serializable {
         Set<Permission> perm = new HashSet<Permission>();
         try {
             for (String permName : selectedPermission) {
-                perm.add(PermissionDAO.getPermissionById(Integer.valueOf(permName)));
+                perm.add(permissionDao.find(Integer.valueOf(permName)));
             }
             Role r = new Role(nameRole, perm);
-            if (!RoleDAO.addRole(r)) {
+            if (!roleDao.addRole(r)) {
                 FacesContext fc = FacesContext.getCurrentInstance();
                 fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
             }
@@ -58,18 +61,14 @@ public class RoleBean implements Serializable {
     /**
      * Редактировать роль      
      */
-    public void updateRole() 
-    {
-       try{
-            if (!RoleDAO.updateRole(idRole,nameRole,selectedPermission)) {
-                FacesContext fc = FacesContext.getCurrentInstance();
-                fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
-            }
+    public void updateRole() {
+        try {
+            roleDao.updateRole(idRole, nameRole, selectedPermission);
         } catch (Exception e) {
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
         }
-    }     
+    }
     
     
     /**
@@ -77,7 +76,7 @@ public class RoleBean implements Serializable {
      */
     public void deleteRole()  {
         try{
-           RoleDAO.deleteRole(idRole);
+           roleDao.deleteRole(idRole);
         } catch (Exception e) {
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
@@ -91,7 +90,7 @@ public class RoleBean implements Serializable {
     public List<Role> getAllRole() {
         List<Role> listRole =  new ArrayList<Role>();
         try {
-            listRole = RoleDAO.getAllRole();
+            listRole = roleDao.findAll();
         } catch (Exception ex) {
             Logger.getLogger(RoleBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -134,7 +133,7 @@ public class RoleBean implements Serializable {
         if(idRole>0)
         {
             try {
-                Role r =RoleDAO.getRoleById(idRole);
+                Role r =roleDao.find(idRole);
                 nameRole=r.getNameRole();
                 selectedPermission.clear();
                 for (Permission perm : r.getPermissions()) {

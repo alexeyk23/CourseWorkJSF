@@ -14,6 +14,7 @@ and open the template in the editor.
 .rf-dt-cap{font-size: 14px;}
 .rf-dt-hdr-c{font-size: 14px;}
 .rf-p-b{padding: 0px;}
+.rf-pp-cntr{width: 320px; height: 130px;}
 table{margin: auto;}
 #dataTable{width: 100%; text-align:center; margin-top: 0px;}
 #selectMany{margin: 0;}

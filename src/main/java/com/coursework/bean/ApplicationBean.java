@@ -6,9 +6,8 @@
 
 package com.coursework.bean;
 
-import com.coursework.dao.ApplicationDAO;
 import com.coursework.dao.ApplicationFacade;
-import com.coursework.dao.PrivilegeDAO;
+import com.coursework.dao.PrivilegeFacade;
 import com.coursework.model.Application;
 import com.coursework.model.Privilege;
 import java.io.Serializable;
@@ -23,7 +22,6 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 
 /**
  *
@@ -39,6 +37,8 @@ public class ApplicationBean implements Serializable {
     private List<String> selectedPrivs = new ArrayList<String>();
     @EJB
     ApplicationFacade af;
+    @EJB
+    PrivilegeFacade privilegeDao;
     /**
      * Добавить приложение
      */
@@ -46,10 +46,10 @@ public class ApplicationBean implements Serializable {
         privileges.clear();
         try {
             for (String ids : selectedPrivs) {
-                privileges.add(PrivilegeDAO.getPrivilegeById(Integer.valueOf(ids)));
+                privileges.add(privilegeDao.find(Integer.valueOf(ids)));
             }
              Application p = new Application(nameApp,privileges);
-             if (!ApplicationDAO.addApp(p)) {
+             if (!af.addApp(p)) {
                 FacesContext fc = FacesContext.getCurrentInstance();
                 fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
             }
@@ -63,11 +63,8 @@ public class ApplicationBean implements Serializable {
      * Редактировать приложение
      */
     public void updateApp() {
-        try {
-            if (!ApplicationDAO.updateApp(idApp, nameApp, selectedPrivs)) {
-                FacesContext fc = FacesContext.getCurrentInstance();
-                fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
-            }
+        try {            
+            af.updateApp(idApp, nameApp, selectedPrivs);             
         } catch (Exception ex) {
             Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext fc = FacesContext.getCurrentInstance();
@@ -81,7 +78,7 @@ public class ApplicationBean implements Serializable {
     public void deleteApp() 
     {
         try{
-           ApplicationDAO.deleteApp(idApp);
+           af.deleteApp(idApp);
         }
         catch(Exception e){
             Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, e);
@@ -95,15 +92,15 @@ public class ApplicationBean implements Serializable {
      * @return список приложений    
      */
     public List<Application> getListApplication() {
-//        List<Application> listApp = new ArrayList<Application>();
-//        try {
-//             listApp =  ApplicationDAO.getAllApp();
-//        } catch (Exception ex) {
-//            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
-//            FacesContext fc = FacesContext.getCurrentInstance();
-//            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения" + ex.getMessage(), null));
-//        }
-        return af.findAll();
+        List<Application> listApp = new ArrayList<Application>();
+        try {
+             listApp =  af.findAll();
+        } catch (Exception ex) {
+            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
+            FacesContext fc = FacesContext.getCurrentInstance();
+            fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения" + ex.getMessage(), null));
+        }
+        return listApp;
     }
 
     /**
@@ -174,7 +171,7 @@ public class ApplicationBean implements Serializable {
         //если ID > 0, то загружаем из базы приложение
         if(idApp>0){
             try {
-                Application application= ApplicationDAO.getAppById(idApp);
+                Application application= af.find(idApp);
                 nameApp=application.getNameApp();
                 selectedPrivs.clear();
                 for (Privilege privilege : application.getPrivs()) {

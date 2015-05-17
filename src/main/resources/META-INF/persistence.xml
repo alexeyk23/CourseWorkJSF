@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
-  <persistence-unit name="manager" transaction-type="RESOURCE_LOCAL">
+  <persistence-unit name="manager" transaction-type="JTA">
     <provider>org.hibernate.ejb.HibernatePersistence</provider>
-    <non-jta-data-source/>
+    <jta-data-source>java:/jboss/postgres</jta-data-source>
     <class>com.coursework.model.Application</class>
     <class>com.coursework.model.Command</class>
     <class>com.coursework.model.Permission</class>
@@ -14,6 +14,7 @@
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
       <property name="hibernate.max_fetch_depth" value="3"/>
       <property name="hibernate.default_schema" value="public"/>
+      <property name="hibernate.id.new_generator_mappings" value="false"/>
       <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/db_Firma"/>
       <property name="javax.persistence.jdbc.password" value="sa"/>
       <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>

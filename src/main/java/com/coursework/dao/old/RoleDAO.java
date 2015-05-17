@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.coursework.dao;
+package com.coursework.dao.old;
 
 import com.coursework.model.Command;
 import com.coursework.model.Permission;
