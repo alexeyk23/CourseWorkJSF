@@ -5,9 +5,10 @@
  */
 package com.coursework.bean;
 
-import com.coursework.dao.ApplicationDAO;
-import com.coursework.dao.PermissionDAO;
-import com.coursework.dao.PrivilegeDAO;
+import com.coursework.dao.ApplicationFacade;
+import com.coursework.dao.PermissionFacade;
+import com.coursework.dao.old.PrivilegeDAO;
+import com.coursework.dao.PrivilegeFacade;
 import com.coursework.model.Application;
 import com.coursework.model.Permission;
 import com.coursework.model.Privilege;
@@ -16,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
@@ -36,13 +37,18 @@ public class PermissionBean implements Serializable{
     private String privilegeId;
     Application app;
     Privilege priv;
-
+    @EJB
+    ApplicationFacade af;
+    @EJB
+    PermissionFacade permissionDao;
+    @EJB
+    PrivilegeFacade privilegeDao;
     /**
      * Удалить разрешение
      * @throws Exception
      */
     public void deletePermission() throws Exception {
-        PermissionDAO.deletePermission(idPerm);
+        permissionDao.deletePermission(idPerm);
     }
 
     /**
@@ -50,9 +56,9 @@ public class PermissionBean implements Serializable{
      */
     public void addPermission() {
         try {
-            priv = PrivilegeDAO.getPrivilegeById(Integer.valueOf(privilegeId));
+            priv = privilegeDao.find(Integer.valueOf(privilegeId));
             Permission p = new Permission(app, priv);
-            if (!PermissionDAO.addPermission(p)) {
+            if (!permissionDao.addPermission(p)) {
                 FacesContext fc = FacesContext.getCurrentInstance();
                 fc.addMessage("messPerm", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое разрешение уже существует!", null));
             }
@@ -70,7 +76,7 @@ public class PermissionBean implements Serializable{
     public List<Permission> getListPermission() {
         List<Permission> res = new ArrayList<Permission>();
         try {
-           res  = PermissionDAO.getAllPermission();
+           res  = permissionDao.findAll();
         } catch (Exception ex) {
             Logger.getLogger(PermissionBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -168,7 +174,7 @@ public class PermissionBean implements Serializable{
     public void changeApp(ValueChangeEvent event) {
         if (event.getNewValue() != null) {
             try {
-                app = ApplicationDAO.getAppById(Integer.valueOf((String) event.getNewValue()));
+                app = af.find(Integer.valueOf((String) event.getNewValue()));
             } catch (Exception ex) {
                 Logger.getLogger(PermissionBean.class.getName()).log(Level.SEVERE, null, ex);
             }

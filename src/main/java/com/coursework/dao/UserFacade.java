@@ -16,92 +16,41 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
+import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Kunakovsky A.
+ * @author User
  */
-public class UserDAO {
+@Stateless
+public class UserFacade extends AbstractFacade<User> {
+    @PersistenceContext(unitName = "manager")
+    private EntityManager entityManager;
 
-    public static void addUser(User u) throws Exception {
-        EntityManager entityManager = null;
-        try {
-            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-            entityManager.getTransaction().begin();
-            int idUser = entityManager.merge(u).getIdUser();  //!!!!!!!! !!!!!!!!!!! M E R G E 
-            //приложения, в которых пользователь уже доавблен
-            Set<Integer> addAppsId = new HashSet<Integer>();
-            for (Role role : u.getRoles()) {
-                for (Permission perm : role.getPermissions()) {
-                    int idApp = perm.getApplication().getIdApp();
-                    Command c = new Command(idUser, idApp, "add user", new Date());
-                    if (!addAppsId.contains(idApp)) {
-                        entityManager.persist(c);
-                        addAppsId.add(idApp);
-                    }
-                    Command commandGrant = new Command(idUser, idApp,perm.getPrivelege().getIdPriv(),"grant priv", new Date());
-                    entityManager.persist(commandGrant);
+    @Override
+    protected EntityManager getEntityManager() {
+        return entityManager;
+    }
+    public void addUser(User u) {
+        int idUser = entityManager.merge(u).getIdUser();  //!!!!!!!! !!!!!!!!!!! M E R G E 
+        //приложения, в которых пользователь уже доавблен
+        Set<Integer> addAppsId = new HashSet<Integer>();
+        for (Role role : u.getRoles()) {
+            for (Permission perm : role.getPermissions()) {
+                int idApp = perm.getApplication().getIdApp();
+                Command c = new Command(idUser, idApp, "add user", new Date());
+                if (!addAppsId.contains(idApp)) {
+                    entityManager.persist(c);
+                    addAppsId.add(idApp);
                 }
-            }
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            if (entityManager != null && entityManager.getTransaction() != null) {
-                entityManager.getTransaction().rollback();
-            }
-            throw e;
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
+                Command commandGrant = new Command(idUser, idApp, perm.getPrivelege().getIdPriv(), "grant priv", new Date());
+                entityManager.persist(commandGrant);
             }
         }
     }
-
-    public static List<User> getAllUsers() throws Exception  {
-        EntityManager entityManager = null;
-        List<User> userList = null;
-        try {
-            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-            entityManager.getTransaction().begin();
-            Query q = entityManager.createQuery("SELECT u FROM User u");
-            userList = q.getResultList();
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            if (entityManager != null && entityManager.getTransaction() != null) {
-                entityManager.getTransaction().rollback();
-            }
-            throw e;
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
-        return userList;
-    }
-
-    public static User getUserById(int id_user) throws Exception  {
-        User res = null;
-        EntityManager entityManager = null;
-        try {
-            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-            entityManager.getTransaction().begin();
-            res = entityManager.find(User.class, id_user);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            if (entityManager != null && entityManager.getTransaction() != null) {
-                entityManager.getTransaction().rollback();
-            }
-            throw e;
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
-        return res;
-    }
-
-    //создание частотного словаря разрешений для юзера
+     //создание частотного словаря разрешений для юзера
     public static Map<Integer, Integer> createPermMap(User user) {
         Map<Integer, Integer> dictPerm = new HashMap<Integer, Integer>();
         for (Role role : user.getRoles()) {
@@ -114,12 +63,8 @@ public class UserDAO {
         }
         return dictPerm;
     }
-
-    public static void updateUser(int id_user, String userName, Date dateofb, List<String> roleIds)throws Exception  {
-        EntityManager entityManager = null;
-        try {
-            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-            entityManager.getTransaction().begin();
+     public void updateUser(int id_user, String userName, Date dateofb, List<String> roleIds){
+       
             User upUser = entityManager.find(User.class, id_user);
             upUser.setNameUser(userName);
             upUser.setDateOfBirthday(dateofb);
@@ -172,25 +117,10 @@ public class UserDAO {
                     entityManager.persist(command);
                 }
             }
-            entityManager.merge(upUser);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            if (entityManager != null && entityManager.getTransaction() != null) {
-                entityManager.getTransaction().rollback();
-            }
-            throw e;
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
+            entityManager.merge(upUser);        
     }
 
-    public static void deleteUser(int id_user) throws Exception {
-        EntityManager entityManager = null;
-        try {
-            entityManager = UtilHibernate.getEntityManagerFactory().createEntityManager();
-            entityManager.getTransaction().begin();
+    public void deleteUser(int id_user){       
             User u = entityManager.find(User.class, id_user);
             Set<Integer> delAppsId = new HashSet<Integer>();
             for (Role role : u.getRoles()) {
@@ -204,17 +134,10 @@ public class UserDAO {
                 }
             }
             u.getRoles().clear();
-            entityManager.remove(u);
-            entityManager.getTransaction().commit();
-        } catch (Exception e) {
-            if (entityManager != null && entityManager.getTransaction() != null) {
-                entityManager.getTransaction().rollback();
-            }
-            throw e;
-        } finally {
-            if (entityManager != null) {
-                entityManager.close();
-            }
-        }
+            entityManager.remove(u);        
     }
+    public UserFacade() {
+        super(User.class);
+    }
+    
 }

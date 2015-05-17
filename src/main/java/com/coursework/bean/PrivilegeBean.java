@@ -5,14 +5,14 @@
  */
 package com.coursework.bean;
 
-import com.coursework.dao.PrivilegeDAO;
+import com.coursework.dao.PrivilegeFacade;
 import com.coursework.model.Privilege;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.SessionScoped;
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -28,14 +28,15 @@ public class PrivilegeBean implements Serializable {
 
     private int idPriv;
     private String namePriv;
-
+    @EJB
+    PrivilegeFacade privilegeDao;
     /**
      * Удалить привилегию
      * @throws Exception
      */
     public void deletePrivilege() throws Exception {
         try {
-            PrivilegeDAO.deletePrivilege(idPriv);
+            privilegeDao.deletePrivilege(idPriv);
         } catch (Exception e) {
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
@@ -49,7 +50,7 @@ public class PrivilegeBean implements Serializable {
     public void addPrivilege() {
         Privilege p = new Privilege(namePriv);
         try {
-            if (!PrivilegeDAO.addPrivilege(p)) {
+            if (!privilegeDao.addPrivilege(p)) {
                 FacesContext fc = FacesContext.getCurrentInstance();
                 fc.addMessage("nameInput", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое имя используется", null));
             }
@@ -67,7 +68,7 @@ public class PrivilegeBean implements Serializable {
     public List<Privilege> getListPrivilege() {
         List<Privilege> res = new ArrayList<Privilege>();
         try {
-           res= PrivilegeDAO.getAllPrivilege();
+           res= privilegeDao.findAll();
         } catch (Exception ex) {
             Logger.getLogger(PrivilegeBean.class.getName()).log(Level.SEVERE, null, ex);
         }
