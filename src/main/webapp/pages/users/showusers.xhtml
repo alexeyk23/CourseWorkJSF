@@ -10,7 +10,7 @@
         <ui:define name="title">Таблица пользователей</ui:define>
         <ui:define name="body">              
                 <h:form prependId="false">
-                    <rich:dataTable var="user" value="#{userBean.listUser}" id="dataTable">
+                    <rich:dataTable var="user" value="#{userController.listUser}" id="dataTable">
                         <f:facet name="header">
                             <rich:columnGroup>                            
                                 <rich:column >
@@ -48,12 +48,12 @@
                             </h:button>  
                             <a4j:commandButton value="Удалить" 
                                                oncomplete="#{rich:component('popup')}.show()">                           
-                                <a4j:param  value="#{user.idUser}" assignTo="#{userBean.idUser}"/>                             
+                                <a4j:param  value="#{user.idUser}" assignTo="#{userController.idUser}"/>                             
                             </a4j:commandButton> 
                         </rich:column>
                     </rich:dataTable>  
                     <h:commandButton action="addUser" value="Добавить"></h:commandButton>
-                    <a4j:jsFunction name="remove" action="#{userBean.deleteUser()}" render="dataTable" 
+                    <a4j:jsFunction name="remove" action="#{userController.deleteUser()}" render="dataTable" 
                                     execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
                     <rich:popupPanel id="popup" modal="true" resizeable="true"
                                      onmaskclick="#{rich:component('popup')}.hide()"

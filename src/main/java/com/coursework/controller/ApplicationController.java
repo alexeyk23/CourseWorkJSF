@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-package com.coursework.bean;
+package com.coursework.controller;
 
 import com.coursework.dao.ApplicationFacade;
 import com.coursework.dao.PrivilegeFacade;
@@ -29,7 +29,7 @@ import javax.faces.view.ViewScoped;
  */
 @ViewScoped
 @Named
-public class ApplicationBean implements Serializable {  
+public class ApplicationController implements Serializable {  
     
     private int idApp;
     private String nameApp;
@@ -66,7 +66,7 @@ public class ApplicationBean implements Serializable {
         try {            
             af.updateApp(idApp, nameApp, selectedPrivs);             
         } catch (Exception ex) {
-            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения" + ex.getMessage(), null));
         }
@@ -81,7 +81,7 @@ public class ApplicationBean implements Serializable {
            af.deleteApp(idApp);
         }
         catch(Exception e){
-            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, e);
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
         }
@@ -96,7 +96,7 @@ public class ApplicationBean implements Serializable {
         try {
              listApp =  af.findAll();
         } catch (Exception ex) {
-            Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения" + ex.getMessage(), null));
         }
@@ -178,7 +178,7 @@ public class ApplicationBean implements Serializable {
                     selectedPrivs.add(String.valueOf(privilege.getIdPriv()));
                 }
             } catch (Exception ex) {
-                Logger.getLogger(ApplicationBean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ApplicationController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -186,7 +186,7 @@ public class ApplicationBean implements Serializable {
     /**
      * Пустой конструктор
      */
-    public ApplicationBean() {
+    public ApplicationController() {
     }
         
 }

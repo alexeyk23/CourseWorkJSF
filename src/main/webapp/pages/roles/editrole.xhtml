@@ -8,21 +8,21 @@
         <ui:define name="title">Редактирование роли</ui:define>
         <ui:define name="body">
         <f:metadata>
-            <f:viewParam  name="idRole" value="#{roleBean.idRole}"/> 
+            <f:viewParam  name="idRole" value="#{roleController.idRole}"/> 
         </f:metadata>
             <h:form prependId="false">
                 <h:outputLabel value="Название:" for="nameInput" />
-                <h:inputText id="nameInput" value="#{roleBean.nameRole}">  
+                <h:inputText id="nameInput" value="#{roleController.nameRole}">  
                     <f:validateLength minimum="3"></f:validateLength>
                 </h:inputText>
                 <h:message for="nameInput" style="color: red;margin: 8px;" />    
                 <br/>                
-                <h:selectManyCheckbox id="selectMany" layout="pageDirection" value="#{roleBean.selectedPermission}">
-                    <f:selectItems value="#{permissionBean.listPermission}" var ="perm"
+                <h:selectManyCheckbox id="selectMany" layout="pageDirection" value="#{roleController.selectedPermission}">
+                    <f:selectItems value="#{permissionController.listPermission}" var ="perm"
                                    itemValue="#{perm.idPerm}" itemLabel="#{perm.application.nameApp}: #{perm.privelege.namePriv}"/>
                 </h:selectManyCheckbox>
                 <h:commandButton value="Сохранить"
-                                 action="#{roleBean.updateRole()}" />
+                                 action="#{roleController.updateRole()}" />
                 <h:commandButton value="Таблица ролей"
                                  action="showRole" />
                 <br/>

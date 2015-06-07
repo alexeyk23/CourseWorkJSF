@@ -11,7 +11,7 @@
         <ui:define name="body">
             <h:body>
                 <h:form prependId="false">
-                    <rich:dataTable id="dataTable" var="perm" value="#{permissionBean.listPermission}">
+                    <rich:dataTable id="dataTable" var="perm" value="#{permissionController.listPermission}">
                         <f:facet name="header">
                             <rich:columnGroup>                            
                                 <rich:column >
@@ -39,11 +39,11 @@
                         </rich:column>
                         <rich:column>
                              <a4j:commandButton value="Удалить" oncomplete="#{rich:component('popup')}.show()">                           
-                                 <a4j:param  value="#{perm.idPerm}" assignTo="#{permissionBean.idPerm}"/>                             
+                                 <a4j:param  value="#{perm.idPerm}" assignTo="#{permissionController.idPerm}"/>                             
                             </a4j:commandButton>
                         </rich:column>
                     </rich:dataTable>  
-                    <a4j:jsFunction name="remove" action="#{permissionBean.deletePermission()}" render="dataTable" 
+                    <a4j:jsFunction name="remove" action="#{permissionController.deletePermission()}" render="dataTable" 
                                     execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
                     <rich:popupPanel id="popup" modal="true" resizeable="true"
                                      onmaskclick="#{rich:component('popup')}.hide()"

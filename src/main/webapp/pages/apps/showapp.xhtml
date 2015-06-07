@@ -11,7 +11,7 @@
         <ui:define name="body">
             <h:body>
                 <h:form prependId="false">
-                    <rich:dataTable id = "dataTable" var="appl" value="#{applicationBean.listApplication}">
+                    <rich:dataTable id = "dataTable" var="appl" value="#{applicationController.listApplication}">
                         <f:facet name="header">
                             <rich:columnGroup>                            
                                 <rich:column >
@@ -42,11 +42,11 @@
                                 <f:param name="idApp" value="#{appl.idApp}"/> 
                             </h:button> 
                             <a4j:commandButton value="Удалить" oncomplete="#{rich:component('popup')}.show()">                           
-                                <a4j:param  value="#{appl.idApp}" assignTo="#{applicationBean.idApp}"/>                             
+                                <a4j:param  value="#{appl.idApp}" assignTo="#{applicationController.idApp}"/>                             
                             </a4j:commandButton>
                         </rich:column>
                     </rich:dataTable>                     
-                    <a4j:jsFunction name="remove" action="#{applicationBean.deleteApp()}" render="dataTable" 
+                    <a4j:jsFunction name="remove" action="#{applicationController.deleteApp()}" render="dataTable" 
                                     execute="@this" oncomplete="#{rich:component('popup')}.hide();" />
                     <rich:popupPanel id="popup" modal="true" resizeable="true"
                                      onmaskclick="#{rich:component('popup')}.hide()"

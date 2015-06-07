@@ -17,8 +17,8 @@
                                 groupCollapsedLeftIcon="triangleDown"
                                 topGroupExpandedRightIcon="chevronUp" 
                                 topGroupCollapsedRightIcon="chevronDown" itemLeftIcon="disc"
-                                itemChangeListener="#{panelMenuBean.updateCurrent}"
-                                activeItem="#{panelMenuBean.current}">
+                                itemChangeListener="#{panelMenuController.updateCurrent}"
+                                activeItem="#{panelMenuController.current}">
                 <rich:panelMenuGroup label="Пользователи">
                     <rich:panelMenuItem label="Таблица"  action="showUser"></rich:panelMenuItem>
                     <rich:panelMenuItem label="Добавить" action="addUser"></rich:panelMenuItem>

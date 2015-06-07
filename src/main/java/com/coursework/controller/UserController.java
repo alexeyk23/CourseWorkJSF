@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.coursework.bean;
+package com.coursework.controller;
 
 import com.coursework.dao.RoleFacade;
 import com.coursework.dao.UserFacade;
@@ -29,7 +29,7 @@ import javax.inject.Named;
  */
 @ViewScoped
 @Named
-public class UserBean implements Serializable {
+public class UserController implements Serializable {
     
     private int idUser;  
     private String nameUser;  
@@ -64,7 +64,7 @@ public class UserBean implements Serializable {
         try {
             userDao.updateUser(idUser, nameUser, dateOfBirthday,selectedRoles);
         } catch (Exception ex) {
-            Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
         }
@@ -78,7 +78,7 @@ public class UserBean implements Serializable {
     {      
        try{ userDao.deleteUser(idUser);        
        }catch (Exception ex) {
-            Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("error", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения "+ex.getMessage(), null));
         }
@@ -95,7 +95,7 @@ public class UserBean implements Serializable {
         try {
             res = userDao.findAll();
         } catch (Exception ex) {
-            Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return res;
     }
@@ -158,7 +158,7 @@ public class UserBean implements Serializable {
                    selectedRoles.add(String.valueOf(r.getIdRole()));
                }
            } catch (Exception ex) {
-               Logger.getLogger(UserBean.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(UserController.class.getName()).log(Level.SEVERE, null, ex);
            }
                  
        }
@@ -199,6 +199,6 @@ public class UserBean implements Serializable {
     /**
      * Пустой конструктор 
      */
-    public UserBean() {
+    public UserController() {
     }
 }

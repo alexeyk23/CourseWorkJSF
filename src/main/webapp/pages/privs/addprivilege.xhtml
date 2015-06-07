@@ -9,13 +9,13 @@
         <ui:define name="body">
             <h:form prependId="false">
                 <h:outputLabel value="Название:" for="nameInput" />
-                <h:inputText id="nameInput" value="#{privilegeBean.name_priv}">
+                <h:inputText id="nameInput" value="#{privilegeController.name_priv}">
                     <f:validateLength minimum="3"></f:validateLength>
                 </h:inputText>
                 <h:message for="nameInput" style="color: red; margin: 3px;"></h:message>                                        
                 <br/>                
                 <h:commandButton value="Добавить"
-                                 action="#{privilegeBean.addPrivilege()}" />
+                                 action="#{privilegeController.addPrivilege()}" />
                 <h:commandButton value="Таблица привилегий"
                                  action="showPriv" />
                 <br/>

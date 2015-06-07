@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.coursework.bean;
+package com.coursework.controller;
 
 import com.coursework.dao.PermissionFacade;
 import com.coursework.dao.RoleFacade;
@@ -28,7 +28,7 @@ import javax.inject.Named;
  */
 @ViewScoped
 @Named
-public class RoleBean implements Serializable {
+public class RoleController implements Serializable {
 
     private int idRole;
     private String nameRole; 
@@ -92,7 +92,7 @@ public class RoleBean implements Serializable {
         try {
             listRole = roleDao.findAll();
         } catch (Exception ex) {
-            Logger.getLogger(RoleBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(RoleController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listRole;
     }
@@ -140,7 +140,7 @@ public class RoleBean implements Serializable {
                     selectedPermission.add(String.valueOf(perm.getIdPerm()));
                 }
             } catch (Exception ex) {
-                Logger.getLogger(RoleBean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RoleController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
@@ -166,6 +166,6 @@ public class RoleBean implements Serializable {
     /**
      * Пустой конструктор
      */
-    public RoleBean() {
+    public RoleController() {
     }
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.coursework.bean;
+package com.coursework.controller;
 
 import com.coursework.dao.ApplicationFacade;
 import com.coursework.dao.PermissionFacade;
@@ -30,7 +30,7 @@ import javax.inject.Named;
  */
 @ViewScoped
 @Named
-public class PermissionBean implements Serializable{
+public class PermissionController implements Serializable{
 
     private int idPerm;
     private String appId;
@@ -63,7 +63,7 @@ public class PermissionBean implements Serializable{
                 fc.addMessage("messPerm", new FacesMessage(FacesMessage.SEVERITY_WARN, "Такое разрешение уже существует!", null));
             }
         } catch (Exception ex) {
-            Logger.getLogger(PermissionBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PermissionController.class.getName()).log(Level.SEVERE, null, ex);
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
         }
@@ -78,7 +78,7 @@ public class PermissionBean implements Serializable{
         try {
            res  = permissionDao.findAll();
         } catch (Exception ex) {
-            Logger.getLogger(PermissionBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PermissionController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return  res;
     }
@@ -176,7 +176,7 @@ public class PermissionBean implements Serializable{
             try {
                 app = af.find(Integer.valueOf((String) event.getNewValue()));
             } catch (Exception ex) {
-                Logger.getLogger(PermissionBean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(PermissionController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         else {
@@ -187,7 +187,7 @@ public class PermissionBean implements Serializable{
     /**
      * Пустой конструктор
      */
-    public PermissionBean() {
+    public PermissionController() {
     }
 
 }

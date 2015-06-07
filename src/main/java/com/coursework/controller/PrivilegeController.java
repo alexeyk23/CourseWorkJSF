@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.coursework.bean;
+package com.coursework.controller;
 
 import com.coursework.dao.PrivilegeFacade;
 import com.coursework.model.Privilege;
@@ -24,7 +24,7 @@ import javax.inject.Named;
  */
 @ViewScoped
 @Named
-public class PrivilegeBean implements Serializable {
+public class PrivilegeController implements Serializable {
 
     private int idPriv;
     private String namePriv;
@@ -40,7 +40,7 @@ public class PrivilegeBean implements Serializable {
         } catch (Exception e) {
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения "+e.getMessage(), null));
-            Logger.getLogger(PrivilegeBean.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(PrivilegeController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
 
@@ -57,7 +57,7 @@ public class PrivilegeBean implements Serializable {
         } catch (Exception ex) {
             FacesContext fc = FacesContext.getCurrentInstance();
             fc.addMessage("errors", new FacesMessage(FacesMessage.SEVERITY_WARN, "Ошибка соединения", null));
-            Logger.getLogger(PrivilegeBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrivilegeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -70,7 +70,7 @@ public class PrivilegeBean implements Serializable {
         try {
            res= privilegeDao.findAll();
         } catch (Exception ex) {
-            Logger.getLogger(PrivilegeBean.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrivilegeController.class.getName()).log(Level.SEVERE, null, ex);
         }
         return  res;
     }
@@ -114,6 +114,6 @@ public class PrivilegeBean implements Serializable {
     /**
      * Пустой конструктор
      */
-    public PrivilegeBean() {
+    public PrivilegeController() {
     }
 }

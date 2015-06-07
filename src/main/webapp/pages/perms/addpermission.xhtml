@@ -10,23 +10,23 @@
         <ui:define name="body">
             <h:form prependId="false">                    
                 <h:outputLabel value="Выберите приложение:" />
-                <h:selectOneMenu value="#{permissionBean.appId}" valueChangeListener="#{permissionBean.changeApp}">
+                <h:selectOneMenu value="#{permissionController.appId}" valueChangeListener="#{permissionController.changeApp}">
                     <f:selectItem value="#{null}"/>
-                    <f:selectItems value="#{applicationBean.listApplication}" var = "app" 
+                    <f:selectItems value="#{applicationController.listApplication}" var = "app" 
                                    itemValue="#{app.idApp}" itemLabel="#{app.nameApp}"/>
                     <a4j:ajax event="valueChange" render="privsForApp" execute="@this" />
                 </h:selectOneMenu>
                 <br/>
                 <h:outputLabel value="Выберите привилегию:"/>
-                <h:selectOneMenu value="#{permissionBean.privilegeId}" id="privsForApp">
-                    <f:selectItems value="#{permissionBean.app.privs}" var="priv" itemLabel="#{priv.namePriv}"
+                <h:selectOneMenu value="#{permissionController.privilegeId}" id="privsForApp">
+                    <f:selectItems value="#{permissionController.app.privs}" var="priv" itemLabel="#{priv.namePriv}"
                                    itemValue="#{priv.idPriv}"/>
                 </h:selectOneMenu>
                 <br/> 
                 <h:messages for="messPerm" style="color: red; margin: 8px;"/>
                 <br/>
                 <h:commandButton value="Добавить разрешение" 
-                                 action="#{permissionBean.addPermission()}"/>                
+                                 action="#{permissionController.addPermission()}"/>                
                 <h:commandButton value="Таблица разрешений"
                                  action="showPerm" />
                 <br/>

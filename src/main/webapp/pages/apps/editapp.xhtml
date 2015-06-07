@@ -8,23 +8,23 @@
         <ui:define name="title">Изменение приложения</ui:define>        
         <ui:define name="body">
             <f:metadata>
-                <f:viewParam  name="idApp" value="#{applicationBean.idApp}"/> 
+                <f:viewParam  name="idApp" value="#{applicationController.idApp}"/> 
             </f:metadata>
             <h:form prependId="false">
                 <h:outputLabel value="Название: " for="nameInput" />
-                <h:inputText id="nameInput" value="#{applicationBean.nameApp}">
+                <h:inputText id="nameInput" value="#{applicationController.nameApp}">
                     <f:validateLength minimum="3"></f:validateLength>
                 </h:inputText>
                 <h:message style="color: red;margin: 8px;" for="nameInput" />
                 <br/>   
                 <h:outputLabel value="Привилегии: " />
                 <br/>                
-                <h:selectManyCheckbox  id="selectMany" layout="pageDirection"  value="#{applicationBean.selectedPrivs}" >
-                    <f:selectItems var="priv" value="#{privilegeBean.listPrivilege}" itemLabel="#{priv.namePriv}"
+                <h:selectManyCheckbox  id="selectMany" layout="pageDirection"  value="#{applicationController.selectedPrivs}" >
+                    <f:selectItems var="priv" value="#{privilegeController.listPrivilege}" itemLabel="#{priv.namePriv}"
                                    itemValue="#{priv.idPriv}" />    
                 </h:selectManyCheckbox>
                 <h:commandButton value="Сохранить"
-                                 action="#{applicationBean.updateApp()}" />
+                                 action="#{applicationController.updateApp()}" />
                 <h:commandButton value="Таблица приложений"
                                  action="showApp" />
                 <br/>

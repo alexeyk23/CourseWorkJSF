@@ -11,21 +11,21 @@
         <ui:define name="body">
             <h:form prependId="false">
                 <h:outputLabel value="ФИО:" for="nameInput" />
-                <h:inputText id="nameInput" value="#{userBean.nameUser}">
+                <h:inputText id="nameInput" value="#{userController.nameUser}">
                     <f:validateLength minimum="3"></f:validateLength>
                 </h:inputText>        
                 <h:message for="nameInput" style="color: red;margin: 8px;"/>               
                 <br/>                 
                 <h:outputLabel value="Дата рождения:" for="dataInput" />
-                <rich:calendar id="date" value="#{userBean.dateOfBirthday}"/>
+                <rich:calendar id="date" value="#{userController.dateOfBirthday}"/>
                 <br/>
-                <h:selectManyCheckbox id="selectMany" layout="pageDirection" value="#{userBean.selectedRoles}" > 
-                    <f:selectItems var="role" value="#{roleBean.allRole}" itemLabel="#{role.nameRole}"
+                <h:selectManyCheckbox id="selectMany" layout="pageDirection" value="#{userController.selectedRoles}" > 
+                    <f:selectItems var="role" value="#{roleController.allRole}" itemLabel="#{role.nameRole}"
                                    itemValue="#{role.idRole}" >                       
                     </f:selectItems>
                 </h:selectManyCheckbox>                 
                 <h:commandButton value="Добавить"
-                                 action="#{userBean.addUser}" />
+                                 action="#{userController.addUser}" />
                 <h:commandButton value="Таблица пользователей"
                                  action="showUser" />
                 <br/>

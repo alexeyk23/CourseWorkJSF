@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.coursework.bean.ui;
+package com.coursework.controller.ui;
 
 import java.io.Serializable;
 import javax.inject.Named;
@@ -15,7 +15,7 @@ import org.richfaces.event.ItemChangeEvent;
  */
 @SessionScoped
 @Named
-public class PanelMenuBean implements Serializable{
+public class PanelMenuController implements Serializable{
     private String current;
 //    private boolean singleMode;
 //
