@@ -1,5 +1,6 @@
 package com.coursework.dao;
 
+import com.coursework.dao.old.PrivilegeDAO;
 import com.coursework.model.Application;
 import com.coursework.model.Command;
 import com.coursework.model.Permission;
